@@ -1,1 +1,3 @@
-# battle-reversi
+# reversi-tactics
+
+Reversi-based tactics game
