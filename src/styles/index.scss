@@ -1,0 +1,46 @@
+@import 'sanitize.css';
+
+
+:root {
+  --app-width: 360px;
+  --app-height: 600px;
+  --icon-width: 32px;
+  --icon-height: 32px;
+  --color-font: #ffffff;
+  --color-background: #000000;
+}
+
+
+/*
+ * Reset styles
+ */
+#js-app-container {
+  ul, ol {
+    list-style-type: none;
+  }
+}
+
+
+#js-app-container {
+  margin: 10px auto;
+
+  .screen {
+    margin: 0 auto;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: var(--app-width);
+    height: var(--app-height);
+    color: var(--color-font);
+    background-color: var(--color-background);
+
+    .scene {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
