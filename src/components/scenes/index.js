@@ -1,12 +1,11 @@
-import AdventureScene from './AdventureScene';
-import HomeScene from './HomeScene';
+import BattleScene from './BattleScene';
 import WelcomeScene from './WelcomeScene';
 
 
 const scenes = {
-  AdventureScene,
-  HomeScene,
+  BattleScene,
   WelcomeScene,
 };
+
 
 export default scenes;

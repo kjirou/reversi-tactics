@@ -15,6 +15,7 @@ var ICON_DATA_SOURCE = [
   // enemies
   ['enemies', [0, 1], 'bat'],
   ['enemies', [0, 7], 'dragon'],
+  ['enemies', [2, 1], 'frog'],
   ['enemies', [0, 11], 'ghost'],
   ['enemies', [3, 13], 'goblin'],
   ['enemies', [1, 3], 'minotaur'],

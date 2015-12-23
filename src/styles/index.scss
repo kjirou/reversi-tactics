@@ -2,17 +2,32 @@
 
 
 :root {
-  --app-width: 360px;
   --app-height: 600px;
-  --icon-width: 32px;
+  --app-width: 360px;
+  --app-with-scroll-bar-width: 380px;
+  --object-bar-height: 48px;
+  --icon-animation-margin: 8px;
   --icon-height: 32px;
-  --color-font: #ffffff;
+  --icon-width: 32px;
+  --card-height: 240px;
+  --card-width: 150px;
   --color-background: #000000;
+  --color-negative: red;
+  --color-neutral: #ffffff;
+  --color-positive: lime;
+  --color-text: #ffffff;
+  --z-index-default: 1;
+}
+
+
+body.development {
+  height: 100%;
+  background-color: #cccccc;
 }
 
 
 /*
- * Reset styles
+ * Reset
  */
 #js-app-container {
   ul, ol {
@@ -21,6 +36,9 @@
 }
 
 
+/*
+ * Screen
+ */
 #js-app-container {
   margin: 10px auto;
 
@@ -31,7 +49,7 @@
     left: 0;
     width: var(--app-width);
     height: var(--app-height);
-    color: var(--color-font);
+    color: var(--color-text);
     background-color: var(--color-background);
 
     .scene {
@@ -40,7 +58,184 @@
       left: 0;
       width: 100%;
       height: 100%;
+      overflow: scroll;
+      overflow-x: hidden;
     }
   }
 }
 
+
+/*
+ * Gauge
+ */
+#js-app-container .gauge {
+  position: absolute;
+  box-sizing: border-box;
+  .gauge-bar {
+    position: absolute;
+    height: 100%;
+  }
+  &.hp-gauge {
+    width: var(--icon-height);
+    height: 6px;
+    border: 1px solid var(--color-text);
+    border-radius: 2px;
+    background-color: var(--color-background);
+    .gauge-bar {
+      top: 1px;
+      left: 1px;
+      width: 28px;
+      height: 2px;
+      background-color: var(--color-text);
+    }
+  }
+}
+
+
+/*
+ * Icon, AnimatedIcon
+ */
+#js-app-container .icon {
+  width: var(--icon-width);
+  height: var(--icon-height);
+}
+#js-app-container .animated-icon {
+  position: relative;
+  width: var(--object-bar-height);
+  height: var(--object-bar-height);
+  .icon-container {
+    position: absolute;
+    top: var(--icon-animation-margin);
+    left: var(--icon-animation-margin);
+    width: var(--icon-width);
+    height: var(--icon-height);
+  }
+}
+
+
+/*
+ * ObjectBar
+ */
+#js-app-container .object-bar {
+  width: var(--app-width);
+  .headline {
+    height: var(--object-bar-height);
+    position: relative;
+    .headline-column {
+      position: absolute;
+      height: 100%;
+      &.headline-column-left {
+        width: var(--object-bar-height);
+        .hp-gauge {
+          left: var(--icon-animation-margin);
+          bottom: 1px;
+          z-index: var(--z-index-default);
+        }
+      }
+      &.headline-column-center {
+        left: var(--object-bar-height);
+        width: 264px;
+        >div {
+          width: 100%;
+          height: 24px;
+          line-height: 24px;
+        }
+        .nameplate {
+          font-size: 12px;
+          >span {
+            display: inline-block;
+          }
+          .floor-type-name {
+            width: 16px;
+            text-align: center;
+          }
+          .separator {
+            width: 8px;
+            text-align: center;
+          }
+        }
+        .buffs {
+          overflow: hidden;
+          font-size: 10px;
+          .buff {
+            margin-right: 4px;
+            &.positive-buff {
+              color: var(--color-positive);
+            }
+            &.negative-buff {
+              color: var(--color-negative);
+            }
+            &.neutral-buff {
+              color: var(--color-neutral);
+            }
+          }
+        }
+      }
+      &.headline-column-right {
+        right: 0;
+        width: var(--object-bar-height);
+        .hit,
+        .damage {
+          position: absolute;
+          width: 46px;
+          height: 12px;
+          line-height: 12px;
+          font-size: 10px;
+          text-shadow:
+            -1px 0 var(--color-background),
+            0 1px var(--color-background),
+            1px 0 var(--color-background),
+            0 -1px var(--color-background);
+        }
+        .hit {
+          top: 2px;
+          left: 2px;
+          text-align: left;
+        }
+        .damage {
+          right: 2px;
+          bottom: 2px;
+          text-align: right;
+        }
+      }
+    }
+    .floor-number {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      font-size: 10px;
+      line-height: 10px;
+      text-align: left;
+      z-index: var(--z-index-default);
+    }
+  }
+  .detail {
+    display: none;
+    font-size: 10px;
+    &.is-showing {
+      display: flex;
+    }
+    .detail-column-left {
+      width: var(--object-bar-height);
+      table {
+        width: 100%;
+        th, td {
+          width: 50%;
+          height: 16px;
+          line-height: 16px;
+          text-align: center;
+          font-weight: normal;
+        }
+      }
+    }
+    .detail-column-center {
+      width: calc(var(--app-width) - var(--object-bar-height) * 2);
+    }
+    .detail-column-right {
+      width: var(--object-bar-height);
+    }
+  }
+}
+
+
+@import './_scenes.scss';

@@ -5,6 +5,6 @@ import Root from './components/Root';
 
 
 window.document.addEventListener('DOMContentLoaded', () => {
-  const container = window.document.querySelector('#js-app-container');
-  ReactDOM.render(React.createElement(Root), container);
+  const appContainer = window.document.querySelector('#js-app-container');
+  ReactDOM.render(React.createElement(Root), appContainer);
 });

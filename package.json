@@ -7,6 +7,7 @@
     "url": "https://github.com/kjirou/reversi-tactics/issues"
   },
   "dependencies": {
+    "lodash": "3.10.1",
     "react": "0.14.3",
     "react-dom": "0.14.3"
   },
