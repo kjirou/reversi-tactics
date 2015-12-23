@@ -9,11 +9,34 @@ import Icon from '../Icon';
 import sharedProps from './sharedProps';
 
 
+class Square extends React.Component {
+
+  render() {
+    return (
+      <div>
+      </div>
+    );
+  }
+}
+
+
+class Board extends React.Component {
+
+  render() {
+    return (
+      <div className="board">
+        <div className="board-inner"></div>
+      </div>
+    );
+  }
+}
+
+
 export default class BattleScene extends React.Component {
 
   render() {
     return (
-      <div>BattleScene</div>
+      <Board />
     );
   }
 }
