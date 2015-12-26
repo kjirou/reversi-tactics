@@ -11,11 +11,16 @@ export default class BattleScene extends React.Component {
 
   render() {
     // TODO: tmp
-    const squares = Array.from({ length: 8 }).map(rowIndex => {
-      return Array.from({ length: 8 }).map(columnIndex => {
+    const squares = Array.from({ length: 8 }).map((notUse, rowIndex) => {
+      return Array.from({ length: 8 }).map((notUse, columnIndex) => {
         return {
           rowIndex,
           columnIndex,
+          reversiPieceType: {
+            0: 'EMPTY',
+            1: 'BLACK',
+            2: 'WHITE',
+          }[(rowIndex * 8 + columnIndex) % 3],
         };
       });
     });

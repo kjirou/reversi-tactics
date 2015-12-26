@@ -1,9 +1,19 @@
 import React from 'react';
 
+import { REVERSI_PIECE_TYPES } from '../consts';
+import ReversiPiece from './ReversiPiece';
+
 
 export default class Square extends React.Component {
 
   render() {
+    let reversiPieceElement = null;
+    if (this.props.reversiPieceType !== REVERSI_PIECE_TYPES.EMPTY) {
+      reversiPieceElement = React.createElement(ReversiPiece, {
+        radius: 18,
+        reversiPieceType: this.props.reversiPieceType,
+      });
+    }
 
     return (
       <div
@@ -13,7 +23,7 @@ export default class Square extends React.Component {
           left: this.props.left,
         } }
       >
-        sq
+        { reversiPieceElement }
       </div>
     );
   }
@@ -25,5 +35,6 @@ Object.assign(Square, {
     left: React.PropTypes.number.isRequired,
     rowIndex: React.PropTypes.number.isRequired,
     columnIndex: React.PropTypes.number.isRequired,
+    reversiPieceType: React.PropTypes.string.isRequired,
   },
 });

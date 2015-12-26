@@ -9,13 +9,14 @@ export default class Board extends React.Component {
   _createSquareElements() {
     const elements = [];
     this.props.squares.forEach((rowSquares, rowIndex) => {
-      this.props.squares.forEach((square, columnIndex) => {
+      rowSquares.forEach((square, columnIndex) => {
         elements.push(React.createElement(Square, {
           key: `square-${ rowIndex }-${ columnIndex }`,
           top: STYLES.SQUARE_HEIGHT * rowIndex + STYLES.SQUARE_MARGIN * (rowIndex + 1),
           left: STYLES.SQUARE_WIDTH * columnIndex + STYLES.SQUARE_MARGIN * (columnIndex + 1),
           rowIndex,
           columnIndex,
+          reversiPieceType: square.reversiPieceType,
         }));
       });
     });
