@@ -17,6 +17,7 @@ export default class Board extends React.Component {
           rowIndex,
           columnIndex,
           reversiPieceType: square.reversiPieceType,
+          iconId: square.iconId,
         }));
       });
     });

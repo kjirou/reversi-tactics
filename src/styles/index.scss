@@ -6,11 +6,10 @@
   --app-height: 600px;
   --app-width: 360px;
   --color-background: #000000;
+  --color-black-piece: #000000;
   --color-board: #22801f;
-  --color-negative: red;
-  --color-neutral: #ffffff;
-  --color-positive: lime;
   --color-text: #ffffff;
+  --color-white-piece: #ffffff;
   --icon-animation-margin: 4px;
   --icon-height: 32px;
   --icon-width: 32px;
@@ -18,8 +17,8 @@
   --z-index-default: 1;
 
   /* Computed values */
-  --animated-icon-width: calc(--icon-width) + var(--icon-animation-margin) + 2;
-  --animated-icon-height: calc(--icon-height) + var(--icon-animation-margin) + 2;
+  --animated-icon-width: calc(var(--icon-width) + var(--icon-animation-margin) * 2);
+  --animated-icon-height: calc(var(--icon-height) + var(--icon-animation-margin) * 2);
 }
 
 
@@ -109,6 +108,12 @@ body.development {
       width: 40px;
       height: 40px;
       background-color: var(--color-board);
+      &.black-piece {
+        background-color: var(--color-black-piece);
+      }
+      &.white-piece {
+        background-color: var(--color-white-piece);
+      }
       .reversi-piece-container {
         position: absolute;
         top: 2px;
