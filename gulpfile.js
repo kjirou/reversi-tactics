@@ -13,7 +13,6 @@ var path = require('path');
 var postcssCustomProperties = require('postcss-custom-properties');
 var postcssImport = require('postcss-import');
 var postcssNested = require('postcss-nested');
-var postcssSassyMixins = require('postcss-sassy-mixins');
 var postcssScss = require('postcss-scss');
 var runSequence = require('run-sequence');
 var vinylSourceStream  = require('vinyl-source-stream');
