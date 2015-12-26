@@ -50,7 +50,7 @@
     "tactics"
   ],
   "license": "Apache-2.0",
-  "main": "index.js",
+  "main": "src/components/Root.js",
   "private": true,
   "repository": {
     "type": "git",
