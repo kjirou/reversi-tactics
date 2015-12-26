@@ -1,24 +1,24 @@
 import React from 'react';
 
-import { REVERSI_PIECE_TYPES } from '../consts';
+import { REVERSI_PIECE_TYPES, STYLES } from '../consts';
 import ReversiPiece from './ReversiPiece';
 
 
 export default class Square extends React.Component {
 
   _createReversiPieceContainerElement() {
-    if (this.props.reversiPieceType !== REVERSI_PIECE_TYPES.EMPTY) {
-      const reversiPieceElement = React.createElement(ReversiPiece, {
-        radius: 18,
-        reversiPieceType: this.props.reversiPieceType,
-      });
-      return <div className="reversi-piece-container">{ reversiPieceElement }</div>;
-    }
-    return null;
+    const reversiPieceElement = React.createElement(ReversiPiece, {
+      radius: STYLES.REVERSI_PIECE_RADIUS,
+      reversiPieceType: this.props.reversiPieceType,
+    });
+    return <div className="reversi-piece-container">{ reversiPieceElement }</div>;
   }
 
   render() {
-    const reversiPieceContainerElement = this._createReversiPieceContainerElement();
+    let reversiPieceContainerElement = null;
+    if (this.props.reversiPieceType !== REVERSI_PIECE_TYPES.EMPTY) {
+      reversiPieceContainerElement = this._createReversiPieceContainerElement();
+    }
 
     return (
       <div
