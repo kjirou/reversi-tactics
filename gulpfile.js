@@ -2,8 +2,11 @@ var autoprefixer = require('autoprefixer');
 var babelify = require('babelify');
 var browserify = require('browserify');
 var gulp = require('gulp');
+var gulpConcat = require('gulp-concat');
+var gulpImageDataURI = require('gulp-image-data-uri');
 var gulpRename = require('gulp-rename');
 var gulpPostcss = require('gulp-postcss');
+var gulpShell = require('gulp-shell');
 var licensify = require('licensify');
 var notifier = require('node-notifier');
 var path = require('path');
@@ -18,12 +21,6 @@ var watchify = require('watchify');
 
 var browserSync = require('browser-sync').create();
 
-
-//
-// Refs)
-// https://github.com/Browsersync/recipes/tree/master/recipes/gulp.browserify
-// https://gist.github.com/Fishrock123/8ea81dad3197c2f84366
-//
 
 var ROOT = __dirname;
 var SRC_ROOT = path.join(ROOT, 'src');
@@ -163,7 +160,25 @@ gulp.task('build:images', function() {
   ;
 });
 
-gulp.task('build:assets', ['build:css', 'build:images']);
+gulp.task('build:divide-icons', gulpShell.task([
+  '$(npm bin)/image-divider'
+]));
+
+gulp.task('build:data-uri-icons', function() {
+  return gulp.src(path.join(PUBLIC_DIST_ROOT, 'icons/**/*.png'))
+    .pipe(gulpImageDataURI({
+      template: {
+        file: path.join(ROOT, 'gulp-image-data-uri-template.css')
+      }
+    }))
+    .pipe(gulpConcat('data-uri-icons.css'))
+    .pipe(gulp.dest(PUBLIC_DIST_ROOT))
+  ;
+});
+
+gulp.task('build:assets', function() {
+  runSequence(['build:css', 'build:images', 'build:divide-icons'], 'build:data-uri-icons');
+});
 
 gulp.task('watch:assets', function() {
 
