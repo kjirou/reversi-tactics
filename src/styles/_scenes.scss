@@ -1,2 +1,97 @@
 #js-app-container {
+
+  .battle-scene {
+    .war-situation {
+      display: flex;
+      width: 100%;
+      height: 192px;
+      .one-side {
+        width: 50%;
+        height: 100%;
+        .scoreboard {
+          display: flex;
+          height: 40px;
+          .army-name {
+            box-sizing: border-box;
+            width: 140px;
+            height: 100%;
+            line-height: 40px;
+            padding-left: 8px;
+            font-size: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+          .score {
+            width: 40px;
+            height: 100%;
+            line-height: 40px;
+            font-size: 16px;
+            text-align: center;
+          }
+        }
+        .unit-selector {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          box-sizing: border-box;
+          padding: 8px 0;
+          width: 100%;
+          height: 152px;
+          .unit {
+            display: flex;
+            justify-content: space-between;
+            width: 160px;
+            height: 44px;
+            border-style: solid;
+            border-width: 2px;
+            .unit-name {
+              width: 110px;
+              height: 40px;
+              line-height: 40px;
+              font-size: 14px;
+              overflow: hidden;
+              white-space: nowrap;
+            }
+          }
+        }
+        &.black-side {
+          color: var(--color-white-piece);
+          background-color: var(--color-black-piece);
+          .unit {
+            border-color: var(--color-white-piece);
+          }
+        }
+        &.white-side {
+          color: var(--color-black-piece);
+          background-color: var(--color-white-piece);
+          .unit {
+            border-color: var(--color-black-piece);
+          }
+        }
+      }
+    }
+    .support-buttons {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 48px;
+      .button {
+        box-sizing: border-box;
+        margin-right: 4px;
+        width: 60px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border: 2px solid  var(--color-text);
+        cursor: pointer;
+        .icon {
+          position: relative;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+  }
 }

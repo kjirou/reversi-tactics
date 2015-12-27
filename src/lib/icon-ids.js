@@ -6,6 +6,8 @@ var ICON_POSITIONS = [
 
   // characters
   ['characters', [0, 3], 'alchemist'],
+  ['characters', [2, 2], 'bird_male'],
+  ['characters', [2, 3], 'bird_female'],
   ['characters', [0, 4], 'cleric'],
   ['characters', [0, 0], 'fighter'],
   ['characters', [1, 1], 'healer'],
