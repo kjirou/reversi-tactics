@@ -56,6 +56,6 @@ Object.assign(Square, {
     rowIndex: React.PropTypes.number.isRequired,
     columnIndex: React.PropTypes.number.isRequired,
     reversiPieceType: React.PropTypes.string.isRequired,
-    iconId: React.PropTypes.string.isRequired,
+    iconId: React.PropTypes.string,
   },
 });
