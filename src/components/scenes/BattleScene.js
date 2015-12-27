@@ -15,6 +15,7 @@ const _squares = Array.from({ length: 8 }).map((notUse, rowIndex) => {
       columnIndex,
       reversiPieceType: 'EMPTY',
       iconId: null,
+      hp: 5,
     };
   });
 });
@@ -22,14 +23,25 @@ const _squares = Array.from({ length: 8 }).map((notUse, rowIndex) => {
 _squares[1][5].reversiPieceType = 'BLACK';
 _squares[1][5].iconId = 'goblin';
 _squares[2][4].reversiPieceType = 'BLACK';
+_squares[2][4].iconId = 'fighter_reversed';
 _squares[3][1].reversiPieceType = 'WHITE';
-_squares[3][1].iconId = 'goblin';
+_squares[3][1].iconId = 'fighter_reversed';
 _squares[3][2].reversiPieceType = 'WHITE';
 _squares[3][2].iconId = 'goblin';
 _squares[3][3].reversiPieceType = 'WHITE';
 _squares[3][4].reversiPieceType = 'WHITE';
 _squares[4][3].reversiPieceType = 'BLACK';
 _squares[4][4].reversiPieceType = 'WHITE';
+
+
+//
+// TODO:
+// - 残りの要素
+//   - HPの表示
+//   - コマ選択
+//   - 現スコアの表示
+//   - ルールへの外部リンク
+//
 
 
 export default class BattleScene extends React.Component {

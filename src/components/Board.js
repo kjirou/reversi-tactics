@@ -14,10 +14,7 @@ export default class Board extends React.Component {
           key: `square-${ rowIndex }-${ columnIndex }`,
           top: STYLES.SQUARE_HEIGHT * rowIndex + STYLES.SQUARE_MARGIN * (rowIndex + 1),
           left: STYLES.SQUARE_WIDTH * columnIndex + STYLES.SQUARE_MARGIN * (columnIndex + 1),
-          rowIndex,
-          columnIndex,
-          reversiPieceType: square.reversiPieceType,
-          iconId: square.iconId,
+          square,
         }));
       });
     });

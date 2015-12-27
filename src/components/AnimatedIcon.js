@@ -10,6 +10,7 @@ export default class AnimatedIcon extends React.Component {
       <div className="animated-icon">
         <div className="icon-container">
           <Icon iconId={ this.props.iconId } />
+          <div className="hp"><span className="hp-text">{ this.props.hp }</span></div>
         </div>
       </div>
     );
@@ -18,6 +19,7 @@ export default class AnimatedIcon extends React.Component {
 
 Object.assign(AnimatedIcon, {
   propTypes: {
+    hp: React.PropTypes.number.isRequired,
     iconId: React.PropTypes.string.isRequired,
   },
 });
