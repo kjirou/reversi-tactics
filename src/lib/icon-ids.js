@@ -1,5 +1,8 @@
+var path = require('path');
+
+
 // For image-driver.js
-var ICON_DATA_SOURCE = [
+var ICON_POSITIONS = [
 
   // characters
   ['characters', [0, 3], 'alchemist'],
@@ -64,9 +67,25 @@ var ICON_DATA_SOURCE = [
   ['tiles', [8, 8], 'village']//,
 ];
 
+var SOURCE_IMAGE_PATH =
+  path.join(__dirname, '../../src/materials/images/denzi/Denzi140330-12-1--32x32.png');
+var REVERSED_COLOR_SOURCE_IMAGE_PATH =
+  path.join(__dirname, '../../src/materials/images/denzi/Denzi140330-12-1--32x32--reversed-color.png');
+
+var ICON_DATA_LIST = [];
+ICON_POSITIONS.forEach(function(iconPosition) {
+  ICON_DATA_LIST.push([SOURCE_IMAGE_PATH].concat(iconPosition));
+  ICON_DATA_LIST.push([
+    REVERSED_COLOR_SOURCE_IMAGE_PATH,
+    iconPosition[0],
+    iconPosition[1],
+    iconPosition[2] + '_reversed'
+  ]);
+});
+
 var _iconIds = [];
-var ICON_IDS = ICON_DATA_SOURCE.map(function(iconData) {
-  var iconId = iconData[2];
+var ICON_IDS = ICON_DATA_LIST.map(function(iconData) {
+  var iconId = iconData[3];
   if (_iconIds.indexOf(iconId) > -1) {
     throw new Error(iconId + ' is duplicated icon-id');
   }
@@ -75,6 +94,6 @@ var ICON_IDS = ICON_DATA_SOURCE.map(function(iconData) {
 });
 
 module.exports = {
-  ICON_DATA_SOURCE: ICON_DATA_SOURCE,
+  ICON_DATA_LIST: ICON_DATA_LIST,
   ICON_IDS: ICON_IDS
 };

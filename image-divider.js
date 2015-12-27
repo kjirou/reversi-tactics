@@ -1,11 +1,9 @@
 var validateConfData = require('image-divider').utils.validateConfData;
-var _ = require('lodash');
 var pathModule = require('path');
 
-var ICON_DATA_SOURCE = require('./src/lib/icon-ids').ICON_DATA_SOURCE;
+var ICON_DATA_LIST = require('./src/lib/icon-ids').ICON_DATA_LIST
 
 
-var SOURCE_IMAGE_PATH = pathModule.join(__dirname, 'src/materials/images/denzi/Denzi140330-12-1--32x32.png');
 var DEST_ROOT = pathModule.join(__dirname, 'public/dist/icons');
 var ICON_WIDTH = 32;
 var ICON_HEIGHT = 32;
@@ -24,10 +22,10 @@ var ICON_POS_MAP = {
  * @param {Array<number>} cellIndex - [rowIndex, colIndex]
  * @return {object}
  */
-var mapIcon = function mapImage(category, cellIndex, iconId) {
+var mapIcon = function mapIcon(sourceImagePath, category, cellIndex, iconId) {
   var basePos = ICON_POS_MAP[category];
   return {
-    src: SOURCE_IMAGE_PATH,
+    src: sourceImagePath,
     pos: [
       basePos[0] + cellIndex[0] * ICON_HEIGHT,
       basePos[1] + cellIndex[1] * ICON_WIDTH
@@ -37,7 +35,7 @@ var mapIcon = function mapImage(category, cellIndex, iconId) {
   };
 };
 
-var icons = ICON_DATA_SOURCE.map(function(iconData) {
+var icons = ICON_DATA_LIST.map(function(iconData) {
   return mapIcon.apply(null, iconData);
 });
 
