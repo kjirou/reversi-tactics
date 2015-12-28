@@ -7,9 +7,11 @@
     "url": "https://github.com/kjirou/reversi-tactics/issues"
   },
   "dependencies": {
+    "flumpt": "0.1.4",
     "lodash": "3.10.1",
     "react": "0.14.3",
-    "react-dom": "0.14.3"
+    "react-dom": "0.14.3",
+    "singleton-mixin": "1.1.1"
   },
   "devDependencies": {
     "autoprefixer": "6.1.0",
