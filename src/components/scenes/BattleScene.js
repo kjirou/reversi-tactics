@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import Board from '../Board';
 import AnimatedIcon from '../AnimatedIcon';
 import Icon from '../Icon';
-import sharedProps from './sharedProps';
+import Scene from './Scene';
 
 
 // TODO: tmp
@@ -35,7 +35,7 @@ _squares[4][3].reversiPieceType = 'BLACK';
 _squares[4][4].reversiPieceType = 'WHITE';
 
 
-export default class BattleScene extends React.Component {
+export default class BattleScene extends Scene {
 
   render() {
 

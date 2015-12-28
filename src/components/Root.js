@@ -1,9 +1,10 @@
+import { Component } from 'flumpt';
 import React from 'react';
 
 import scenes from './scenes';
 
 
-export default class Root extends React.Component {
+export default class Root extends Component {
 
   render() {
     const sceneId = 'BattleScene';

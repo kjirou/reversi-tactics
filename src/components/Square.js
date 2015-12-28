@@ -1,10 +1,11 @@
+import { Component } from 'flumpt';
 import React from 'react';
 
 import { REVERSI_PIECE_TYPES, STYLES } from '../consts';
 import AnimatedIcon from './AnimatedIcon';
 
 
-export default class Square extends React.Component {
+export default class Square extends Component {
 
   render() {
     const classNames = ['square'];

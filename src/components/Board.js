@@ -1,10 +1,11 @@
+import { Component } from 'flumpt';
 import React from 'react';
 
 import { STYLES } from '../consts';
 import Square from './Square';
 
 
-export default class Board extends React.Component {
+export default class Board extends Component {
 
   _createSquareElements() {
     const elements = [];

@@ -1,14 +1,12 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Root from './components/Root';
-import ModelContainer from './containers/ModelContainer';
-
-
-const modelContainer = ModelContainer.getInstance();
+import App from './App';
 
 
 window.document.addEventListener('DOMContentLoaded', () => {
   const appContainer = window.document.querySelector('#js-app-container');
-  ReactDOM.render(React.createElement(Root), appContainer);
+  const app = new App({
+    renderer: el => ReactDOM.render(el, appContainer),
+  });
+  app.update(state => state);
 });
