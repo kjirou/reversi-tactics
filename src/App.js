@@ -15,21 +15,26 @@ export default class App extends Flux {
     });
   }
 
-  static _createInitialState() {
+  static _createState() {
     const modelContainer = ModelContainer.getInstance();
-    const state = {
-      squares: modelContainer.squares,
+    const boardProps = modelContainer.board.presentProps();
+    return {
+      squares: boardProps.squares,
     };
-    return state;
+  }
+
+  static _createInitialState() {
+    return App._createState();
   }
 
   /*
    * Attach logging to events triggered by "dispatch"
    */
   _onDispatch(eventName, handler) {
+    const boundHandler = handler.bind(this);
     this.on(eventName, (...args) => {
       console.log('dispatch:', eventName, ...args);
-      handler(...args);
+      boundHandler(...args);
     });
   }
 
