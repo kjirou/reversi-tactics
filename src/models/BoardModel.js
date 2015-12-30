@@ -36,6 +36,20 @@ export default class BoardModel extends Model {
     return this.getExtent()[1];
   }
 
+  getSquare(position) {
+    const [rowIndex, columnIndex] = position;
+    if (!this._squares[rowIndex] || !this._squares[rowIndex][columnIndex]) { return null; }
+    return this._squares[rowIndex][columnIndex];
+  }
+
+  ensureSquare(position) {
+    const square = this.getSquare(position);
+    if (!square) {
+      throw new Error(`Can not find the square by [${ position }]`);
+    }
+    return square;
+  }
+
   presentProps() {
     const props = {
       squares: this._squares.map(rowSquares => {

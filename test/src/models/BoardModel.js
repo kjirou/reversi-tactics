@@ -23,4 +23,20 @@ describe('src/models/BoardModel', () => {
     assert.strictEqual(props.squares.length, 2);
     assert.strictEqual(props.squares[0].length, 3);
   });
+
+  it('getSquare, ensureSquare', () => {
+    const board = new BoardModel();
+
+    assert(board.getSquare([0, 0]));
+    assert(board.getSquare([7, 7]));
+    assert.strictEqual(board.getSquare([-1, 0]), null);
+    assert.strictEqual(board.getSquare([8, 0]), null);
+    assert.strictEqual(board.getSquare([0, -1]), null);
+    assert.strictEqual(board.getSquare([0, 8]), null);
+
+    assert(board.ensureSquare([0, 0]));
+    assert.throws(() => {
+      board.ensureSquare([0, 8]);
+    }, /Can not find/);
+  });
 });

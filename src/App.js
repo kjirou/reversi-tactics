@@ -4,27 +4,31 @@ import React from 'react';
 import Root from './components/Root';
 import { EVENTS } from './consts';
 import ModelContainer from './containers/ModelContainer';
+import AppModel from './models/AppModel';
 
 
 export default class App extends Flux {
 
   constructor({ renderer }) {
+    const appModel = new AppModel();
+
     super({
       renderer,
-      initialState: App._createInitialState(),
+      initialState: App._createState(appModel),
     });
+
+    this._appModel = appModel;
   }
 
-  static _createState() {
-    const modelContainer = ModelContainer.getInstance();
-    const boardProps = modelContainer.board.presentProps();
+  static _createState(appModel) {
+    const boardProps = appModel.board.presentProps();
     return {
       squares: boardProps.squares,
     };
   }
 
-  static _createInitialState() {
-    return App._createState();
+  _createState() {
+    return App._createState(this._appModel);
   }
 
   /*
@@ -40,6 +44,8 @@ export default class App extends Flux {
 
   subscribe() {
     this._onDispatch(EVENTS.TOUCH_SQUARE, ({ rowIndex, columnIndex }) => {
+      this._appModel.touchSquare([rowIndex, columnIndex]);
+      this.update(state => this._createState() );
     })
   }
 

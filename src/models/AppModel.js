@@ -1,8 +1,10 @@
-import BoardModel from '../models/BoardModel';
-import Container from './Container';
+import lodash from 'lodash';
+
+import Model from './Model';
+import BoardModel from './BoardModel';
 
 
-export default class ModelContainer extends Container {
+export default class AppModel extends Model {
 
   constructor() {
     super();
@@ -16,4 +18,8 @@ export default class ModelContainer extends Container {
   }
 
   get board() { return this._board; }
+
+  touchSquare(position) {
+    this._board.ensureSquare(position).reversiPieceType = 'BLACK';
+  }
 }
