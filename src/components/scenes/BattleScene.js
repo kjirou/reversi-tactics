@@ -2,6 +2,8 @@ import lodash from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { EVENTS } from '../../consts';
+import EventHandlerCarrier from '../../lib/EventHandlerCarrier';
 import Board from '../Board';
 import AnimatedIcon from '../AnimatedIcon';
 import Icon from '../Icon';
@@ -10,11 +12,25 @@ import Scene from './Scene';
 
 export default class BattleScene extends Scene {
 
+  _createBoardElement() {
+    return React.createElement(Board, {
+      key: 'board',
+      squares: this.props.root.squares,
+      onMouseDownSquareCarrier: new EventHandlerCarrier((event, { emitter }) => {
+        emitter.dispatch(EVENTS.TOUCH_SQUARE, {
+          rowIndex: emitter.props.square.rowIndex,
+          colIndex: emitter.props.square.columnIndex,
+        });
+      }),
+    });
+  }
+
   render() {
+    const boardElement = this._createBoardElement();
 
     return (
       <div className="scene battle-scene">
-        <Board squares={ this.props.root.squares } />
+        { boardElement }
         <div className="war-situation">
           <div className="black-side one-side">
             <div className="scoreboard">

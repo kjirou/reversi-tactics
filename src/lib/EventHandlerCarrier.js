@@ -1,7 +1,5 @@
 /*
  * Pass event handler to child components
- *
- * TODO: Is this right?
  */
 export default class EventHandlerCarrier {
 
@@ -14,9 +12,10 @@ export default class EventHandlerCarrier {
 
   /*
    * @param {ReactElement} emitter
-   * @param {Event} event
    */
-  bindContexts(emitter, event) {
-    return this._eventHandler.bind(emitter, event, { emitter });
+  bindContext(emitter) {
+    return event => {
+      this._eventHandler.bind(emitter)(event, { emitter })
+    };
   }
 }

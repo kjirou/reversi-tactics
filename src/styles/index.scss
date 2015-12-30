@@ -133,6 +133,7 @@ body.development {
       width: 40px;
       height: 40px;
       background-color: var(--color-board);
+      cursor: pointer;
       &.black-piece {
         background-color: var(--color-black-piece);
       }

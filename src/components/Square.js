@@ -2,6 +2,7 @@ import { Component } from 'flumpt';
 import React from 'react';
 
 import { REVERSI_PIECE_TYPES, STYLES } from '../consts';
+import EventHandlerCarrier from '../lib/EventHandlerCarrier';
 import AnimatedIcon from './AnimatedIcon';
 
 
@@ -30,6 +31,7 @@ export default class Square extends Component {
           top: this.props.top,
           left: this.props.left,
         } }
+        onMouseDown={ this.props.onMouseDownCarrier ? this.props.onMouseDownCarrier.bindContext(this) : null }
       >
         { iconElement }
       </div>
@@ -38,9 +40,13 @@ export default class Square extends Component {
 }
 
 Object.assign(Square, {
+  defaultProps: {
+    onMouseDownCarrier: null,
+  },
   propTypes: {
     top: React.PropTypes.number.isRequired,
     left: React.PropTypes.number.isRequired,
     square: React.PropTypes.object.isRequired,
+    onMouseDownCarrier: React.PropTypes.instanceOf(EventHandlerCarrier),
   },
 });

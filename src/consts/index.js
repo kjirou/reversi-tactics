@@ -1,3 +1,7 @@
+export const EVENTS = {
+  TOUCH_SQUARE: 'TOUCH_SQUARE',
+};
+
 export const REVERSI_PIECE_TYPES = {
   BLACK: 'BLACK',
   EMPTY: 'EMPTY',

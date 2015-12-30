@@ -2,6 +2,7 @@ import { Component } from 'flumpt';
 import React from 'react';
 
 import { STYLES } from '../consts';
+import EventHandlerCarrier from '../lib/EventHandlerCarrier';
 import Square from './Square';
 
 
@@ -16,6 +17,7 @@ export default class Board extends Component {
           top: STYLES.SQUARE_HEIGHT * rowIndex + STYLES.SQUARE_MARGIN * (rowIndex + 1),
           left: STYLES.SQUARE_WIDTH * columnIndex + STYLES.SQUARE_MARGIN * (columnIndex + 1),
           square,
+          onMouseDownCarrier: this.props.onMouseDownSquareCarrier,
         }));
       });
     });
@@ -36,7 +38,11 @@ export default class Board extends Component {
 }
 
 Object.assign(Board, {
+  defaultProps: {
+    onMouseDownSquareCarrier: null,
+  },
   propTypes: {
     squares: React.PropTypes.array.isRequired,
+    onMouseDownSquareCarrier: React.PropTypes.instanceOf(EventHandlerCarrier),
   },
 });
