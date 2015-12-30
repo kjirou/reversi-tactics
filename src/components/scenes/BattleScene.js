@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 
 import { EVENTS } from '../../consts';
 import EventHandlerCarrier from '../../lib/EventHandlerCarrier';
+import { preventEvents } from '../../lib/utils';
 import Board from '../Board';
 import AnimatedIcon from '../AnimatedIcon';
 import Icon from '../Icon';
@@ -17,6 +18,7 @@ export default class BattleScene extends Scene {
       key: 'board',
       squares: this.props.root.squares,
       onMouseDownSquareCarrier: new EventHandlerCarrier((event, { emitter }) => {
+        preventEvents(event);
         emitter.dispatch(EVENTS.TOUCH_SQUARE, {
           rowIndex: emitter.props.square.rowIndex,
           columnIndex: emitter.props.square.columnIndex,
