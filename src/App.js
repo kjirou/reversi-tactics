@@ -23,9 +23,18 @@ export default class App extends Flux {
     return state;
   }
 
+  /*
+   * Attach logging to events triggered by "dispatch"
+   */
+  _onDispatch(eventName, handler) {
+    this.on(eventName, (...args) => {
+      console.log('dispatch:', eventName, ...args);
+      handler(...args);
+    });
+  }
+
   subscribe() {
-    this.on(EVENTS.TOUCH_SQUARE, (data) => {
-      console.log(data);
+    this._onDispatch(EVENTS.TOUCH_SQUARE, ({ rowIndex, columnIndex }) => {
     })
   }
 
