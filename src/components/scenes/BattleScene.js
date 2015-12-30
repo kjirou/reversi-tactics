@@ -19,7 +19,7 @@ export default class BattleScene extends Scene {
       onMouseDownSquareCarrier: new EventHandlerCarrier((event, { emitter }) => {
         emitter.dispatch(EVENTS.TOUCH_SQUARE, {
           rowIndex: emitter.props.square.rowIndex,
-          colIndex: emitter.props.square.columnIndex,
+          columnIndex: emitter.props.square.columnIndex,
         });
       }),
     });
