@@ -3,7 +3,6 @@ import React from 'react';
 
 import Root from './components/Root';
 import { EVENTS } from './consts';
-import ModelContainer from './containers/ModelContainer';
 import AppModel from './models/AppModel';
 
 
@@ -43,9 +42,9 @@ export default class App extends Flux {
   }
 
   subscribe() {
-    this._onDispatch(EVENTS.TOUCH_SQUARE, ({ rowIndex, columnIndex }) => {
-      this._appModel.touchSquare([rowIndex, columnIndex]);
-      this.update(state => this._createState() );
+    this._onDispatch(EVENTS.TOUCH_SQUARE, ({ position }) => {
+      this._appModel.touchSquare(position);
+      this.update(state => this._createState());
     })
   }
 

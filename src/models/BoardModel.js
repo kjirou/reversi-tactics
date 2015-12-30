@@ -19,7 +19,9 @@ export default class BoardModel extends Model {
   static _createSquares([rowLength, columnLength]) {
     return lodash.range(rowLength).map(rowIndex => {
       return lodash.range(columnLength).map(columnIndex => {
-        return new SquareModel({ rowIndex, columnIndex });
+        return new SquareModel({
+          position: [rowIndex, columnIndex],
+        });
       });
     });
   }
