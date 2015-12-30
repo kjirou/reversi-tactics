@@ -8,10 +8,10 @@ export default class Root extends Component {
 
   render() {
     const sceneId = 'BattleScene';
-    const sceneProps = {
+    const sceneElement = React.createElement(scenes[sceneId], {
       key: sceneId,
-    };
-    const sceneElement = React.createElement(scenes[sceneId], sceneProps);
+      root: this.props,
+    });
 
     return (
       <div className="screen">
