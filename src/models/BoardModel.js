@@ -136,7 +136,7 @@ export default class BoardModel extends Model {
       this._convertToReversiBoardPieceType(reversiPieceType)
     );
     this._syncFromReversiBoard();
-    return reversedReversiBoardPositions(v => this._convertToPosition(v));
+    return reversedReversiBoardPositions.map(v => this._convertToPosition(v));
   }
 
   presentProps() {

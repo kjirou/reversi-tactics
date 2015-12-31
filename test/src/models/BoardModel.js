@@ -9,6 +9,19 @@ import SquareModel from 'src/models/SquareModel';
 
 describe('src/models/BoardModel', () => {
 
+  const boardToText = (board) => {
+    return board._squares.map(rowSquares => {
+      return rowSquares.map(square => {
+        return {
+          [REVERSI_PIECE_TYPES.EMPTY]: '-',
+          [REVERSI_PIECE_TYPES.BLACK]: 'x',
+          [REVERSI_PIECE_TYPES.WHITE]: 'o',
+        }[square.reversiPieceType] || '';
+      }).join('');
+    }).join('\n');
+  };
+
+
   it('_createSquares', () => {
     const squares = BoardModel._createSquares([2, 3]);
     assert.strictEqual(squares.length, 2);
@@ -88,7 +101,7 @@ describe('src/models/BoardModel', () => {
   it('_syncFromReversiBoard', () => {
     const board = new BoardModel();
 
-    lodash.flatten(board.squares).forEach(square => {
+    lodash.flatten(board._squares).forEach(square => {
       assert.strictEqual(square.reversiPieceType, REVERSI_PIECE_TYPES.EMPTY);
     });
 
@@ -104,29 +117,49 @@ describe('src/models/BoardModel', () => {
   it('putPiece', () => {
     const board = new BoardModel({ extent: [2, 2] });
     board.putPiece([0, 0], REVERSI_PIECE_TYPES.BLACK);
-    assert.strictEqual(board.ensureSquare([0, 0]).reversiPieceType, REVERSI_PIECE_TYPES.BLACK);
-    assert.strictEqual(board.ensureSquare([0, 1]).reversiPieceType, REVERSI_PIECE_TYPES.EMPTY);
-    assert.strictEqual(board.ensureSquare([1, 0]).reversiPieceType, REVERSI_PIECE_TYPES.EMPTY);
-    assert.strictEqual(board.ensureSquare([1, 1]).reversiPieceType, REVERSI_PIECE_TYPES.EMPTY);
+    assert.strictEqual(boardToText(board), [
+      'x-',
+      '--',
+    ].join('\n'));
 
     board.putPiece([1, 1], REVERSI_PIECE_TYPES.WHITE);
-    assert.strictEqual(board.ensureSquare([0, 0]).reversiPieceType, REVERSI_PIECE_TYPES.BLACK);
-    assert.strictEqual(board.ensureSquare([0, 1]).reversiPieceType, REVERSI_PIECE_TYPES.EMPTY);
-    assert.strictEqual(board.ensureSquare([1, 0]).reversiPieceType, REVERSI_PIECE_TYPES.EMPTY);
-    assert.strictEqual(board.ensureSquare([1, 1]).reversiPieceType, REVERSI_PIECE_TYPES.WHITE);
+    assert.strictEqual(boardToText(board), [
+      'x-',
+      '-o',
+    ].join('\n'));
 
     board.putPiece([0, 0], REVERSI_PIECE_TYPES.EMPTY);
-    assert.strictEqual(board.ensureSquare([0, 0]).reversiPieceType, REVERSI_PIECE_TYPES.EMPTY);
-    assert.strictEqual(board.ensureSquare([0, 1]).reversiPieceType, REVERSI_PIECE_TYPES.EMPTY);
-    assert.strictEqual(board.ensureSquare([1, 0]).reversiPieceType, REVERSI_PIECE_TYPES.EMPTY);
-    assert.strictEqual(board.ensureSquare([1, 1]).reversiPieceType, REVERSI_PIECE_TYPES.WHITE);
+    assert.strictEqual(boardToText(board), [
+      '--',
+      '-o',
+    ].join('\n'));
   });
 
   it('placePiece', () => {
     const board = new BoardModel({ extent: [2, 3] });
+    let reversedPositions;
+
     board.putPiece([0, 0], REVERSI_PIECE_TYPES.BLACK);
     board.putPiece([0, 1], REVERSI_PIECE_TYPES.WHITE);
     board.putPiece([1, 1], REVERSI_PIECE_TYPES.BLACK);
     board.putPiece([1, 2], REVERSI_PIECE_TYPES.WHITE);
+    assert.strictEqual(boardToText(board), [
+      'xo-',
+      '-xo',
+    ].join('\n'));
+
+    reversedPositions = board.placePiece([0, 2], REVERSI_PIECE_TYPES.BLACK);
+    assert.strictEqual(boardToText(board), [
+      'xxx',
+      '-xo',
+    ].join('\n'));
+    assert.deepEqual(reversedPositions, [[0, 1]]);
+
+    reversedPositions = board.placePiece([1, 0], REVERSI_PIECE_TYPES.WHITE);
+    assert.strictEqual(boardToText(board), [
+      'xxx',
+      'ooo',
+    ].join('\n'));
+    assert.deepEqual(reversedPositions, [[1, 1]]);
   });
 });
