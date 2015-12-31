@@ -11,15 +11,22 @@ export default class AppModel extends Model {
 
     this._board = new BoardModel();
     // TODO: Tmp
-    this._board._squares[3][3].reversiPieceType = 'WHITE';
-    this._board._squares[3][4].reversiPieceType = 'BLACK';
-    this._board._squares[4][3].reversiPieceType = 'BLACK';
-    this._board._squares[4][4].reversiPieceType = 'WHITE';
+    this._board.putPiece([3, 3], 'WHITE');
+    this._board.putPiece([3, 4], 'BLACK');
+    this._board.putPiece([4, 3], 'BLACK');
+    this._board.putPiece([4, 4], 'WHITE');
   }
 
   get board() { return this._board; }
 
   touchSquare(position) {
-    this._board.ensureSquare(position).reversiPieceType = 'BLACK';
+    // TODO: Tmp
+    this._nextReversiPieceType = this._nextReversiPieceType || 'BLACK';
+    this._board.placePiece(position, this._nextReversiPieceType);
+    this._nextReversiPieceType = {
+      BLACK: 'WHITE',
+      WHITE: 'BLACK',
+    }[this._nextReversiPieceType];
+    return Promise.resolve();
   }
 }

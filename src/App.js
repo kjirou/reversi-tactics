@@ -41,10 +41,17 @@ export default class App extends Flux {
     });
   }
 
+  _onPromiseError(err) {
+    console.error(err.stack || err);
+  }
+
   subscribe() {
     this._onDispatch(EVENTS.TOUCH_SQUARE, ({ position }) => {
-      this._appModel.touchSquare(position);
-      this.update(state => this._createState());
+      this._appModel
+        .touchSquare(position)
+        .then(() => this.update(() => this._createState()))
+        .catch(this._onPromiseError)
+      ;
     })
   }
 
