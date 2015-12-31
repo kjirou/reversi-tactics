@@ -11,6 +11,8 @@ export default class SquareModel extends Model {
     this._reversiPieceType = REVERSI_PIECE_TYPES.EMPTY;
   }
 
+  get position() { return this._position; }
+  get reversiPieceType() { return this._reversiPieceType; }
   set reversiPieceType(value) { this._reversiPieceType = value; }
 
   _getRowIndex() {
