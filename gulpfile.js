@@ -113,7 +113,6 @@ gulp.task('watch:js', function() {
     isWatchfied: true,
     debug: true
   });
-  bundle(bundler);
 
   bundler.on('update', function onUpdate() {
     console.log('Build JavaScripts at ' + (new Date()).toTimeString());
@@ -122,6 +121,8 @@ gulp.task('watch:js', function() {
     });
     bundling.pipe(browserSync.stream({ once: true }));
   });
+
+  bundle(bundler);
 });
 
 
@@ -218,6 +219,7 @@ gulp.task('serve', function() {
 });
 
 gulp.task('build', ['build:js', 'build:assets']);
+gulp.task('watch', ['watch:js', 'watch:assets']);
 gulp.task('develop', function() {
-  runSequence('build', ['watch:js', 'watch:assets'], 'serve');
+  runSequence('build', 'watch', 'serve');
 });
