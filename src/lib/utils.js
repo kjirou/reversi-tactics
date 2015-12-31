@@ -1,3 +1,7 @@
+export const within = (num, minNum, maxNum) => {
+  return Math.min(Math.max(num, minNum), maxNum);
+};
+
 export const preventDefaultEvent = (event) => {
   if (event.preventDefault) {
     event.preventDefault();

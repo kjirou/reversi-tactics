@@ -1,3 +1,8 @@
+export const PARAMETERS = {
+  MIN_MAX_HP: 1,
+  MAX_MAX_HP: 99,
+};
+
 export const EVENTS = {
   TOUCH_SQUARE: 'TOUCH_SQUARE',
 };
