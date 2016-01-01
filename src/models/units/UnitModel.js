@@ -4,11 +4,14 @@ import { PARAMETERS } from '../../consts';
 import { within } from '../../lib/utils';
 import Model from '../Model';
 import AutomaticNamingMixin from '../mixins/AutomaticNamingMixin';
+import IconizedMixin from '../mixins/IconizedMixin';
 import ParametersMixin from '../mixins/ParametersMixin';
+import TypeIdMixin from '../mixins/TypeIdMixin';
 
 
 // This is necessary for extending mixed same name methods
 class PrototypeUnitModel extends Model {}
+Object.assign(PrototypeUnitModel, TypeIdMixin, IconizedMixin);
 Object.assign(PrototypeUnitModel.prototype, AutomaticNamingMixin, ParametersMixin);
 
 
@@ -17,7 +20,6 @@ export default class UnitModel extends PrototypeUnitModel {
   constructor() {
     super();
 
-    this._maxHp = PARAMETERS.MIN_MAX_HP;
     this._hp = PARAMETERS.MIN_MAX_HP;
   }
 
@@ -103,7 +105,3 @@ export default class UnitModel extends PrototypeUnitModel {
     return !this.isDead();
   }
 }
-
-Object.assign(UnitModel, {
-  typeId: null,
-});
