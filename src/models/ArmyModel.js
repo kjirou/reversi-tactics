@@ -1,7 +1,7 @@
 import { ARMY_COLORS } from '../consts';
 import Model from './Model';
 
-import NamingMixin from './mixins/NamingMixin';
+import NamingMixin from '../mixins/NamingMixin';
 
 
 class PrototypeArmyModel extends Model {}

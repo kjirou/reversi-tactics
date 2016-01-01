@@ -1,7 +1,7 @@
 import lodash from 'lodash';
 import { defineIntegerParameter } from 'rpgparameter';
 
-import { PARAMETERS } from '../../consts';
+import { PARAMETERS } from '../consts';
 
 
 const ParametersMixin = {};

@@ -1,9 +1,9 @@
 import assert from 'assert';
 
-import AutomaticNamingMixin from 'src/models/mixins/AutomaticNamingMixin';
+import AutomaticNamingMixin from 'src/mixins/AutomaticNamingMixin';
 
 
-describe('src/models/mixins/AutomaticNamingMixin', () => {
+describe('src/mixins/AutomaticNamingMixin', () => {
 
   it('should return titleized typeId as name', () => {
     class Foo {

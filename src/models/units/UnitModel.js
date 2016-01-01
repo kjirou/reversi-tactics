@@ -2,11 +2,11 @@ import { aggregators } from 'rpgparameter';
 
 import { PARAMETERS } from '../../consts';
 import { within } from '../../lib/utils';
+import AutomaticNamingMixin from '../../mixins/AutomaticNamingMixin';
+import IconizedMixin from '../../mixins/IconizedMixin';
+import ParametersMixin from '../../mixins/ParametersMixin';
+import TypeIdMixin from '../../mixins/TypeIdMixin';
 import Model from '../Model';
-import AutomaticNamingMixin from '../mixins/AutomaticNamingMixin';
-import IconizedMixin from '../mixins/IconizedMixin';
-import ParametersMixin from '../mixins/ParametersMixin';
-import TypeIdMixin from '../mixins/TypeIdMixin';
 
 
 // This is necessary for extending mixed same name methods

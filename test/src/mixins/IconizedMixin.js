@@ -1,10 +1,10 @@
 import assert from 'assert';
 
-import IconizedMixin from 'src/models/mixins/IconizedMixin';
-import TypeIdMixin from 'src/models/mixins/TypeIdMixin';
+import IconizedMixin from 'src/mixins/IconizedMixin';
+import TypeIdMixin from 'src/mixins/TypeIdMixin';
 
 
-describe('src/models/mixins/IconizedMixin', () => {
+describe('src/mixins/IconizedMixin', () => {
 
   it('getIconId', () => {
     const foo = {};

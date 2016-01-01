@@ -1,9 +1,9 @@
 import assert from 'assert';
 
-import ParametersMixin from 'src/models/mixins/ParametersMixin';
+import ParametersMixin from 'src/mixins/ParametersMixin';
 
 
-describe('src/models/mixins/ParametersMixin', () => {
+describe('src/mixins/ParametersMixin', () => {
 
   it('should apply to class',() => {
     class Foo {

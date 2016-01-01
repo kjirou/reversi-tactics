@@ -1,9 +1,9 @@
 import assert from 'assert';
 
-import NamingMixin from 'src/models/mixins/NamingMixin';
+import NamingMixin from 'src/mixins/NamingMixin';
 
 
-describe('src/models/mixins/NamingMixin', () => {
+describe('src/mixins/NamingMixin', () => {
 
   it('should apply to object', () => {
     const foo = {};

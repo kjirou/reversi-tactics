@@ -1,4 +1,4 @@
-import { ICON_IDS } from '../../lib/icon-ids';
+import { ICON_IDS } from '../lib/icon-ids';
 
 
 const IconizedMixin = {
