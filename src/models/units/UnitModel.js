@@ -7,7 +7,7 @@ import AutomaticNamingMixin from '../mixins/AutomaticNamingMixin';
 import ParametersMixin from '../mixins/ParametersMixin';
 
 
-// This is necessary for extending same name methods
+// This is necessary for extending mixed same name methods
 class PrototypeUnitModel extends Model {}
 Object.assign(PrototypeUnitModel.prototype, AutomaticNamingMixin, ParametersMixin);
 

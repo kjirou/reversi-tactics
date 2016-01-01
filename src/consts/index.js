@@ -1,10 +1,15 @@
-export const PARAMETERS = {
-  MIN_MAX_HP: 1,
-  MAX_MAX_HP: 99,
+export const ARMY_COLORS = {
+  BLACK: 'BLACK',
+  WHITE: 'WHITE',
 };
 
 export const EVENTS = {
   TOUCH_SQUARE: 'TOUCH_SQUARE',
+};
+
+export const PARAMETERS = {
+  MIN_MAX_HP: 1,
+  MAX_MAX_HP: 99,
 };
 
 export const REVERSI_PIECE_TYPES = {

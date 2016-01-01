@@ -1,7 +1,9 @@
 import lodash from 'lodash';
 
-import Model from './Model';
+import { ARMY_COLORS } from '../consts';
+import ArmyModel from './ArmyModel';
 import BoardModel from './BoardModel';
+import Model from './Model';
 
 
 export default class AppModel extends Model {
@@ -9,14 +11,21 @@ export default class AppModel extends Model {
   constructor() {
     super();
 
+    // TODO: Game initialization
     this._board = new BoardModel();
-    // TODO: Tmp
     this._board.putPiece([3, 3], 'WHITE');
     this._board.putPiece([3, 4], 'BLACK');
     this._board.putPiece([4, 3], 'BLACK');
     this._board.putPiece([4, 4], 'WHITE');
+
+    const blackArmy = new ArmyModel();
+    blackArmy.color = ARMY_COLORS.BLACK;
+    const whiteArmy = new ArmyModel();
+    whiteArmy.color = ARMY_COLORS.WHITE;
+    this._armies = [blackArmy, whiteArmy];
   }
 
+  // TODO: Props should be created at inside
   get board() { return this._board; }
 
   touchSquare(position) {
