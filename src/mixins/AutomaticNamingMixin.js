@@ -9,11 +9,16 @@ const AutomaticNamingMixin = Object.assign({}, NamingMixin, {
     if (this._name) {
       return this._name;
     }
-    const typeId = this.typeId || (this.constructor || {}).typeId || null;
+
+    let typeId = this.getTypeId && this.getTypeId() ||
+      this.constructor && this.constructor.getTypeId && this.constructor.getTypeId() ||
+      null;
+
     if (typeId) {
-      return titleize(humanize(typeId));
+      typeId = titleize(humanize(typeId));
     }
-    return null;
+
+    return typeId;
   }
 });
 
