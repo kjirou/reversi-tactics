@@ -20,6 +20,12 @@ export default class UnitModel extends PrototypeUnitModel {
   constructor() {
     super();
 
+    /*
+     * The army that I belong
+     * {ArmyModel|null}
+     */
+    this._army = null;
+
     this._hp = PARAMETERS.MIN_MAX_HP;
   }
 
