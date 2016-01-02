@@ -20,10 +20,8 @@ export default class App extends Flux {
   }
 
   static _createState(appModel) {
-    const boardProps = appModel.board.presentProps();
-    return {
-      squares: boardProps.squares,
-    };
+    const appProps = appModel.presentProps();
+    return appProps;
   }
 
   _createState() {
