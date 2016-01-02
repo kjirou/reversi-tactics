@@ -16,6 +16,7 @@ var ICON_POSITIONS = [
   ['characters', [0, 8], 'nerd'],
   ['characters', [0, 2], 'ranger'],
   ['characters', [0, 5], 'thief'],
+  ['characters', [1, 5], 'vigilante'],
 
   // enemies
   ['enemies', [0, 1], 'bat'],

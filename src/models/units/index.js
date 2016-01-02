@@ -23,5 +23,28 @@ export const unitResourceList = createClassBasedResourceList(UnitModel, [
       _maxHp: 3,
     },
   },
+  {
+    constants: {
+      _typeId: 'knight',
+    },
+    properties: {
+      _maxHp: 8,
+    },
+  },
+  {
+    constants: {
+      _typeId: 'orc',
+    },
+    properties: {
+      _maxHp: 5,
+      _attackPower: 2,
+    },
+  },
+  {
+    constants: {
+      _typeId: 'vigilante',
+    },
+  },
 ]);
 export const unitResourceDict = dictify(unitResourceList, obj => obj.getTypeId());
+export const unitTypeIds = Object.keys(unitResourceDict);
