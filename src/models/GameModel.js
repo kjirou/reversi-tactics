@@ -52,6 +52,7 @@ export default class GameModel extends Model {
 
   get board() { return this._board; }
   get armies() { return this._armies; }
+  get nextArmyColor() { return this._nextArmyColor; }
 
   _toggleArmyColor(armyColor) {
     return {
@@ -60,7 +61,8 @@ export default class GameModel extends Model {
     }[armyColor];
   }
 
-  // TODO: return state diffse for animation
+  // TODO: assert next placeable squares
+  // TODO: return state diffs for animation
   proceed(position) {
     const currentArmyColor = this._nextArmyColor;
     const currentArmy = this._armies[currentArmyColor];

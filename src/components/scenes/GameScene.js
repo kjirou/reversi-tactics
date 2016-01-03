@@ -11,7 +11,7 @@ import Icon from '../Icon';
 import Scene from './Scene';
 
 
-export default class BattleScene extends Scene {
+export default class GameScene extends Scene {
 
   _createBoardElement() {
     return React.createElement(Board, {
@@ -39,21 +39,26 @@ export default class BattleScene extends Scene {
       const battlerProps = props.visibleBattlers[index] || null;
       let iconElement = null;
       let nameElement = null;
+      let nextElement = null;
+
       if (battlerProps) {
         iconElement = React.createElement(AnimatedIcon, {
           iconId: battlerProps.iconId,
           hp: battlerProps.hp,
         });
-        nameElement = React.DOM.div({
-          key: 'battler-name',
-          className: 'battler-name',
-        }, battlerProps.name);
+
+        nameElement = <div key="battler-name" className="battler-name">{ battlerProps.name }</div>;
+
+        if (index === 0 && armyColor === this.props.scene.nextArmyColor) {
+          nextElement = <div key="battler-next" className="battler-next">NEXT</div>;
+        }
       }
 
       return (
-        <div key={ `battler-selector-item-${ index }` } className="battler">
+        <div key={ `battler-selector-item-${ index }` } className="battler-item">
           { iconElement }
           { nameElement }
+          { nextElement }
         </div>
       );
     });

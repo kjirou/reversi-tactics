@@ -61,11 +61,12 @@ export default class AppModel extends Model {
     if (this._game) {
       const boardProps = this._game.board.presentProps();
       scenes.game = {
+        squares: boardProps.squares,
         armies: {
           [ARMY_COLORS.BLACK]: this._game.armies[ARMY_COLORS.BLACK].presentProps(),
           [ARMY_COLORS.WHITE]: this._game.armies[ARMY_COLORS.WHITE].presentProps(),
         },
-        squares: boardProps.squares,
+        nextArmyColor: this._game.nextArmyColor,
       };
     }
 

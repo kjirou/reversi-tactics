@@ -38,7 +38,8 @@
           padding: 8px 0;
           width: 100%;
           height: 152px;
-          .battler {
+          .battler-item {
+            position: relative;
             display: flex;
             justify-content: space-between;
             width: 160px;
@@ -53,19 +54,30 @@
               overflow: hidden;
               white-space: nowrap;
             }
+            .battler-next {
+              position: absolute;
+              padding: 0 2px;
+              height: 14px;
+              line-height: 14px;
+              top: 0;
+              right: 0;
+              z-index: var(--z-index-default);
+              font-size: 10px;
+              text-align: center;
+            }
           }
         }
         &.black-side {
           color: var(--color-white-piece);
           background-color: var(--color-black-piece);
-          .battler {
+          .battler-item {
             border-color: var(--color-white-piece);
           }
         }
         &.white-side {
           color: var(--color-black-piece);
           background-color: var(--color-white-piece);
-          .battler {
+          .battler-item {
             border-color: var(--color-black-piece);
           }
         }
