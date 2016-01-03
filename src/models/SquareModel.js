@@ -7,6 +7,9 @@ export default class SquareModel extends Model {
   constructor({ position }) {
     super();
 
+    /*
+     * {Array<number>} - [rowIndex, columnIndex]
+     */
     this._position = position;
     this._reversiPieceType = REVERSI_PIECE_TYPES.EMPTY;
     this._battler = null;
@@ -16,6 +19,7 @@ export default class SquareModel extends Model {
   get reversiPieceType() { return this._reversiPieceType; }
   set reversiPieceType(value) { this._reversiPieceType = value; }
   get battler() { return this._battler; }
+  set battler(value) { this._battler = value; }
 
   _getRowIndex() {
     return this._position[0];
@@ -48,6 +52,6 @@ export default class SquareModel extends Model {
       columnIndex: this._getColumnIndex(),
       reversiPieceType: this._reversiPieceType,
       iconId: this._getIconId(),
-    }
+    };
   }
 }

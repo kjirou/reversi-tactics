@@ -143,6 +143,7 @@ export default class BoardModel extends Model {
   placeBattler(position, battler) {
     assert(!isMixedBattler(battler), 'It is not a battler');
     const square = this.ensureSquare(position);
+    square.battler = battler;
     battler.setPosition(position);
   }
 

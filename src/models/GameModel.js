@@ -12,6 +12,8 @@ export default class GameModel extends Model {
   constructor() {
     super();
 
+    this._nextReversiPieceType = REVERSI_PIECE_TYPES.BLACK;
+
     this._board = new BoardModel();
     this._board.putPiece([3, 3], REVERSI_PIECE_TYPES.WHITE);
     this._board.putPiece([3, 4], REVERSI_PIECE_TYPES.BLACK);
@@ -49,4 +51,16 @@ export default class GameModel extends Model {
 
   get board() { return this._board; }
   get armies() { return this._armies; }
+
+  _toggleNextReversiPieceType() {
+    this._nextReversiPieceType = {
+      [REVERSI_PIECE_TYPES.BLACK]: REVERSI_PIECE_TYPES.WHITE,
+      [REVERSI_PIECE_TYPES.WHITE]: REVERSI_PIECE_TYPES.BLACK,
+    }[this._nextReversiPieceType];
+  }
+
+  proceed(position) {
+    this._board.placePiece(position, this._nextReversiPieceType);
+    this._toggleNextReversiPieceType();
+  }
 }

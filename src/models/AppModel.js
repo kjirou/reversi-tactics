@@ -1,10 +1,20 @@
-import lodash from 'lodash';
+import assert from 'assert';
+import { uniq, values } from 'lodash';
 
 import { ARMY_COLORS } from '../consts';
-import ArmyModel from './ArmyModel';
-import BoardModel from './BoardModel';
 import GameModel from './GameModel';
 import Model from './Model';
+
+
+const actions = {
+
+  touchSquare(position) {
+    if (!this._game) {
+      return;
+    }
+    return this._game.proceed(position);
+  },
+};
 
 
 export default class AppModel extends Model {
@@ -13,21 +23,32 @@ export default class AppModel extends Model {
     super();
 
     this._game = new GameModel();
+
+    this._includeActions(actions);
   }
 
-  touchSquare(position) {
-    if (!this._game) {
-      return Promise.resolve();
-    }
-
-    this._nextReversiPieceType = this._nextReversiPieceType || 'BLACK';
-    this._game._board.placePiece(position, this._nextReversiPieceType);
-    this._nextReversiPieceType = {
-      BLACK: 'WHITE',
-      WHITE: 'BLACK',
-    }[this._nextReversiPieceType];
-
-    return Promise.resolve();
+  /*
+   * Define actions to prototype from function map
+   *
+   * TODO: Organize dependencies
+   *
+   * @param {Object} actions - e.g. { [actionName]: action, .. }
+   */
+  _includeActions(actions) {
+    Object.keys(actions).forEach(actionName => {
+      const boundAction = actions[actionName].bind(this);
+      this[actionName] = (...args) => {
+        // Convert to Promise-based API forcibly
+        const result = boundAction(...args);
+        if (result instanceof Promise) {
+          return result;
+        } else if (result instanceof Error) {
+          return Promise.reject(result);
+        } else {
+          return Promise.resolve(result);
+        }
+      };
+    });
   }
 
   presentProps() {

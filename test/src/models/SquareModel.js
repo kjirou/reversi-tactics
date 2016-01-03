@@ -13,6 +13,7 @@ describe('src/models/SquareModel', () => {
       rowIndex: 2,
       columnIndex: 3,
       reversiPieceType: REVERSI_PIECE_TYPES.EMPTY,
+      iconId: null,
     });
   });
 });
