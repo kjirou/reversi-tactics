@@ -9,7 +9,9 @@ const ParametersMixin = {};
 defineIntegerParameter(ParametersMixin, 'maxHp', {
   default: PARAMETERS.MIN_MAX_HP,
 });
-defineIntegerParameter(ParametersMixin, 'attackPower');
+defineIntegerParameter(ParametersMixin, 'attackPower', {
+  default: 1,
+});
 
 
 export default ParametersMixin;
