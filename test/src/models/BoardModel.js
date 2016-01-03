@@ -88,14 +88,14 @@ describe('src/models/BoardModel', () => {
     assert.strictEqual(board._getReversiBoardSquare([0, 8]), null);
   });
 
-  it('isPlacableSquare', () => {
+  it('isPlaceableSquare', () => {
     const board = new BoardModel();
-    assert.strictEqual(board.isPlacableSquare([0, 0], REVERSI_PIECE_TYPES.BLACK), false);
+    assert.strictEqual(board.isPlaceableSquare([0, 0], REVERSI_PIECE_TYPES.BLACK), false);
   });
 
-  it('getPlacableSquares', () => {
+  it('getPlaceableSquares', () => {
     const board = new BoardModel();
-    assert.strictEqual(board.getPlacableSquares(REVERSI_PIECE_TYPES.WHITE).length, 0);
+    assert.strictEqual(board.getPlaceableSquares(REVERSI_PIECE_TYPES.WHITE).length, 0);
   });
 
   it('_syncFromReversiBoard', () => {

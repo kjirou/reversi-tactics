@@ -42,6 +42,10 @@ export default class ArmyModel extends PrototypeArmyModel {
     return this._findUnplacedBattlers().slice(0, PARAMETERS.MAX_VISIBLE_BATTLER_COUNT);
   }
 
+  getNextBattler() {
+    return this._findUnplacedBattlers()[0] || null;
+  }
+
   presentProps() {
     return {
       name: this.getName(),

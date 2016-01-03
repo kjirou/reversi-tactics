@@ -33,7 +33,7 @@ export default class SquareModel extends Model {
     if (!this._battler) {
       return null;
     }
-    return this._battler.isIconReversed() ? this.getReversedIconId() : this.getIconId();
+    return this._battler.isIconReversed() ? this._battler.getReversedIconId() : this._battler.getIconId();
   }
 
   presentProps() {

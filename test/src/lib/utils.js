@@ -35,4 +35,9 @@ describe('src/lib/utils', () => {
     assert.strictEqual(getReversiPieceTypeFromArmyColor(ARMY_COLORS.BLACK), REVERSI_PIECE_TYPES.BLACK);
     assert.strictEqual(getReversiPieceTypeFromArmyColor(ARMY_COLORS.WHITE), REVERSI_PIECE_TYPES.WHITE);
   });
+
+  it('getArmyColorFromReversiPieceType', () => {
+    assert.strictEqual(getReversiPieceTypeFromArmyColor(REVERSI_PIECE_TYPES.BLACK), ARMY_COLORS.BLACK);
+    assert.strictEqual(getReversiPieceTypeFromArmyColor(REVERSI_PIECE_TYPES.WHITE), ARMY_COLORS.WHITE);
+  });
 });

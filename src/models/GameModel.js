@@ -1,6 +1,7 @@
 import lodash from 'lodash';
 
 import { ARMY_COLORS, REVERSI_PIECE_TYPES } from '../consts';
+import { getReversiPieceTypeFromArmyColor } from '../lib/utils';
 import ArmyModel from './ArmyModel';
 import BoardModel from './BoardModel';
 import Model from './Model';
@@ -12,7 +13,7 @@ export default class GameModel extends Model {
   constructor() {
     super();
 
-    this._nextReversiPieceType = REVERSI_PIECE_TYPES.BLACK;
+    this._nextArmyColor = ARMY_COLORS.BLACK;
 
     this._board = new BoardModel();
     this._board.putPiece([3, 3], REVERSI_PIECE_TYPES.WHITE);
@@ -52,15 +53,34 @@ export default class GameModel extends Model {
   get board() { return this._board; }
   get armies() { return this._armies; }
 
-  _toggleNextReversiPieceType() {
-    this._nextReversiPieceType = {
-      [REVERSI_PIECE_TYPES.BLACK]: REVERSI_PIECE_TYPES.WHITE,
-      [REVERSI_PIECE_TYPES.WHITE]: REVERSI_PIECE_TYPES.BLACK,
-    }[this._nextReversiPieceType];
+  _toggleArmyColor(armyColor) {
+    return {
+      [ARMY_COLORS.BLACK]: ARMY_COLORS.WHITE,
+      [ARMY_COLORS.WHITE]: ARMY_COLORS.BLACK,
+    }[armyColor];
   }
 
+  // TODO: return state diffse for animation
   proceed(position) {
-    this._board.placePiece(position, this._nextReversiPieceType);
-    this._toggleNextReversiPieceType();
+    const currentArmyColor = this._nextArmyColor;
+    const currentArmy = this._armies[currentArmyColor];
+    const currentReversiPieceType = getReversiPieceTypeFromArmyColor(currentArmyColor);
+    const placeableSquares = this._board.getPlaceableSquares(currentReversiPieceType);
+    const isPlaceableSquare = this._board.isPlaceableSquare(position, currentReversiPieceType);
+    const currentBattler = currentArmy.getNextBattler();
+
+    // TODO: consider to turn of unplaceable piece
+    if (placeableSquares.length === 0) {
+      console.log('Can not place the piece in anywhere');
+      this._nextArmyColor = this._toggleArmyColor(currentArmyColor);
+      return;
+    }
+
+    if (isPlaceableSquare && currentBattler) {
+      this._board.placeBattler(position, currentBattler);
+      this._nextArmyColor = this._toggleArmyColor(currentArmyColor);
+    } else {
+      console.log('Can not place the piece in there');
+    }
   }
 }

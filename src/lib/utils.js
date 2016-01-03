@@ -55,3 +55,15 @@ export const getReversiPieceTypeFromArmyColor = (armyColor) => {
     [ARMY_COLORS.WHITE]: REVERSI_PIECE_TYPES.WHITE,
   }[armyColor];
 };
+
+/*
+ * @param {string} armyColor - One of ARMY_COLORS
+ */
+export const getArmyColorFromReversiPieceType = (reversiPieceType) => {
+  assert(values(REVERSI_PIECE_TYPES).indexOf(reversiPieceType) !== -1,
+    `${ reversiPieceType } is not a one of ARMY_COLORS`);
+  return {
+    [REVERSI_PIECE_TYPES.BLACK]: ARMY_COLORS.BLACK,
+    [REVERSI_PIECE_TYPES.WHITE]: ARMY_COLORS.WHITE,
+  }[reversiPieceType];
+};

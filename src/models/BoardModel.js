@@ -3,6 +3,7 @@ import lodash from 'lodash';
 import reversi from 'reversi';
 
 import { REVERSI_PIECE_TYPES } from '../consts';
+import { getReversiPieceTypeFromArmyColor } from '../lib/utils';
 import { isMixedBattler } from '../mixins/BattlerMixin';
 import Model from './Model';
 import SquareModel from './SquareModel';
@@ -98,16 +99,16 @@ export default class BoardModel extends Model {
     return this._reversiBoard._getSquare(...this._convertToReversiBoardPosition(position));
   }
 
-  isPlacableSquare(position, reversiPieceType) {
+  isPlaceableSquare(position, reversiPieceType) {
     return this._reversiBoard.isPlacableSquare(
       ...this._convertToReversiBoardPosition(position),
       this._convertToReversiBoardPieceType(reversiPieceType)
     );
   }
 
-  getPlacableSquares(reversiPieceType) {
+  getPlaceableSquares(reversiPieceType) {
     return lodash.flatten(this._squares).filter(square => {
-      return this.isPlacableSquare(square.position, reversiPieceType);
+      return this.isPlaceableSquare(square.position, reversiPieceType);
     });
   }
 
@@ -131,7 +132,7 @@ export default class BoardModel extends Model {
   }
 
   placePiece(position, reversiPieceType) {
-    assert(this.isPlacableSquare(position, reversiPieceType), 'Can not place the piece');
+    assert(this.isPlaceableSquare(position, reversiPieceType), 'Can not place the piece');
     const reversedReversiBoardPositions = this._reversiBoard.placePiece(
       ...this._convertToReversiBoardPosition(position),
       this._convertToReversiBoardPieceType(reversiPieceType)
@@ -141,10 +142,11 @@ export default class BoardModel extends Model {
   }
 
   placeBattler(position, battler) {
-    assert(!isMixedBattler(battler), 'It is not a battler');
+    assert(isMixedBattler(battler), 'It is not a battler');
     const square = this.ensureSquare(position);
     square.battler = battler;
     battler.setPosition(position);
+    this.placePiece(position, getReversiPieceTypeFromArmyColor(battler.getBelongingArmy().color));
   }
 
   presentProps() {
