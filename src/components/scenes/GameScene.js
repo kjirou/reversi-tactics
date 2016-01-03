@@ -35,8 +35,8 @@ export default class BattleScene extends Scene {
       classNames.push('white-side');
     }
 
-    const battlerSelectorItems = range(PARAMETERS.MAX_CHOOSABLE_BATTLER_COUNT).map(index => {
-      const battlerProps = props.choosableBattlers[index] || null;
+    const battlerSelectorItems = range(PARAMETERS.MAX_VISIBLE_BATTLER_COUNT).map(index => {
+      const battlerProps = props.visibleBattlers[index] || null;
       let iconElement = null;
       let nameElement = null;
       if (battlerProps) {

@@ -35,7 +35,6 @@ const BattlerMixin = {
   },
 
   isIconReversed() {
-    console.log(this._belongingArmy);
     return this._belongingArmy.color === ARMY_COLORS.WHITE;
   },
 

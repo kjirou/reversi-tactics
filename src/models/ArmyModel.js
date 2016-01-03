@@ -38,15 +38,15 @@ export default class ArmyModel extends PrototypeArmyModel {
     return this._battlers.filter(battler => !battler.isPlaced());
   }
 
-  getChoosableBattlers() {
-    return this._findUnplacedBattlers().slice(0, PARAMETERS.MAX_CHOOSABLE_BATTLER_COUNT);
+  _getVisibleBattlers() {
+    return this._findUnplacedBattlers().slice(0, PARAMETERS.MAX_VISIBLE_BATTLER_COUNT);
   }
 
   presentProps() {
     return {
       name: this.getName(),
       score: 99,  // TODO
-      choosableBattlers: this.getChoosableBattlers().map(battler => battler.presentProps()),
+      visibleBattlers: this._getVisibleBattlers().map(battler => battler.presentProps()),
     };
   }
 }
