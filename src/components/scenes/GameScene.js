@@ -36,10 +36,21 @@ export default class BattleScene extends Scene {
     }
 
     const battlerSelectorItems = range(PARAMETERS.MAX_CHOOSABLE_BATTLER_COUNT).map(index => {
+      const battlerProps = props.choosableBattlers[index] || null;
+      let iconElement = null;
+      let nameElement = null;
+      if (battlerProps) {
+        iconElement = React.createElement(AnimatedIcon, { iconId: battlerProps.iconId });
+        nameElement = React.DOM.div({
+          key: 'battler-name',
+          className: 'battler-name',
+        }, battlerProps.name);
+      }
+
       return (
         <div key={ `battler-selector-item-${ index }` } className="battler">
-          <AnimatedIcon iconId="goblin" />
-          <div className="battler-name">Goblin</div>
+          { iconElement }
+          { nameElement }
         </div>
       );
     });

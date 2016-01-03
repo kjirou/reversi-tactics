@@ -3,7 +3,7 @@ import { aggregators } from 'rpgparameter';
 import { PARAMETERS } from '../../consts';
 import { within } from '../../lib/utils';
 import AutomaticNamingMixin from '../../mixins/AutomaticNamingMixin';
-import BattlerMixin from '../../mixins/BattlerMixin';
+import BattlerMixin, { isMixedBattler } from '../../mixins/BattlerMixin';
 import IconizedMixin from '../../mixins/IconizedMixin';
 import ParametersMixin from '../../mixins/ParametersMixin';
 import TypeIdMixin from '../../mixins/TypeIdMixin';
@@ -35,6 +35,10 @@ export default class UnitModel extends PrototypeUnitModel {
 
   getIconId() {
     return this.constructor.getIconId();
+  }
+
+  getReversedIconId() {
+    return this.getIconId() + '_reversed';
   }
 
   getMaxHp() {
@@ -112,6 +116,19 @@ export default class UnitModel extends PrototypeUnitModel {
 
   isAlive() {
     return !this.isDead();
+  }
+
+  presentProps() {
+    const props = {
+      name: this.getName(),
+      iconId: this.getIconId(),
+    };
+    if (isMixedBattler(this)) {
+      if (this.isIconReversed()) {
+        props.iconId = this.getReversedIconId();
+      }
+    }
+    return props;
   }
 
   static beBorn(...args) {

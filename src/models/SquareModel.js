@@ -29,20 +29,11 @@ export default class SquareModel extends Model {
     return this._position[1];
   }
 
-  _isIconReversed() {
-    return this._battler &&
-      this._battler.getBelongingArmy().color === ARMY_COLORS.WHITE;
-  }
-
   _getIconId() {
     if (!this._battler) {
       return null;
     }
-    let iconId = this._battler.getIconId();
-    if (this._isIconReversed()) {
-      iconId += '_reversed';
-    }
-    return iconId;
+    return this._battler.isIconReversed() ? this.getReversedIconId() : this.getIconId();
   }
 
   presentProps() {

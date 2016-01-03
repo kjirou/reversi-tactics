@@ -24,6 +24,8 @@ export default class ArmyModel extends PrototypeArmyModel {
     this._battlers = this._createBattlers(unitDeck);
   }
 
+  get color() { return this._color; }
+
   _createBattlers(unitDeck) {
     unitDeck.forEach(typeId => assert(unitTypeIds.indexOf(typeId) !== -1, `${ typeId } is not a unitTypeId`));
 
@@ -44,7 +46,7 @@ export default class ArmyModel extends PrototypeArmyModel {
     return {
       name: this.getName(),
       score: 99,  // TODO
-      //choosableBattlers: this.getChoosableBattlers().map(battler => battler.presentProps()),
+      choosableBattlers: this.getChoosableBattlers().map(battler => battler.presentProps()),
     };
   }
 }

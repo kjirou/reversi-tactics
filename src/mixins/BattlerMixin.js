@@ -1,5 +1,7 @@
 import assert from 'assert';
 
+import { ARMY_COLORS } from '../consts';
+
 
 /*
  * Mix in battler role to UnitModel
@@ -30,6 +32,11 @@ const BattlerMixin = {
 
   isPlaced() {
     return this._position !== null;
+  },
+
+  isIconReversed() {
+    console.log(this._belongingArmy);
+    return this._belongingArmy.color === ARMY_COLORS.WHITE;
   },
 
   /*
