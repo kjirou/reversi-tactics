@@ -146,7 +146,7 @@ export default class BoardModel extends Model {
     const square = this.ensureSquare(position);
     square.battler = battler;
     battler.setPosition(position);
-    this.placePiece(position, getReversiPieceTypeFromArmyColor(battler.getBelongingArmy().color));
+    return this.placePiece(position, getReversiPieceTypeFromArmyColor(battler.getBelongingArmy().color));
   }
 
   presentProps() {

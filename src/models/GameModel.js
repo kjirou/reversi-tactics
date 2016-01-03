@@ -79,7 +79,19 @@ export default class GameModel extends Model {
     }
 
     if (isPlaceableSquare && currentBattler) {
-      this._board.placeBattler(position, currentBattler);
+      const reversedPositions = this._board.placeBattler(position, currentBattler);
+
+      // TODO: tmp
+      // TODO: attack reaction
+      reversedPositions.forEach(position => {
+        const square = this._board.ensureSquare(position);
+        const battler = square.battler;
+        if (battler && battler.getBelongingArmy().color !== currentArmyColor) {
+          console.log(`Attack to the ${ battler.getName() } of [${ square.position }]`);
+          battler.beDamaged(currentBattler.getAttackPower());
+        }
+      });
+
       this._nextArmyColor = this._toggleArmyColor(currentArmyColor);
     } else {
       console.log('Can not place the piece in there');
