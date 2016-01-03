@@ -21,17 +21,14 @@ export default class ArmyModel extends PrototypeArmyModel {
 
     this._name = name;
     this._color = color;
-    this._battlerUnits = this._createBattlerUnits(unitDeck);
+    this._battlers = this._createBattlers(unitDeck);
   }
 
-  _createBattlerUnits(unitDeck) {
+  _createBattlers(unitDeck) {
     unitDeck.forEach(typeId => assert(unitTypeIds.indexOf(typeId) !== -1, `${ typeId } is not a unitTypeId`));
 
     return shuffle(unitDeck)
-      .map(typeId => {
-        const unit = new (unitResourceDict[typeId])();
-        return unit;
-      })
+      .map(typeId => unitResourceDict[typeId].beBornAsBattler({ belongingArmy: this }))
     ;
   }
 }

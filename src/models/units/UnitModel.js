@@ -3,6 +3,7 @@ import { aggregators } from 'rpgparameter';
 import { PARAMETERS } from '../../consts';
 import { within } from '../../lib/utils';
 import AutomaticNamingMixin from '../../mixins/AutomaticNamingMixin';
+import BattlerMixin from '../../mixins/BattlerMixin';
 import IconizedMixin from '../../mixins/IconizedMixin';
 import ParametersMixin from '../../mixins/ParametersMixin';
 import TypeIdMixin from '../../mixins/TypeIdMixin';
@@ -20,12 +21,6 @@ export default class UnitModel extends PrototypeUnitModel {
   constructor() {
     super();
 
-    /*
-     * The army that I belong
-     * {ArmyModel|null}
-     */
-    this._army = null;
-
     this._hp = PARAMETERS.MIN_MAX_HP;
   }
 
@@ -33,6 +28,14 @@ export default class UnitModel extends PrototypeUnitModel {
   get wound() { return this._getWound(); }
   get hpRate() { return this._getHpRate(); }
   get woundRate() { return this._getWoundRate(); }
+
+  getTypeId() {
+    return this.constructor.getTypeId();
+  }
+
+  getIconId() {
+    return this.constructor.getIconId();
+  }
 
   getMaxHp() {
     const maxHp = aggregators.aggregateIntegers([
@@ -109,5 +112,17 @@ export default class UnitModel extends PrototypeUnitModel {
 
   isAlive() {
     return !this.isDead();
+  }
+
+  static beBorn(...args) {
+    const unit = new this(...args);
+    unit.beHealedFully();
+    return unit;
+  }
+
+  static beBornAsBattler(battlerMixinConstructorArgs, ...args) {
+    const battler = Object.assign(this.beBorn(...args), BattlerMixin);
+    battler.battlerMixinConstructor(battlerMixinConstructorArgs, ...args);
+    return battler;
   }
 }

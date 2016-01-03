@@ -1,7 +1,9 @@
 import assert from 'assert';
 import sinon from 'sinon';
 
-import { PARAMETERS } from 'src/consts';
+import { ARMY_COLORS, PARAMETERS } from 'src/consts';
+import { isMixedBattler } from 'src/mixins/BattlerMixin';
+import ArmyModel from 'src/models/ArmyModel';
 import UnitModel from 'src/models/units/UnitModel';
 
 
@@ -9,6 +11,17 @@ describe('src/models/units/UnitModel', () => {
 
   it('constructor', () => {
     const unit = new UnitModel();
+  });
+
+  it('beBornAsBattler', () => {
+    const army = new ArmyModel({
+      name: 'test',
+      color: ARMY_COLORS.BLACK,
+      unitDeck: [],
+    });
+    const batter = UnitModel.beBornAsBattler({ belongingArmy: army });
+    assert(batter instanceof UnitModel);
+    assert.strictEqual(isMixedBattler(batter), true);
   });
 
 

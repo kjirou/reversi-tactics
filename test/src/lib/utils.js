@@ -1,6 +1,7 @@
 import assert from 'assert';
 
-import { createClassBasedResourceList } from 'src/lib/utils';
+import { ARMY_COLORS, REVERSI_PIECE_TYPES } from 'src/consts';
+import { createClassBasedResourceList, getReversiPieceTypeFromArmyColor } from 'src/lib/utils';
 
 
 describe('src/lib/utils', () => {
@@ -28,5 +29,10 @@ describe('src/lib/utils', () => {
     assert.strictEqual(item.price, 100);
 
     new itemList[1]();  // should be created as a class
+  });
+
+  it('getReversiPieceTypeFromArmyColor', () => {
+    assert.strictEqual(getReversiPieceTypeFromArmyColor(ARMY_COLORS.BLACK), REVERSI_PIECE_TYPES.BLACK);
+    assert.strictEqual(getReversiPieceTypeFromArmyColor(ARMY_COLORS.WHITE), REVERSI_PIECE_TYPES.WHITE);
   });
 });

@@ -3,6 +3,7 @@ import lodash from 'lodash';
 import reversi from 'reversi';
 
 import { REVERSI_PIECE_TYPES } from '../consts';
+import { isMixedBattler } from '../mixins/BattlerMixin';
 import Model from './Model';
 import SquareModel from './SquareModel';
 
@@ -137,6 +138,12 @@ export default class BoardModel extends Model {
     );
     this._syncFromReversiBoard();
     return reversedReversiBoardPositions.map(v => this._convertToPosition(v));
+  }
+
+  placeBattler(position, battler) {
+    assert(!isMixedBattler(battler), 'It is not a battler');
+    const square = this.ensureSquare(position);
+    battler.setPosition(position);
   }
 
   presentProps() {
