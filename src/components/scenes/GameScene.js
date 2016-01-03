@@ -37,9 +37,9 @@ export default class BattleScene extends Scene {
 
     const battlerSelectorItems = range(PARAMETERS.MAX_CHOOSABLE_BATTLER_COUNT).map(index => {
       return (
-        <div key={ `battler-selector-item-${ index }` } className="unit">
+        <div key={ `battler-selector-item-${ index }` } className="battler">
           <AnimatedIcon iconId="goblin" />
-          <div className="unit-name">Goblin</div>
+          <div className="battler-name">Goblin</div>
         </div>
       );
     });
@@ -50,7 +50,7 @@ export default class BattleScene extends Scene {
           <div className="army-name">{ props.name }</div>
           <div className="score">{ props.score }</div>
         </div>
-        <div className="unit-selector">
+        <div className="battler-selector">
           { battlerSelectorItems }
         </div>
       </div>
@@ -63,9 +63,9 @@ export default class BattleScene extends Scene {
     const whiteArmyElement = this._createArmyElement(ARMY_COLORS.WHITE);
 
     return (
-      <div className="scene battle-scene">
+      <div className="scene game-scene">
         { boardElement }
-        <div className="war-situation">
+        <div className="armies">
           { blackArmyElement }
           { whiteArmyElement }
         </div>
