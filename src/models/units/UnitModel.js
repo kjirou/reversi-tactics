@@ -34,6 +34,9 @@ export default class UnitModel extends PrototypeUnitModel {
   }
 
   getIconId() {
+    if (this.isDead()) {
+      return 'bones';
+    }
     return this.constructor.getIconId();
   }
 

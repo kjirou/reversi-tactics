@@ -58,7 +58,9 @@ var ICON_POSITIONS = [
   ['items', [0, 1], 'sword'],
 
   // objects
+  ['objects', [1, 8], 'bones'],
   ['objects', [2, 7], 'chest'],
+  ['objects', [1, 7], 'corpse'],
   ['objects', [0, 12], 'downstairs'],
   ['objects', [2, 9], 'horizontal_bridge'],
   ['objects', [0, 1], 'signboard'],
