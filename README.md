@@ -11,6 +11,14 @@ Reversi-based tactics game
 
 - Install [ImageMagick](http://www.imagemagick.org/script/index.php) for [image-divider](https://www.npmjs.com/package/image-divider)
 
+### Installation
+
+```bash
+git clone git@github.com:kjirou/reversi-tactics.git
+cd ./reversi-tactics
+npm run install
+```
+
 ### Build sources & Watch sources & Open on your browser
 
 ```bash
