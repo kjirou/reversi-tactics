@@ -28,7 +28,7 @@ const BattlerMixin = {
     this._position = value;
   },
 
-  isInBattle() {
+  isPlaced() {
     return this._position !== null;
   },
 

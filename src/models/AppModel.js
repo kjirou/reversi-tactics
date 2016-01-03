@@ -52,14 +52,25 @@ export default class AppModel extends Model {
   }
 
   presentProps() {
-    let squares = null;
+    // TODO: Re-compute & categorize props like reducers of Redux
+    const scenes = {
+      game: null,
+      welcome: null,
+    };
+
     if (this._game) {
       const boardProps = this._game.board.presentProps();
-      squares = boardProps.squares;
+      scenes.game = {
+        armies: {
+          [ARMY_COLORS.BLACK]: this._game.armies[ARMY_COLORS.BLACK].presentProps(),
+          [ARMY_COLORS.WHITE]: this._game.armies[ARMY_COLORS.WHITE].presentProps(),
+        },
+        squares: boardProps.squares,
+      };
     }
 
     return {
-      squares,
+      scenes,
     };
   }
 }

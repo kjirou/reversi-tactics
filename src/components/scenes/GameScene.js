@@ -16,7 +16,7 @@ export default class BattleScene extends Scene {
   _createBoardElement() {
     return React.createElement(Board, {
       key: 'board',
-      squares: this.props.root.squares,
+      squares: this.props.scene.squares,
       onMouseDownSquareCarrier: new EventHandlerCarrier((event, { emitter }) => {
         preventEvents(event);
         emitter.dispatch(EVENTS.TOUCH_SQUARE, {
@@ -27,17 +27,17 @@ export default class BattleScene extends Scene {
   }
 
   _createArmyElement(armyColor) {
-    const props = this.props.scene[armyColor];
+    const props = this.props.scene.armies[armyColor];
     const classNames = ['one-side'];
     if (armyColor === ARMY_COLORS.BLACK) {
-      className.push('black-side');
+      classNames.push('black-side');
     } else {
-      className.push('white-side');
+      classNames.push('white-side');
     }
 
     const battlerSelectorItems = range(PARAMETERS.MAX_CHOOSABLE_BATTLER_COUNT).map(index => {
       return (
-        <div className="unit">
+        <div key={ `battler-selector-item-${ index }` } className="unit">
           <AnimatedIcon iconId="goblin" />
           <div className="unit-name">Goblin</div>
         </div>
@@ -45,7 +45,7 @@ export default class BattleScene extends Scene {
     });
 
     return (
-      <div className={ classNames.join(' ') }>
+      <div key={ `army-${ armyColor }` } className={ classNames.join(' ') }>
         <div className="scoreboard">
           <div className="army-name">{ props.name }</div>
           <div className="score">{ props.score }</div>

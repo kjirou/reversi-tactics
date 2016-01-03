@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { shuffle } from 'lodash';
 
-import { ARMY_COLORS } from '../consts';
+import { ARMY_COLORS, PARAMETERS } from '../consts';
 import NamingMixin from '../mixins/NamingMixin';
 import Model from './Model';
 import { unitResourceDict, unitTypeIds } from './units';
@@ -19,7 +19,7 @@ export default class ArmyModel extends PrototypeArmyModel {
   constructor({ name = null, color, unitDeck }) {
     super();
 
-    this._name = name;
+    this._name = name || 'No Name';
     this._color = color;
     this._battlers = this._createBattlers(unitDeck);
   }
@@ -30,5 +30,21 @@ export default class ArmyModel extends PrototypeArmyModel {
     return shuffle(unitDeck)
       .map(typeId => unitResourceDict[typeId].beBornAsBattler({ belongingArmy: this }))
     ;
+  }
+
+  _findUnplacedBattlers() {
+    return this._battlers.filter(battler => !battler.isPlaced());
+  }
+
+  getChoosableBattlers() {
+    return this._findUnplacedBattlers().slice(0, PARAMETERS.MAX_CHOOSABLE_BATTLER_COUNT);
+  }
+
+  presentProps() {
+    return {
+      name: this.getName(),
+      score: 99,  // TODO
+      //choosableBattlers: this.getChoosableBattlers().map(battler => battler.presentProps()),
+    };
   }
 }

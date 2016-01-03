@@ -8,8 +8,9 @@ export const EVENTS = {
 };
 
 export const PARAMETERS = {
-  MIN_MAX_HP: 1,
+  MAX_CHOOSABLE_BATTLER_COUNT: 3,
   MAX_MAX_HP: 99,
+  MIN_MAX_HP: 1,
 };
 
 export const REVERSI_PIECE_TYPES = {
