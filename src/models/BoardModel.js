@@ -100,7 +100,7 @@ export default class BoardModel extends Model {
   }
 
   isPlaceableSquare(position, reversiPieceType) {
-    return this._reversiBoard.isPlacableSquare(
+    return this._reversiBoard.isPlaceableSquare(
       ...this._convertToReversiBoardPosition(position),
       this._convertToReversiBoardPieceType(reversiPieceType)
     );
