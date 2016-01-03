@@ -34,6 +34,10 @@ export default class ArmyModel extends PrototypeArmyModel {
     ;
   }
 
+  _findPlacedBattlers() {
+    return this._battlers.filter(battler => battler.isPlaced());
+  }
+
   _findUnplacedBattlers() {
     return this._battlers.filter(battler => !battler.isPlaced());
   }
@@ -46,10 +50,14 @@ export default class ArmyModel extends PrototypeArmyModel {
     return this._findUnplacedBattlers()[0] || null;
   }
 
+  _calculateScore() {
+    return this._findPlacedBattlers().filter(battler => battler.isAlive()).length;
+  }
+
   presentProps() {
     return {
       name: this.getName(),
-      score: 99,  // TODO
+      score: this._calculateScore(),
       visibleBattlers: this._getVisibleBattlers().map(battler => battler.presentProps()),
     };
   }
