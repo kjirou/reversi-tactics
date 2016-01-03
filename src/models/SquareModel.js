@@ -31,9 +31,11 @@ export default class SquareModel extends Model {
 
   presentProps() {
     let iconId = null;
+    let hp = null;
 
     if (this._battler) {
       iconId = this._battler.getUniformedIconId(this._battler.getBelongingArmy().color);
+      hp = this._battler.hp;
     }
 
     return {
@@ -42,6 +44,7 @@ export default class SquareModel extends Model {
       columnIndex: this._getColumnIndex(),
       reversiPieceType: this._reversiPieceType,
       iconId,
+      hp,
     };
   }
 }

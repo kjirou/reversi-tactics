@@ -40,7 +40,10 @@ export default class BattleScene extends Scene {
       let iconElement = null;
       let nameElement = null;
       if (battlerProps) {
-        iconElement = React.createElement(AnimatedIcon, { iconId: battlerProps.iconId });
+        iconElement = React.createElement(AnimatedIcon, {
+          iconId: battlerProps.iconId,
+          hp: battlerProps.hp,
+        });
         nameElement = React.DOM.div({
           key: 'battler-name',
           className: 'battler-name',
