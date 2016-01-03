@@ -1,6 +1,6 @@
 import { aggregators } from 'rpgparameter';
 
-import { PARAMETERS } from '../../consts';
+import { ARMY_COLORS, PARAMETERS } from '../../consts';
 import { within } from '../../lib/utils';
 import AutomaticNamingMixin from '../../mixins/AutomaticNamingMixin';
 import BattlerMixin, { isMixedBattler } from '../../mixins/BattlerMixin';
@@ -37,8 +37,10 @@ export default class UnitModel extends PrototypeUnitModel {
     return this.constructor.getIconId();
   }
 
-  getReversedIconId() {
-    return this.getIconId() + '_reversed';
+  getUniformedIconId(armyColor) {
+    return {
+      [ARMY_COLORS.WHITE]: this.getIconId() + '_reversed',
+    }[armyColor] || this.getIconId();
   }
 
   getMaxHp() {
@@ -122,11 +124,10 @@ export default class UnitModel extends PrototypeUnitModel {
     const props = {
       name: this.getName(),
       iconId: this.getIconId(),
+      hp: this.hp,
     };
     if (isMixedBattler(this)) {
-      if (this.isIconReversed()) {
-        props.iconId = this.getReversedIconId();
-      }
+      props.iconId = this.getUniformedIconId(this.getBelongingArmy().color);
     }
     return props;
   }

@@ -29,20 +29,19 @@ export default class SquareModel extends Model {
     return this._position[1];
   }
 
-  _getIconId() {
-    if (!this._battler) {
-      return null;
-    }
-    return this._battler.isIconReversed() ? this._battler.getReversedIconId() : this._battler.getIconId();
-  }
-
   presentProps() {
+    let iconId = null;
+
+    if (this._battler) {
+      iconId = this._battler.getUniformedIconId(this._battler.getBelongingArmy().color);
+    }
+
     return {
       position: this._position.slice(),
       rowIndex: this._getRowIndex(),
       columnIndex: this._getColumnIndex(),
       reversiPieceType: this._reversiPieceType,
-      iconId: this._getIconId(),
+      iconId,
     };
   }
 }

@@ -34,10 +34,6 @@ const BattlerMixin = {
     return this._position !== null;
   },
 
-  isIconReversed() {
-    return this._belongingArmy.color === ARMY_COLORS.WHITE;
-  },
-
   /*
    * @param {BoardModel} board
    */
