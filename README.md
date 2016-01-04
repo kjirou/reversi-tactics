@@ -1,5 +1,7 @@
 # reversi-tactics
 
+[![Circle CI](https://circleci.com/gh/kjirou/reversi-tactics.svg?style=svg)](https://circleci.com/gh/kjirou/reversi-tactics)
+
 Reversi-based tactics game
 
 ![](https://raw.githubusercontent.com/kjirou/reversi-tactics/master/doc/demo.gif)
