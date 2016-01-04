@@ -14,6 +14,7 @@ describe('src/models/SquareModel', () => {
       columnIndex: 3,
       reversiPieceType: REVERSI_PIECE_TYPES.EMPTY,
       iconId: null,
+      hp: null,
     });
   });
 });
