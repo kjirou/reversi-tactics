@@ -18,7 +18,7 @@ Reversi-based tactics game
 ```bash
 git clone git@github.com:kjirou/reversi-tactics.git
 cd ./reversi-tactics
-npm run install
+npm install
 ```
 
 ### Build sources & Watch sources & Open on your browser
