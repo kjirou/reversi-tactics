@@ -74,7 +74,6 @@ export default class AppModel extends Model {
           });
         });
       });
-      console.log(squares);
 
       scenes.game = {
         squares,
