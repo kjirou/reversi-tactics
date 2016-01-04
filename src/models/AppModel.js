@@ -2,6 +2,7 @@ import assert from 'assert';
 import { uniq, values } from 'lodash';
 
 import { ARMY_COLORS } from '../consts';
+import { getReversiPieceTypeFromArmyColor } from '../lib/utils';
 import GameModel from './GameModel';
 import Model from './Model';
 
@@ -60,8 +61,23 @@ export default class AppModel extends Model {
 
     if (this._game) {
       const boardProps = this._game.board.presentProps();
+      const nextArmyPlaceableSquarePositions = this._game.getNextArmyPlaceableSquarePositions();
+      const nextReversiPieceType = getReversiPieceTypeFromArmyColor(this._game.nextArmyColor);
+      const squares = boardProps.squares.map(rowSquares => {
+        return rowSquares.map(square => {
+          return Object.assign({}, square, {
+            placementSuggestion: (
+              nextArmyPlaceableSquarePositions.some(position => {
+                return position[0] === square.position[0] && position[1] === square.position[1];
+              })
+            ) ? nextReversiPieceType : null,
+          });
+        });
+      });
+      console.log(squares);
+
       scenes.game = {
-        squares: boardProps.squares,
+        squares,
         armies: {
           [ARMY_COLORS.BLACK]: this._game.armies[ARMY_COLORS.BLACK].presentProps(),
           [ARMY_COLORS.WHITE]: this._game.armies[ARMY_COLORS.WHITE].presentProps(),

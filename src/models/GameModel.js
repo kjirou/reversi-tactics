@@ -54,6 +54,12 @@ export default class GameModel extends Model {
   get armies() { return this._armies; }
   get nextArmyColor() { return this._nextArmyColor; }
 
+  getNextArmyPlaceableSquarePositions() {
+    const reversiPieceType = getReversiPieceTypeFromArmyColor(this._nextArmyColor);
+    return this._board.getPlaceableSquares(reversiPieceType)
+      .map(square => square.position);
+  }
+
   _toggleArmyColor(armyColor) {
     return {
       [ARMY_COLORS.BLACK]: ARMY_COLORS.WHITE,
@@ -61,7 +67,6 @@ export default class GameModel extends Model {
     }[armyColor];
   }
 
-  // TODO: assert next placeable squares
   // TODO: return state diffs for animation
   proceed(position) {
     const currentArmyColor = this._nextArmyColor;

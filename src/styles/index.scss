@@ -140,6 +140,16 @@ body.development {
       &.white-piece {
         background-color: var(--color-white-piece);
       }
+      &.suggested-piece {
+        border-style: dashed;
+        border-width: 2px;
+        &.suggested-black-piece {
+          border-color: var(--color-black-piece);
+        }
+        &.suggested-white-piece {
+          border-color: var(--color-white-piece);
+        }
+      }
 /*
       .reversi-piece-container {
         position: absolute;

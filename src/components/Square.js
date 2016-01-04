@@ -9,11 +9,22 @@ import AnimatedIcon from './AnimatedIcon';
 export default class Square extends Component {
 
   render() {
+    // TODO: should expand the square prop in after
+    Object.assign(this.props.square, {
+      // {string|null} - string is one of REVERSI_PIECE_TYPES
+      placementSuggestion: this.props.square.placementSuggestion || null,
+    });
+
     const classNames = ['square'];
     if (this.props.square.reversiPieceType === REVERSI_PIECE_TYPES.BLACK) {
       classNames.push('black-piece');
     } else if (this.props.square.reversiPieceType === REVERSI_PIECE_TYPES.WHITE) {
       classNames.push('white-piece');
+    }
+    if (this.props.square.placementSuggestion === REVERSI_PIECE_TYPES.BLACK) {
+      classNames.push('suggested-piece suggested-black-piece');
+    } else if (this.props.square.placementSuggestion === REVERSI_PIECE_TYPES.WHITE) {
+      classNames.push('suggested-piece suggested-white-piece');
     }
 
     let iconElement = null;
