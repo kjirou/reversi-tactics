@@ -84,11 +84,11 @@ export default class GameModel extends Model {
     }
 
     if (isPlaceableSquare && currentBattler) {
-      const reversedPositions = this._board.placeBattler(position, currentBattler);
+      const reversedPositionMap = this._board.placeBattler(position, currentBattler);
 
       // TODO: tmp
       // TODO: attack reaction
-      reversedPositions.forEach(position => {
+      reversedPositionMap[0].forEach(position => {
         const square = this._board.ensureSquare(position);
         const battler = square.battler;
         if (battler && battler.getBelongingArmy().color !== currentArmyColor) {

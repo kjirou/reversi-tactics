@@ -133,12 +133,17 @@ export default class BoardModel extends Model {
 
   placePiece(position, reversiPieceType) {
     assert(this.isPlaceableSquare(position, reversiPieceType), 'Can not place the piece');
-    const reversedReversiBoardPositions = this._reversiBoard.placePiece(
+    const reversedReversiBoardPositionMap = this._reversiBoard.placePiece(
       ...this._convertToReversiBoardPosition(position),
       this._convertToReversiBoardPieceType(reversiPieceType)
     );
     this._syncFromReversiBoard();
-    return reversedReversiBoardPositions.map(v => this._convertToPosition(v));
+    return [
+      reversedReversiBoardPositionMap[0].map(v => this._convertToPosition(v)),
+      reversedReversiBoardPositionMap[1].map(positions => {
+        return positions.map(v => this._convertToPosition(v));
+      }),
+    ];
   }
 
   placeBattler(position, battler) {

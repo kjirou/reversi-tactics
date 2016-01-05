@@ -12,7 +12,7 @@
     "lodash": "3.10.1",
     "react": "0.14.3",
     "react-dom": "0.14.3",
-    "reversi": "2.0.0",
+    "reversi": "3.0.0",
     "rpgparameter": "1.0.0",
     "singleton-mixin": "1.1.1",
     "underscore.string": "3.2.2",
