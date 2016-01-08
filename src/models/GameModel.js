@@ -1,4 +1,5 @@
 import lodash from 'lodash';
+import { DIRECTIONS } from 'reversi';
 
 import { ARMY_COLORS, REVERSI_PIECE_TYPES } from '../consts';
 import { getReversiPieceTypeFromArmyColor } from '../lib/utils';
@@ -67,6 +68,47 @@ export default class GameModel extends Model {
     }[armyColor];
   }
 
+  _placeBattler(position, battler) {
+    const reversedPositionMap = this._board.placeBattler(position, battler);
+    const battlerColor = battler.getBelongingArmy().color;
+
+    reversedPositionMap[1].forEach((positions, directionIndex) => {
+      if (positions.length === 0) {
+        return;
+      }
+
+      const lastPosition = positions[positions.length - 1];
+      const directionCoords = DIRECTIONS[directionIndex];
+      const oppositePosition = [lastPosition[0] + directionCoords[0], lastPosition[1] + directionCoords[1]];
+      const oppositeSquare = this._board.ensureSquare(oppositePosition);
+      const oppositeBattler = oppositeSquare.battler;
+
+      const attackToPosition = (attacker, position) => {
+        const targetSquare = this._board.ensureSquare(position);
+        const targetBattler = targetSquare.battler;
+        if (targetBattler && targetBattler.getBelongingArmy().color !== battlerColor) {
+          targetBattler.beDamaged(attacker.getAttackPower());
+        }
+      };
+
+      positions.forEach(position => {
+        attackToPosition(battler, position);
+      });
+
+      if (oppositeBattler && oppositeBattler.isAlive()) {
+        // Friend: Cooperation attack
+        if (oppositeBattler.getBelongingArmy().color === battlerColor) {
+          positions.slice().reverse().forEach(position => {
+            attackToPosition(oppositeBattler, position);
+          })
+        // Enemy: Critical hit
+        } else {
+          oppositeBattler.beDamaged(battler.getAttackPower() * 2);
+        }
+      }
+    });
+  }
+
   // TODO: return state diffs for animation
   proceed(position) {
     const currentArmyColor = this._nextArmyColor;
@@ -84,19 +126,7 @@ export default class GameModel extends Model {
     }
 
     if (isPlaceableSquare && currentBattler) {
-      const reversedPositionMap = this._board.placeBattler(position, currentBattler);
-
-      // TODO: tmp
-      // TODO: attack reaction
-      reversedPositionMap[0].forEach(position => {
-        const square = this._board.ensureSquare(position);
-        const battler = square.battler;
-        if (battler && battler.getBelongingArmy().color !== currentArmyColor) {
-          console.log(`Attack to the ${ battler.getName() } of [${ square.position }]`);
-          battler.beDamaged(currentBattler.getAttackPower());
-        }
-      });
-
+      this._placeBattler(position, currentBattler);
       this._nextArmyColor = this._toggleArmyColor(currentArmyColor);
     } else {
       console.log('Can not place the piece in there');
