@@ -137,7 +137,7 @@ describe('src/models/BoardModel', () => {
 
   it('placePiece', () => {
     const board = new BoardModel({ extent: [2, 3] });
-    let reversedPositions;
+    let reversedPositionMap;
 
     board.putPiece([0, 0], REVERSI_PIECE_TYPES.BLACK);
     board.putPiece([0, 1], REVERSI_PIECE_TYPES.WHITE);
@@ -148,18 +148,42 @@ describe('src/models/BoardModel', () => {
       '-xo',
     ].join('\n'));
 
-    reversedPositions = board.placePiece([0, 2], REVERSI_PIECE_TYPES.BLACK);
+    reversedPositionMap = board.placePiece([0, 2], REVERSI_PIECE_TYPES.BLACK);
     assert.strictEqual(boardToText(board), [
       'xxx',
       '-xo',
     ].join('\n'));
-    assert.deepEqual(reversedPositions, [[0, 1]]);
+    assert.deepEqual(reversedPositionMap, [
+      [ [0, 1] ],
+      [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [ [0, 1] ],
+        [],
+      ],
+    ]);
 
-    reversedPositions = board.placePiece([1, 0], REVERSI_PIECE_TYPES.WHITE);
+    reversedPositionMap = board.placePiece([1, 0], REVERSI_PIECE_TYPES.WHITE);
     assert.strictEqual(boardToText(board), [
       'xxx',
       'ooo',
     ].join('\n'));
-    assert.deepEqual(reversedPositions, [[1, 1]]);
+    assert.deepEqual(reversedPositionMap, [
+      [ [1, 1] ],
+      [
+        [],
+        [],
+        [ [1, 1] ],
+        [],
+        [],
+        [],
+        [],
+        [],
+      ],
+    ]);
   });
 });
