@@ -1,7 +1,48 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import Icon from './Icon';
 
+
+class FlipBook extends React.Component {
+
+  _showIconFlip(animationQuery) {
+    animationQuery = Object.assign({}, {
+      wait: 0,
+      duration: 0,
+      className: '',
+    }, animationQuery);
+
+    const domNode = ReactDOM.findDOMNode(this);
+    const flip = window.document.createElement('div');
+    flip.classList.add('icon-flip');
+    flip.classList.add(animationQuery.className);
+    setTimeout(() => {
+      domNode.appendChild(flip);
+      setTimeout(() => {
+        domNode.removeChild(flip);
+      }, animationQuery.duration);
+    }, animationQuery.wait);
+  }
+
+  _runAnimationQueies() {
+    this.props.animationQueries.forEach(animationQuery => {
+      this._showIconFlip(animationQuery);
+    });
+  }
+
+  componentDidMount() {
+    this._runAnimationQueies();
+  }
+
+  componentDidUpdate() {
+    this._runAnimationQueies();
+  }
+
+  render() {
+    return <div className="flip-book" />;
+  }
+}
 
 export default class AnimatedIcon extends React.Component {
 
@@ -14,6 +55,7 @@ export default class AnimatedIcon extends React.Component {
     return (
       <div className="animated-icon">
         <div className="icon-container">
+          <FlipBook animationQueries={ this.props.animationQueries } />
           <Icon iconId={ this.props.iconId } />
           { hpElement }
         </div>
@@ -24,9 +66,28 @@ export default class AnimatedIcon extends React.Component {
 
 Object.assign(AnimatedIcon, {
   defaultProps: {
+    animationQueries: [
+      // TODO:
+      //{
+      //  wait: 200,
+      //  duration: 200,
+      //  className: 'sword-icon',
+      //},
+      //{
+      //  wait: 500,
+      //  duration: 200,
+      //  className: 'sword-icon',
+      //},
+      //{
+      //  wait: 800,
+      //  duration: 200,
+      //  className: 'sword-icon',
+      //},
+    ],
     hp: null,
   },
   propTypes: {
+    animationQueries: React.PropTypes.array,
     hp: React.PropTypes.number,
     iconId: React.PropTypes.string.isRequired,
   },
