@@ -69,19 +69,19 @@ Object.assign(AnimatedIcon, {
     animationQueries: [
       // TODO:
       //{
+      //  wait: 100,
+      //  duration: 100,
+      //  className: 'slash-1-icon',
+      //},
+      //{
       //  wait: 200,
-      //  duration: 200,
-      //  className: 'sword-icon',
+      //  duration: 100,
+      //  className: 'slash-2-icon',
       //},
       //{
-      //  wait: 500,
-      //  duration: 200,
-      //  className: 'sword-icon',
-      //},
-      //{
-      //  wait: 800,
-      //  duration: 200,
-      //  className: 'sword-icon',
+      //  wait: 300,
+      //  duration: 100,
+      //  className: 'slash-1-icon',
       //},
     ],
     hp: null,

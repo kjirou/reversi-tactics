@@ -23,7 +23,7 @@ var ICON_POS_MAP = {
  * @return {object}
  */
 var mapIcon = function mapIcon(sourceImagePath, category, cellIndex, iconId) {
-  var basePos = ICON_POS_MAP[category];
+  var basePos = ICON_POS_MAP[category] || [0, 0];
   return {
     src: sourceImagePath,
     pos: [
