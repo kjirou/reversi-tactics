@@ -47,7 +47,16 @@ export default class App extends Flux {
     this._onDispatch(EVENTS.TOUCH_SQUARE, ({ position }) => {
       this._appModel
         .touchSquare(position)
-        .then(() => this.update(() => this._createState()))
+        .then(animationQueryDict => {
+          const state = this._createState();
+          if (animationQueryDict) {
+            Object.keys(animationQueryDict).forEach(positionStr => {
+              const position = positionStr.split(',').map(v => Number(v));  // TODO
+              state.scenes.game.squares[position[0]][position[1]].animationQuery = animationQueryDict[positionStr];
+            });
+          }
+          this.update(() => state);
+        })
         .catch(this._onPromiseError)
       ;
     })

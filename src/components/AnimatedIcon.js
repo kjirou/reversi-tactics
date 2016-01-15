@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { createSlashQuery } from '../lib/animation-query-builder';
 import Icon from './Icon';
 
 
@@ -13,7 +12,9 @@ class FlipBook extends React.Component {
     const flip = window.document.createElement('div');
 
     flip.classList.add('icon-flip');
-    flip.classList.add(partialQuery.className);
+    if (partialQuery.className) {
+      flip.classList.add(partialQuery.className);
+    }
 
     return new Promise(resolve => {
       setTimeout(() => {
@@ -28,11 +29,13 @@ class FlipBook extends React.Component {
 
   _runAnimationQuery() {
     return this.props.animationQuery.reduce((lastPromise, partialQuery) => {
-      const promise = lastPromise.then(() => this._showFlip(partialQuery));
       if (partialQuery.async) {
-        return Promise.resolve();
+        return lastPromise.then(() => {
+          this._showFlip(partialQuery);
+          return Promise.resolve();
+        });
       } else {
-        return promise;
+        return lastPromise.then(() => this._showFlip(partialQuery));
       }
     }, Promise.resolve());
   }
@@ -76,9 +79,8 @@ export default class AnimatedIcon extends React.Component {
 
 Object.assign(AnimatedIcon, {
   defaultProps: {
-    //animationQuery: [],
-    animationQuery: createSlashQuery(),
     hp: null,
+    animationQuery: [],
   },
   propTypes: {
     animationQuery: React.PropTypes.array,

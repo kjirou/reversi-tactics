@@ -1,7 +1,11 @@
 import assert from 'assert';
 
 import { ARMY_COLORS, REVERSI_PIECE_TYPES } from 'src/consts';
-import { createClassBasedResourceList, getReversiPieceTypeFromArmyColor } from 'src/lib/utils';
+import {
+  createClassBasedResourceList,
+  getReversiPieceTypeFromArmyColor,
+  measureDistance,
+} from 'src/lib/utils';
 
 
 describe('src/lib/utils', () => {
@@ -39,5 +43,10 @@ describe('src/lib/utils', () => {
   it('getArmyColorFromReversiPieceType', () => {
     assert.strictEqual(getReversiPieceTypeFromArmyColor(REVERSI_PIECE_TYPES.BLACK), ARMY_COLORS.BLACK);
     assert.strictEqual(getReversiPieceTypeFromArmyColor(REVERSI_PIECE_TYPES.WHITE), ARMY_COLORS.WHITE);
+  });
+
+  it('measureDistance', () => {
+    assert.strictEqual(measureDistance([1, 2], [3, 6]), 3 - 1 + 6 - 2);
+    assert.strictEqual(measureDistance([3, 6], [1, 2]), 3 - 1 + 6 - 2);
   });
 });

@@ -32,6 +32,7 @@ export default class Square extends Component {
       iconElement = React.createElement(AnimatedIcon, {
         iconId: this.props.square.iconId,
         hp: this.props.square.hp,
+        animationQuery: this.props.square.animationQuery,
       });
     }
 

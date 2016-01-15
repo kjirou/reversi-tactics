@@ -13,7 +13,13 @@ const query = (options = {}) => {
   return Object.assign(createDefaultQuery(), options);
 };
 
-export const createSlashQuery = (damage) => {
+export const createDelayQuery = (delay) => {
+  return [
+    query({ delay }),
+  ];
+};
+
+export const createSlashQuery = () => {
   return [
     query({
       duration: 50,
@@ -30,7 +36,7 @@ export const createSlashQuery = (damage) => {
   ];
 };
 
-export const createCrossedSlashQuery = (damage) => {
+export const createCrossedSlashQuery = () => {
   return [
     query({
       duration: 50,
