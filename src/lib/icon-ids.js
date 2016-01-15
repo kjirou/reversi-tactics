@@ -73,8 +73,10 @@ var DENZI_ICON_POSITIONS = [
 ];
 
 var ORIGINAL_MISC_ICON_POSITIONS = [
-  ['flips', [0, 0], 'slash-1'],
-  ['flips', [0, 1], 'slash-2'],
+  ['flips', [0, 0], 'slash_1'],
+  ['flips', [0, 1], 'slash_2'],
+  ['flips', [1, 0], 'reversed_slash_1'],
+  ['flips', [1, 1], 'reversed_slash_2'],
 ];
 
 var SOURCE_IMAGE_PATH =

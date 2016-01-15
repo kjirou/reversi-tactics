@@ -1,42 +1,52 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { createSlashQuery } from '../lib/animation-query-builder';
 import Icon from './Icon';
 
 
 class FlipBook extends React.Component {
 
-  _showIconFlip(animationQuery) {
-    animationQuery = Object.assign({}, {
-      wait: 0,
-      duration: 0,
-      className: '',
-    }, animationQuery);
-
+  // TODO: zIndex, text
+  _showFlip(partialQuery) {
     const domNode = ReactDOM.findDOMNode(this);
     const flip = window.document.createElement('div');
-    flip.classList.add('icon-flip');
-    flip.classList.add(animationQuery.className);
-    setTimeout(() => {
-      domNode.appendChild(flip);
-      setTimeout(() => {
-        domNode.removeChild(flip);
-      }, animationQuery.duration);
-    }, animationQuery.wait);
-  }
 
-  _runAnimationQueies() {
-    this.props.animationQueries.forEach(animationQuery => {
-      this._showIconFlip(animationQuery);
+    flip.classList.add('icon-flip');
+    flip.classList.add(partialQuery.className);
+
+    return new Promise(resolve => {
+      setTimeout(() => {
+        domNode.appendChild(flip);
+        setTimeout(() => {
+          domNode.removeChild(flip);
+          resolve();
+        }, partialQuery.duration);
+      }, partialQuery.delay);
     });
   }
 
+  _runAnimationQuery() {
+    return this.props.animationQuery.reduce((lastPromise, partialQuery) => {
+      const promise = lastPromise.then(() => this._showFlip(partialQuery));
+      if (partialQuery.async) {
+        return Promise.resolve();
+      } else {
+        return promise;
+      }
+    }, Promise.resolve());
+  }
+
   componentDidMount() {
-    this._runAnimationQueies();
+    this._runAnimationQuery()
+      .catch(err => console.error(err.stack || err))
+    ;
   }
 
   componentDidUpdate() {
-    this._runAnimationQueies();
+    this._runAnimationQuery()
+      .catch(err => console.error(err.stack || err))
+    ;
   }
 
   render() {
@@ -55,7 +65,7 @@ export default class AnimatedIcon extends React.Component {
     return (
       <div className="animated-icon">
         <div className="icon-container">
-          <FlipBook animationQueries={ this.props.animationQueries } />
+          <FlipBook animationQuery={ this.props.animationQuery } />
           <Icon iconId={ this.props.iconId } />
           { hpElement }
         </div>
@@ -66,28 +76,12 @@ export default class AnimatedIcon extends React.Component {
 
 Object.assign(AnimatedIcon, {
   defaultProps: {
-    animationQueries: [
-      // TODO:
-      //{
-      //  wait: 100,
-      //  duration: 100,
-      //  className: 'slash-1-icon',
-      //},
-      //{
-      //  wait: 200,
-      //  duration: 100,
-      //  className: 'slash-2-icon',
-      //},
-      //{
-      //  wait: 300,
-      //  duration: 100,
-      //  className: 'slash-1-icon',
-      //},
-    ],
+    //animationQuery: [],
+    animationQuery: createSlashQuery(),
     hp: null,
   },
   propTypes: {
-    animationQueries: React.PropTypes.array,
+    animationQuery: React.PropTypes.array,
     hp: React.PropTypes.number,
     iconId: React.PropTypes.string.isRequired,
   },
