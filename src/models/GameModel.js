@@ -98,9 +98,9 @@ export default class GameModel extends Model {
         animationQuery = createSlashQuery(damage);
       }
 
-      const distance = measureDistance(attackerPosition, targetPosition);
-      const delayQuery = createDelayQuery((distance - 1) * 50);
-      animationQuery.unshift(...delayQuery);
+      //const distance = measureDistance(attackerPosition, targetPosition);
+      //const delayQuery = createDelayQuery((distance - 1) * 50);
+      //animationQuery.unshift(...delayQuery);
     }
 
     return animationQuery;
