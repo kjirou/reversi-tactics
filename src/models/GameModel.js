@@ -2,7 +2,8 @@ import lodash from 'lodash';
 import { DIRECTIONS } from 'reversi';
 
 import { ARMY_COLORS, REVERSI_PIECE_TYPES } from '../consts';
-import { getReversiPieceTypeFromArmyColor } from '../lib/utils';
+import { createDelayQuery, createSlashQuery, createCrossedSlashQuery } from '../lib/animation-query-builder';
+import { getReversiPieceTypeFromArmyColor, measureDistance } from '../lib/utils';
 import ArmyModel from './ArmyModel';
 import BoardModel from './BoardModel';
 import Model from './Model';
@@ -68,7 +69,57 @@ export default class GameModel extends Model {
     }[armyColor];
   }
 
+  /*
+   * @param {Battler} attacker
+   * @return {Array|null} - animationQuery
+   */
+  _attackToPosition(attacker, attackerPosition, targetPosition, isCritical = false) {
+    let animationQuery = null;
+
+    const targetSquare = this._board.ensureSquare(targetPosition);
+    const targetBattler = targetSquare.battler;
+
+    if (
+      targetBattler &&
+      targetBattler.isAlive() &&
+      targetBattler.getBelongingArmy().color !== attacker.getBelongingArmy().color
+    ) {
+      let damageRate = 1;
+      if (isCritical) {
+        damageRate = 2;
+      }
+
+      const damage = ~~(attacker.getAttackPower() * damageRate);
+      targetBattler.beDamaged(damage);
+
+      if (isCritical) {
+        animationQuery = createCrossedSlashQuery(damage);
+      } else {
+        animationQuery = createSlashQuery(damage);
+      }
+
+      //const distance = measureDistance(attackerPosition, targetPosition);
+      //const delayQuery = createDelayQuery((distance - 1) * 50);
+      //animationQuery.unshift(...delayQuery);
+    }
+
+    return animationQuery;
+  }
+
+  /*
+   * @return {Object} - { [positionStr]: animationQuery, .. }
+   */
   _placeBattler(position, battler) {
+    const animationQueryDict = {};
+    const appendAnimationQuery = (position, animationQuery) => {
+      const positionStr = String(position);
+      if (positionStr in animationQueryDict) {
+        animationQueryDict[positionStr].push(...animationQuery);
+      } else {
+        animationQueryDict[positionStr] = animationQuery;
+      }
+    };
+
     const reversedPositionMap = this._board.placeBattler(position, battler);
     const battlerColor = battler.getBelongingArmy().color;
 
@@ -83,34 +134,41 @@ export default class GameModel extends Model {
       const oppositeSquare = this._board.ensureSquare(oppositePosition);
       const oppositeBattler = oppositeSquare.battler;
 
-      const attackToPosition = (attacker, position) => {
-        const targetSquare = this._board.ensureSquare(position);
-        const targetBattler = targetSquare.battler;
-        if (targetBattler && targetBattler.getBelongingArmy().color !== battlerColor) {
-          targetBattler.beDamaged(attacker.getAttackPower());
+      positions.forEach(targetPosition => {
+        const aq = this._attackToPosition(battler, position, targetPosition, false);
+        if (aq) {
+          appendAnimationQuery(targetPosition, aq);
         }
-      };
-
-      positions.forEach(position => {
-        attackToPosition(battler, position);
       });
 
       if (oppositeBattler && oppositeBattler.isAlive()) {
         // Friend: Cooperation attack
         if (oppositeBattler.getBelongingArmy().color === battlerColor) {
-          positions.slice().reverse().forEach(position => {
-            attackToPosition(oppositeBattler, position);
+          positions.slice().reverse().forEach(position_ => {
+            const aq = this._attackToPosition(oppositeBattler, oppositePosition, position_, false);
+            if (aq) {
+              aq.unshift(...createDelayQuery(250));
+              appendAnimationQuery(position_, aq);
+            }
           })
         // Enemy: Critical hit
         } else {
-          oppositeBattler.beDamaged(battler.getAttackPower() * 2);
+          const aq = this._attackToPosition(battler, position, oppositePosition, true);
+          if (aq) {
+            appendAnimationQuery(oppositePosition, aq);
+          }
         }
       }
     });
+
+    return animationQueryDict;
   }
 
-  // TODO: return state diffs for animation
+  /*
+   * @return {object}
+   */
   proceed(position) {
+    let animationQueryDict = {};
     const currentArmyColor = this._nextArmyColor;
     const currentArmy = this._armies[currentArmyColor];
     const currentReversiPieceType = getReversiPieceTypeFromArmyColor(currentArmyColor);
@@ -122,14 +180,16 @@ export default class GameModel extends Model {
     if (placeableSquares.length === 0) {
       console.log('Can not place the piece in anywhere');
       this._nextArmyColor = this._toggleArmyColor(currentArmyColor);
-      return;
+      return animationQueryDict;
     }
 
     if (isPlaceableSquare && currentBattler) {
-      this._placeBattler(position, currentBattler);
+      animationQueryDict = this._placeBattler(position, currentBattler);
       this._nextArmyColor = this._toggleArmyColor(currentArmyColor);
     } else {
       console.log('Can not place the piece in there');
     }
+
+    return animationQueryDict;
   }
 }

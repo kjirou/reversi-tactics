@@ -67,3 +67,10 @@ export const getArmyColorFromReversiPieceType = (reversiPieceType) => {
     [REVERSI_PIECE_TYPES.WHITE]: ARMY_COLORS.WHITE,
   }[reversiPieceType];
 };
+
+/*
+ * @return {number} - The distance between two positions
+ */
+export const measureDistance = (positionA, positionB) => {
+  return Math.abs(positionA[0] - positionB[0]) + Math.abs(positionA[1] - positionB[1]);
+};

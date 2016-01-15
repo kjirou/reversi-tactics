@@ -2,7 +2,7 @@ var path = require('path');
 
 
 // For image-driver.js
-var ICON_POSITIONS = [
+var DENZI_ICON_POSITIONS = [
 
   // characters
   ['characters', [0, 3], 'alchemist'],
@@ -72,13 +72,24 @@ var ICON_POSITIONS = [
   ['tiles', [8, 8], 'village']//,
 ];
 
+var ORIGINAL_MISC_ICON_POSITIONS = [
+  ['flips', [0, 0], 'slash_1'],
+  ['flips', [0, 1], 'slash_2'],
+  ['flips', [0, 2], 'red_slash_1'],
+  ['flips', [0, 3], 'red_slash_2'],
+  ['flips', [1, 0], 'reversed_slash_1'],
+  ['flips', [1, 1], 'reversed_slash_2'],
+  ['flips', [1, 2], 'reversed_red_slash_1'],
+  ['flips', [1, 3], 'reversed_red_slash_2'],
+];
+
 var SOURCE_IMAGE_PATH =
   path.join(__dirname, '../../src/materials/images/denzi/Denzi140330-12-1--32x32.png');
 var REVERSED_COLOR_SOURCE_IMAGE_PATH =
   path.join(__dirname, '../../src/materials/images/denzi/Denzi140330-12-1--32x32--reversed-color.png');
 
 var ICON_DATA_LIST = [];
-ICON_POSITIONS.forEach(function(iconPosition) {
+DENZI_ICON_POSITIONS.forEach(function(iconPosition) {
   ICON_DATA_LIST.push([SOURCE_IMAGE_PATH].concat(iconPosition));
   ICON_DATA_LIST.push([
     REVERSED_COLOR_SOURCE_IMAGE_PATH,
@@ -86,6 +97,11 @@ ICON_POSITIONS.forEach(function(iconPosition) {
     iconPosition[1],
     iconPosition[2] + '_reversed'
   ]);
+});
+
+var ORIGINAL_MISC_SOURCE_IMAGE_PATH = path.join(__dirname, '../../src/materials/images/original/misc.png');
+ORIGINAL_MISC_ICON_POSITIONS.forEach(function(iconPosition) {
+  ICON_DATA_LIST.push([ORIGINAL_MISC_SOURCE_IMAGE_PATH].concat(iconPosition));
 });
 
 var _iconIds = [];

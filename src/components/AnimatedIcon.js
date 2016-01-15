@@ -1,7 +1,61 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import Icon from './Icon';
 
+
+class FlipBook extends React.Component {
+
+  // TODO: zIndex, text
+  _showFlip(partialQuery) {
+    const domNode = ReactDOM.findDOMNode(this);
+    const flip = window.document.createElement('div');
+
+    flip.classList.add('icon-flip');
+    if (partialQuery.className) {
+      flip.classList.add(partialQuery.className);
+    }
+
+    return new Promise(resolve => {
+      setTimeout(() => {
+        domNode.appendChild(flip);
+        setTimeout(() => {
+          domNode.removeChild(flip);
+          resolve();
+        }, partialQuery.duration);
+      }, partialQuery.delay);
+    });
+  }
+
+  _runAnimationQuery() {
+    return this.props.animationQuery.reduce((lastPromise, partialQuery) => {
+      if (partialQuery.async) {
+        return lastPromise.then(() => {
+          this._showFlip(partialQuery);
+          return Promise.resolve();
+        });
+      } else {
+        return lastPromise.then(() => this._showFlip(partialQuery));
+      }
+    }, Promise.resolve());
+  }
+
+  componentDidMount() {
+    this._runAnimationQuery()
+      .catch(err => console.error(err.stack || err))
+    ;
+  }
+
+  componentDidUpdate() {
+    this._runAnimationQuery()
+      .catch(err => console.error(err.stack || err))
+    ;
+  }
+
+  render() {
+    return <div className="flip-book" />;
+  }
+}
 
 export default class AnimatedIcon extends React.Component {
 
@@ -14,6 +68,7 @@ export default class AnimatedIcon extends React.Component {
     return (
       <div className="animated-icon">
         <div className="icon-container">
+          <FlipBook animationQuery={ this.props.animationQuery } />
           <Icon iconId={ this.props.iconId } />
           { hpElement }
         </div>
@@ -25,8 +80,10 @@ export default class AnimatedIcon extends React.Component {
 Object.assign(AnimatedIcon, {
   defaultProps: {
     hp: null,
+    animationQuery: [],
   },
   propTypes: {
+    animationQuery: React.PropTypes.array,
     hp: React.PropTypes.number,
     iconId: React.PropTypes.string.isRequired,
   },
