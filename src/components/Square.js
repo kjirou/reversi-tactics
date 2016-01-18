@@ -1,5 +1,6 @@
 import { Component } from 'flumpt';
 import React from 'react';
+import LateArrival from '../lib/react-late-arrival';
 
 import { REVERSI_PIECE_TYPES, STYLES } from '../consts';
 import EventHandlerCarrier from '../lib/EventHandlerCarrier';
@@ -7,6 +8,22 @@ import AnimatedIcon from './AnimatedIcon';
 
 
 export default class Square extends Component {
+
+  _createAnimatedIconElement() {
+    const props = {
+      realProps: {
+        iconId: this.props.square.iconId,
+        hp: this.props.square.hp,
+      },
+      transitions: this.props.square.iconTransitions,
+    };
+
+    return (
+      <LateArrival { ...props } >
+        { (props) => <AnimatedIcon { ...props } /> }
+      </LateArrival>
+    );
+  }
 
   render() {
     // TODO: should expand the square prop in after
@@ -29,11 +46,7 @@ export default class Square extends Component {
 
     let iconElement = null;
     if (this.props.square.iconId) {
-      iconElement = React.createElement(AnimatedIcon, {
-        iconId: this.props.square.iconId,
-        hp: this.props.square.hp,
-        animationQuery: this.props.square.animationQuery,
-      });
+      iconElement = this._createAnimatedIconElement();
     }
 
     return (

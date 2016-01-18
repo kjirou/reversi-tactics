@@ -14,6 +14,12 @@ export default class App extends Flux {
     super({
       renderer,
       initialState: App._createState(appModel),
+      middlewares: [
+        state => {
+          console.log('update:', state);
+          return state;
+        }
+      ]
     });
 
     this._appModel = appModel;
@@ -47,12 +53,12 @@ export default class App extends Flux {
     this._onDispatch(EVENTS.TOUCH_SQUARE, ({ position }) => {
       this._appModel
         .touchSquare(position)
-        .then(animationQueryDict => {
+        .then(transitionMap => {
           const state = this._createState();
-          if (animationQueryDict) {
-            Object.keys(animationQueryDict).forEach(positionStr => {
+          if (transitionMap) {
+            Object.keys(transitionMap).forEach(positionStr => {
               const position = positionStr.split(',').map(v => Number(v));  // TODO
-              state.scenes.game.squares[position[0]][position[1]].animationQuery = animationQueryDict[positionStr];
+              state.scenes.game.squares[position[0]][position[1]].iconTransitions = transitionMap[positionStr];
             });
           }
           this.update(() => state);

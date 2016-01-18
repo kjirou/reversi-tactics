@@ -1,8 +1,8 @@
-import lodash from 'lodash';
+import { pick, random, range } from 'lodash';
 import { DIRECTIONS } from 'reversi';
 
 import { ARMY_COLORS, REVERSI_PIECE_TYPES } from '../consts';
-import { createDelayQuery, createSlashQuery, createCrossedSlashQuery } from '../lib/animation-query-builder';
+import { generateAnimatedIconTransitions } from '../lib/transition-generator';
 import { getReversiPieceTypeFromArmyColor, measureDistance } from '../lib/utils';
 import ArmyModel from './ArmyModel';
 import BoardModel from './BoardModel';
@@ -26,24 +26,24 @@ export default class GameModel extends Model {
     this._blackArmy = new ArmyModel({
       name: 'Uruk Hai',
       color: ARMY_COLORS.BLACK,
-      unitDeck: lodash.range(32).map(() => {
+      unitDeck: range(32).map(() => {
         return {
           0: 'goblin',
           1: 'goblin',
           2: 'orc',
-        }[lodash.random(2)];
+        }[random(2)];
       }),
     });
     this._whiteArmy = new ArmyModel({
       name: 'The Rohan',
       color: ARMY_COLORS.WHITE,
-      unitDeck: lodash.range(32).map(() => {
+      unitDeck: range(32).map(() => {
         return {
           0: 'vigilante',
           1: 'vigilante',
           2: 'fighter',
           3: 'knight',
-        }[lodash.random(3)];
+        }[random(3)];
       }),
     });
     this._armies = {
@@ -71,10 +71,15 @@ export default class GameModel extends Model {
 
   /*
    * @param {Battler} attacker
-   * @return {Array|null} - animationQuery
+   * @return {Array<Object>}
    */
-  _attackToPosition(attacker, attackerPosition, targetPosition, isCritical = false) {
-    let animationQuery = null;
+  _attackToPosition(attacker, attackerPosition, targetPosition, options = {}) {
+    options = Object.assign({
+      isCritical: false,
+      transitionDelay: null,
+    }, options);
+
+    let transitions = [];
 
     const targetSquare = this._board.ensureSquare(targetPosition);
     const targetBattler = targetSquare.battler;
@@ -85,38 +90,39 @@ export default class GameModel extends Model {
       targetBattler.getBelongingArmy().color !== attacker.getBelongingArmy().color
     ) {
       let damageRate = 1;
-      if (isCritical) {
+      if (options.isCritical) {
         damageRate = 2;
       }
 
       const damage = ~~(attacker.getAttackPower() * damageRate);
+      // TODO: Sync to AnimatedIcon.propTypes
+      const beforeProps = pick(targetBattler.presentProps(), 'hp', 'iconId');
       targetBattler.beDamaged(damage);
 
-      if (isCritical) {
-        animationQuery = createCrossedSlashQuery(damage);
-      } else {
-        animationQuery = createSlashQuery(damage);
+      let transitionType = 'slash';
+      if (options.isCritical) {
+        transitionType = 'crossed_slash';
       }
-
-      //const distance = measureDistance(attackerPosition, targetPosition);
-      //const delayQuery = createDelayQuery((distance - 1) * 50);
-      //animationQuery.unshift(...delayQuery);
+      transitions = generateAnimatedIconTransitions(beforeProps, transitionType, {
+        delay: options.transitionDelay,
+        hpDelta: damage,
+      });
     }
 
-    return animationQuery;
+    return transitions;
   }
 
   /*
-   * @return {Object} - { [positionStr]: animationQuery, .. }
+   * @return {Object} - { [positionStr]: transitions, .. }
    */
   _placeBattler(position, battler) {
-    const animationQueryDict = {};
-    const appendAnimationQuery = (position, animationQuery) => {
+    const transitionMap = {};
+    const appendTransitions = (position, transitions) => {
       const positionStr = String(position);
-      if (positionStr in animationQueryDict) {
-        animationQueryDict[positionStr].push(...animationQuery);
+      if (positionStr in transitionMap) {
+        transitionMap[positionStr].push(...transitions);
       } else {
-        animationQueryDict[positionStr] = animationQuery;
+        transitionMap[positionStr] = transitions;
       }
     };
 
@@ -134,41 +140,38 @@ export default class GameModel extends Model {
       const oppositeSquare = this._board.ensureSquare(oppositePosition);
       const oppositeBattler = oppositeSquare.battler;
 
+      // placed battler act
       positions.forEach(targetPosition => {
-        const aq = this._attackToPosition(battler, position, targetPosition, false);
-        if (aq) {
-          appendAnimationQuery(targetPosition, aq);
-        }
+        const transitions = this._attackToPosition(battler, position, targetPosition);
+        appendTransitions(targetPosition, transitions);
       });
 
+      // opposite battler react
       if (oppositeBattler && oppositeBattler.isAlive()) {
         // Friend: Cooperation attack
         if (oppositeBattler.getBelongingArmy().color === battlerColor) {
           positions.slice().reverse().forEach(position_ => {
-            const aq = this._attackToPosition(oppositeBattler, oppositePosition, position_, false);
-            if (aq) {
-              aq.unshift(...createDelayQuery(250));
-              appendAnimationQuery(position_, aq);
-            }
+            const transitions = this._attackToPosition(oppositeBattler, oppositePosition, position_, {
+              transitionDelay: 250,
+            });
+            appendTransitions(position_, transitions);
           })
         // Enemy: Critical hit
         } else {
-          const aq = this._attackToPosition(battler, position, oppositePosition, true);
-          if (aq) {
-            appendAnimationQuery(oppositePosition, aq);
-          }
+          const transitions = this._attackToPosition(battler, position, oppositePosition, { isCritical: true });
+          appendTransitions(oppositePosition, transitions);
         }
       }
     });
 
-    return animationQueryDict;
+    return transitionMap;
   }
 
   /*
    * @return {object}
    */
   proceed(position) {
-    let animationQueryDict = {};
+    let transitionMap = {};
     const currentArmyColor = this._nextArmyColor;
     const currentArmy = this._armies[currentArmyColor];
     const currentReversiPieceType = getReversiPieceTypeFromArmyColor(currentArmyColor);
@@ -180,16 +183,16 @@ export default class GameModel extends Model {
     if (placeableSquares.length === 0) {
       console.log('Can not place the piece in anywhere');
       this._nextArmyColor = this._toggleArmyColor(currentArmyColor);
-      return animationQueryDict;
+      return transitionMap;
     }
 
     if (isPlaceableSquare && currentBattler) {
-      animationQueryDict = this._placeBattler(position, currentBattler);
+      transitionMap = this._placeBattler(position, currentBattler);
       this._nextArmyColor = this._toggleArmyColor(currentArmyColor);
     } else {
       console.log('Can not place the piece in there');
     }
 
-    return animationQueryDict;
+    return transitionMap;
   }
 }
