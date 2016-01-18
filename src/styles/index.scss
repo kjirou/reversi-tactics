@@ -99,16 +99,11 @@ body.development {
     left: var(--icon-animation-margin);
     width: var(--icon-width);
     height: var(--icon-height);
-    .flip-book {
+    .flip-icon-container {
       position: absolute;
       width: 100%;
       height: 100%;
       z-index: var(--z-index-default);
-      .icon-flip {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-      }
     }
     .hp {
       position: absolute;
