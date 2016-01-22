@@ -1,7 +1,6 @@
 import { Component } from 'flumpt';
 import React from 'react';
-//import LateArrival from 'react-late-arrival';
-import LateArrival from '../lib/react-late-arrival';
+import LateArrival from 'react-late-arrival';
 
 import { REVERSI_PIECE_TYPES, STYLES } from '../consts';
 import EventHandlerCarrier from '../lib/EventHandlerCarrier';
