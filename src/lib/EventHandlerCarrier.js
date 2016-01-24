@@ -1,5 +1,7 @@
 /*
- * Pass event handler to child components
+ * Wrap event handler for carrying to partial components
+ *
+ * It is mainly to avoid dependence on "this"
  */
 export default class EventHandlerCarrier {
 
@@ -14,8 +16,7 @@ export default class EventHandlerCarrier {
    * @param {ReactElement} emitter
    */
   bindContext(emitter) {
-    return event => {
-      this._eventHandler.bind(emitter)(event, { emitter })
-    };
+    const boundHandler = this._eventHandler.bind(emitter);
+    return event => boundHandler(event, { emitter });
   }
 }
