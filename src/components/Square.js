@@ -1,6 +1,6 @@
 import { Component } from 'flumpt';
 import React from 'react';
-import LateArrival from 'react-late-arrival';
+import FlipBook from 'react-flip-book';
 
 import { REVERSI_PIECE_TYPES, STYLES } from '../consts';
 import EventHandlerCarrier from '../lib/EventHandlerCarrier';
@@ -19,9 +19,9 @@ export default class Square extends Component {
     };
 
     return (
-      <LateArrival { ...props } >
+      <FlipBook { ...props } >
         { (props) => <AnimatedIcon { ...props } /> }
-      </LateArrival>
+      </FlipBook>
     );
   }
 

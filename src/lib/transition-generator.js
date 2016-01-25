@@ -1,5 +1,5 @@
 /*
- * Generate transitions for react-late-arrival
+ * Generate transitions for react-flip-book
  * @param {Object} defaultProps
  * @param {Array<Object>} transitionDiffs
  * @return {Array<Object>}
