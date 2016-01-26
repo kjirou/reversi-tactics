@@ -13,7 +13,7 @@ const actions = {
     if (!this._game) {
       return;
     }
-    return this._game.proceed(position);
+    this._lastProceedingResult = this._game.proceed(position);
   },
 };
 
@@ -23,6 +23,7 @@ export default class AppModel extends Model {
   constructor() {
     super();
 
+    this._lastProceedingResult = null;
     this._game = new GameModel();
 
     this._includeActions(actions);
@@ -52,6 +53,28 @@ export default class AppModel extends Model {
     });
   }
 
+  /*
+   * @return {Array<object>} - A list of square props
+   */
+  static _generateSquares(gameModel, transitionMap) {
+    const boardProps = gameModel.board.presentProps();
+    const nextArmyPlaceableSquarePositions = gameModel.getNextArmyPlaceableSquarePositions();
+    const nextReversiPieceType = getReversiPieceTypeFromArmyColor(gameModel.nextArmyColor);
+
+    return boardProps.squares.map(rowSquares => {
+      return rowSquares.map(square => {
+        return Object.assign({}, square, {
+          placementSuggestion: (
+            nextArmyPlaceableSquarePositions.some(position => {
+              return position[0] === square.position[0] && position[1] === square.position[1];
+            })
+          ) ? nextReversiPieceType : null,
+          iconTransitions: transitionMap[square.positionId] || [],
+        });
+      });
+    });
+  }
+
   presentProps() {
     // TODO: Re-compute & categorize props like reducers of Redux
     const scenes = {
@@ -60,21 +83,8 @@ export default class AppModel extends Model {
     };
 
     if (this._game) {
-      const boardProps = this._game.board.presentProps();
-      const nextArmyPlaceableSquarePositions = this._game.getNextArmyPlaceableSquarePositions();
-      const nextReversiPieceType = getReversiPieceTypeFromArmyColor(this._game.nextArmyColor);
-      const squares = boardProps.squares.map(rowSquares => {
-        return rowSquares.map(square => {
-          return Object.assign({}, square, {
-            placementSuggestion: (
-              nextArmyPlaceableSquarePositions.some(position => {
-                return position[0] === square.position[0] && position[1] === square.position[1];
-              })
-            ) ? nextReversiPieceType : null,
-            iconTransitions: [],
-          });
-        });
-      });
+      const transitionMap = this._lastProceedingResult || {};
+      const squares = this.constructor._generateSquares(this._game, transitionMap);
 
       scenes.game = {
         squares,

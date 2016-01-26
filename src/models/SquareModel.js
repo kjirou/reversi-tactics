@@ -29,6 +29,10 @@ export default class SquareModel extends Model {
     return this._position[1];
   }
 
+  _generatePositionId() {
+    return this._position.toString();
+  }
+
   presentProps() {
     let iconId = null;
     let hp = null;
@@ -40,6 +44,7 @@ export default class SquareModel extends Model {
 
     return {
       position: this._position.slice(),
+      positionId: this._generatePositionId(),
       rowIndex: this._getRowIndex(),
       columnIndex: this._getColumnIndex(),
       reversiPieceType: this._reversiPieceType,

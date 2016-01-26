@@ -10,6 +10,7 @@ describe('src/models/SquareModel', () => {
     const square = new SquareModel({ position: [2, 3] });
     assert.deepEqual(square.presentProps(), {
       position: [2, 3],
+      positionId: '2,3',
       rowIndex: 2,
       columnIndex: 3,
       reversiPieceType: REVERSI_PIECE_TYPES.EMPTY,
