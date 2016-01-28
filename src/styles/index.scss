@@ -15,6 +15,7 @@
   --icon-width: 32px;
   --reversi-piece-radius: 18px;
   --z-index-default: 1;
+  --z-index-high: 2;
 
   /* Computed values */
   --animated-icon-width: calc(var(--icon-width) + var(--icon-animation-margin) * 2);
@@ -93,6 +94,25 @@ body.development {
   position: relative;
   width: var(--animated-icon-width);
   height: var(--animated-icon-height);
+  .text {
+    position: absolute;
+    width: var(--animated-icon-width);
+    height: var(--animated-icon-height);
+    line-height: var(--animated-icon-height);
+    z-index: var(--z-index-high);
+    font-size: 12px;
+    /*
+     * TODO: Can not keep centering for overflowed text
+     *       Ref) http://stackoverflow.com/questions/6618648/can-overflow-text-be-centered
+     */
+    text-align: center;
+    color: var(--color-background);
+    text-shadow:
+      -1px 0 var(--color-text),
+      0 1px var(--color-text),
+      1px 0 var(--color-text),
+      0 -1px var(--color-text);
+  }
   .icon-container {
     position: absolute;
     top: var(--icon-animation-margin);

@@ -7,9 +7,9 @@ import Icon from './Icon';
 export default class AnimatedIcon extends React.Component {
 
   render() {
-    let hpElement = null;
-    if (this.props.hp !== null) {
-      hpElement = <div className="hp"><span className="hp-text">{ this.props.hp }</span></div>;
+    let textElement = null;
+    if (this.props.text) {
+      textElement = <div className="text">{ this.props.text }</div>;
     }
 
     let flipIconElement = null;
@@ -17,8 +17,14 @@ export default class AnimatedIcon extends React.Component {
       flipIconElement = <Icon iconId={ this.props.flipIconId } />;
     }
 
+    let hpElement = null;
+    if (this.props.hp !== null) {
+      hpElement = <div className="hp"><span className="hp-text">{ this.props.hp }</span></div>;
+    }
+
     return (
       <div className="animated-icon">
+        { textElement }
         <div className="icon-container">
           <div className="flip-icon-container">
             { flipIconElement }
@@ -35,10 +41,12 @@ Object.assign(AnimatedIcon, {
   defaultProps: {
     hp: null,
     flipIconId: null,
+    text: '',
   },
   propTypes: {
     hp: React.PropTypes.number,
     iconId: React.PropTypes.string.isRequired,
     flipIconId: React.PropTypes.string,
+    text: React.PropTypes.string,
   },
 });

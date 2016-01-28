@@ -14,6 +14,7 @@ export default class Square extends Component {
       realProps: {
         iconId: this.props.square.iconId,
         hp: this.props.square.hp,
+        text: '',
       },
       transitions: this.props.square.iconTransitions,
     };
