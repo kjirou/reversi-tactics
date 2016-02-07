@@ -16,7 +16,7 @@ export default class Square extends Component {
         hp: this.props.square.hp,
         text: '',
       },
-      transition: this.props.square.iconTransitions,
+      transition: this.props.square.iconTransition,
     };
 
     return (

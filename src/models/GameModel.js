@@ -79,7 +79,7 @@ export default class GameModel extends Model {
       transitionDelay: null,
     }, options);
 
-    let transitions = [];
+    let transition = [];
 
     const targetSquare = this._board.ensureSquare(targetPosition);
     const targetBattler = targetSquare.battler;
@@ -103,26 +103,26 @@ export default class GameModel extends Model {
       if (options.isCritical) {
         transitionType = 'crossed_slash';
       }
-      transitions = generateAnimatedIconTransition(beforeProps, transitionType, {
+      transition = generateAnimatedIconTransition(beforeProps, transitionType, {
         delay: options.transitionDelay,
         hpDelta: damage,
       });
     }
 
-    return transitions;
+    return transition;
   }
 
   /*
-   * @return {Object} - { [positionStr]: transitions, .. }
+   * @return {Object} - { [positionStr]: transition, .. }
    */
   _placeBattler(position, battler) {
     const transitionMap = {};
-    const appendTransitions = (position, transitions) => {
+    const appendTransition = (position, transition) => {
       const positionStr = String(position);
       if (positionStr in transitionMap) {
-        transitionMap[positionStr].push(...transitions);
+        transitionMap[positionStr].push(...transition);
       } else {
-        transitionMap[positionStr] = transitions;
+        transitionMap[positionStr] = transition;
       }
     };
 
@@ -142,8 +142,8 @@ export default class GameModel extends Model {
 
       // placed battler act
       positions.forEach(targetPosition => {
-        const transitions = this._attackToPosition(battler, position, targetPosition);
-        appendTransitions(targetPosition, transitions);
+        const transition = this._attackToPosition(battler, position, targetPosition);
+        appendTransition(targetPosition, transition);
       });
 
       // opposite battler react
@@ -151,15 +151,15 @@ export default class GameModel extends Model {
         // Friend: Cooperation attack
         if (oppositeBattler.getBelongingArmy().color === battlerColor) {
           positions.slice().reverse().forEach(position_ => {
-            const transitions = this._attackToPosition(oppositeBattler, oppositePosition, position_, {
+            const transition = this._attackToPosition(oppositeBattler, oppositePosition, position_, {
               transitionDelay: 250,
             });
-            appendTransitions(position_, transitions);
+            appendTransition(position_, transition);
           })
         // Enemy: Critical hit
         } else {
-          const transitions = this._attackToPosition(battler, position, oppositePosition, { isCritical: true });
-          appendTransitions(oppositePosition, transitions);
+          const transition = this._attackToPosition(battler, position, oppositePosition, { isCritical: true });
+          appendTransition(oppositePosition, transition);
         }
       }
     });
