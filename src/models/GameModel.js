@@ -2,7 +2,7 @@ import { pick, random, range } from 'lodash';
 import { DIRECTIONS } from 'reversi';
 
 import { ARMY_COLORS, REVERSI_PIECE_TYPES } from '../consts';
-import { generateAnimatedIconTransitions } from '../lib/transition-generator';
+import { generateAnimatedIconTransition } from '../lib/transition-generator';
 import { getReversiPieceTypeFromArmyColor, measureDistance } from '../lib/utils';
 import ArmyModel from './ArmyModel';
 import BoardModel from './BoardModel';
@@ -103,7 +103,7 @@ export default class GameModel extends Model {
       if (options.isCritical) {
         transitionType = 'crossed_slash';
       }
-      transitions = generateAnimatedIconTransitions(beforeProps, transitionType, {
+      transitions = generateAnimatedIconTransition(beforeProps, transitionType, {
         delay: options.transitionDelay,
         hpDelta: damage,
       });
