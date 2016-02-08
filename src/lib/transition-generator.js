@@ -1,35 +1,16 @@
-/*
- * Generate transitions for react-flip-book
- * @param {Object} defaultProps
- * @param {Array<Object>} transitionDiffs
- * @return {Array<Object>}
- */
-export const generateTransitions = (defaultProps, transitionDiffs) => {
-  let currentProps = Object.assign({}, defaultProps);
-  return transitionDiffs.map(diff => {
-    const duration = diff.duration || 0;
-    const diffProps = {};
-    Object.keys(diff).forEach(key => {
-      if (key !== 'duration') {
-        diffProps[key] = diff[key];
-      }
-    });
-    currentProps = Object.assign({}, currentProps, diffProps, {
-      duration,
-    });
-    return currentProps;
-  });
-};
+import { generateTransition } from 'react-flip-book';
 
-export const generateAnimatedIconTransitions = (props, transitionType, options = {}) => {
+import { toSignedNumber } from './utils';
+
+
+export const generateAnimatedIconTransition = (defaultProps, transitionType, options = {}) => {
   options = Object.assign({
     delay: null,
     hpDelta: 0,
   }, options);
-  const isDamage = options.hpDelta < 0;
 
   // TODO: define "slash" as constants
-  const transitions = {
+  const transition = {
     crossed_slash: [
       { duration: 50, flipIconId: 'red_slash_1' },
       { duration: 100, flipIconId: 'red_slash_2' },
@@ -47,8 +28,17 @@ export const generateAnimatedIconTransitions = (props, transitionType, options =
   }[transitionType];
 
   if (options.delay !== null) {
-    transitions.unshift({ duration: options.delay });
+    transition.unshift({ duration: options.delay });
   }
 
-  return generateTransitions(props, transitions);
+  if (options.hpDelta) {
+    transition.push({
+      duration: 500,
+      flipIconId: null,
+      text: toSignedNumber(options.hpDelta),
+      textClassNames: ['text-hp-delta'],
+    });
+  }
+
+  return generateTransition(defaultProps, transition);
 };

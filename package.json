@@ -12,7 +12,7 @@
     "lodash": "3.10.1",
     "react": "0.14.7",
     "react-dom": "0.14.7",
-    "react-flip-book": "*",
+    "react-flip-book": "0.2.0",
     "reversi": "3.0.0",
     "rpgparameter": "1.0.0",
     "underscore.string": "3.2.2",

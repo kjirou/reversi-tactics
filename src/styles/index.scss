@@ -112,6 +112,10 @@ body.development {
       0 1px var(--color-text),
       1px 0 var(--color-text),
       0 -1px var(--color-text);
+    &.text-hp-delta {
+      font-size: 18px;
+      font-weight: bold;
+    }
   }
   .icon-container {
     position: absolute;

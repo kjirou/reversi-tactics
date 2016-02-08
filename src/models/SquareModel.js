@@ -50,7 +50,7 @@ export default class SquareModel extends Model {
       reversiPieceType: this._reversiPieceType,
       iconId,
       hp,
-      iconTransitions: [],
+      iconTransition: [],
     };
   }
 }

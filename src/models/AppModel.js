@@ -69,7 +69,7 @@ export default class AppModel extends Model {
               return position[0] === square.position[0] && position[1] === square.position[1];
             })
           ) ? nextReversiPieceType : null,
-          iconTransitions: transitionMap[square.positionId] || [],
+          iconTransition: transitionMap[square.positionId] || [],
         });
       });
     });
