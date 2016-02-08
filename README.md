@@ -4,7 +4,7 @@
 
 Reversi-based tactics game
 
-![](https://raw.githubusercontent.com/kjirou/reversi-tactics/master/doc/demo-20160119.gif)
+![](https://raw.githubusercontent.com/kjirou/reversi-tactics/master/doc/demo-20160209.gif)
 
 
 ## Development
