@@ -1,12 +1,13 @@
 import { generateTransition } from 'react-flip-book';
 
+import { toSignedNumber } from './utils';
+
 
 export const generateAnimatedIconTransition = (defaultProps, transitionType, options = {}) => {
   options = Object.assign({
     delay: null,
     hpDelta: 0,
   }, options);
-  const isDamage = options.hpDelta < 0;
 
   // TODO: define "slash" as constants
   const transition = {
@@ -28,6 +29,15 @@ export const generateAnimatedIconTransition = (defaultProps, transitionType, opt
 
   if (options.delay !== null) {
     transition.unshift({ duration: options.delay });
+  }
+
+  if (options.hpDelta) {
+    transition.push({
+      duration: 500,
+      flipIconId: null,
+      text: toSignedNumber(options.hpDelta),
+      textClassNames: ['text-hp-delta'],
+    });
   }
 
   return generateTransition(defaultProps, transition);

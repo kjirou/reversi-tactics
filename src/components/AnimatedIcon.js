@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import Icon from './Icon';
 
 
-export default class AnimatedIcon extends React.Component {
+export default class AnimatedIcon extends Component {
 
   render() {
     let textElement = null;
     if (this.props.text) {
-      textElement = <div className="text">{ this.props.text }</div>;
+      const textClassName = ['text', ...this.props.textClassNames].join(' ');
+      textElement = <div className={ textClassName }>{ this.props.text }</div>;
     }
 
     let flipIconElement = null;
@@ -42,11 +43,13 @@ Object.assign(AnimatedIcon, {
     hp: null,
     flipIconId: null,
     text: '',
+    textClassNames: [],
   },
   propTypes: {
     hp: React.PropTypes.number,
     iconId: React.PropTypes.string.isRequired,
     flipIconId: React.PropTypes.string,
     text: React.PropTypes.string,
+    textClassNames: React.PropTypes.array,
   },
 });

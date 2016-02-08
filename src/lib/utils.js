@@ -8,6 +8,16 @@ export const within = (num, minNum, maxNum) => {
   return Math.min(Math.max(num, minNum), maxNum);
 };
 
+export const toSignedNumber = (num, zeroPrefix = '') => {
+  let str = String(num);
+  if (num === 0) {
+    str = zeroPrefix + str;
+  } else if (num > 0) {
+    str = '+' + str;
+  }
+  return str;
+};
+
 export const preventDefaultEvent = (event) => {
   if (event.preventDefault) {
     event.preventDefault();

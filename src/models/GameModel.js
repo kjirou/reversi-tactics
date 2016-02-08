@@ -105,7 +105,7 @@ export default class GameModel extends Model {
       }
       transition = generateAnimatedIconTransition(beforeProps, transitionType, {
         delay: options.transitionDelay,
-        hpDelta: damage,
+        hpDelta: -damage,
       });
     }
 

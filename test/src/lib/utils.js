@@ -5,10 +5,18 @@ import {
   createClassBasedResourceList,
   getReversiPieceTypeFromArmyColor,
   measureDistance,
+  toSignedNumber,
 } from 'src/lib/utils';
 
 
 describe('src/lib/utils', () => {
+
+  it('toSignedNumber', () => {
+    assert.strictEqual(toSignedNumber(1), '+1');
+    assert.strictEqual(toSignedNumber(-1), '-1');
+    assert.strictEqual(toSignedNumber(0), '0');
+    assert.strictEqual(toSignedNumber(0, 'x'), 'x0');
+  });
 
   it('createClassBasedResourceList', () => {
     class Item {}
