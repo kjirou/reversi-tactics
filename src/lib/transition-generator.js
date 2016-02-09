@@ -1,6 +1,5 @@
+import { toSignedNumber } from '@kjirou/utils';
 import { generateTransition } from 'react-flip-book';
-
-import { toSignedNumber } from './utils';
 
 
 export const generateAnimatedIconTransition = (defaultProps, transitionType, options = {}) => {

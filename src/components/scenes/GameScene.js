@@ -1,10 +1,10 @@
+import { preventEvents } from '@kjirou/utils';
 import { range } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { ARMY_COLORS, EVENTS, PARAMETERS } from '../../consts';
 import EventHandlerCarrier from '../../lib/EventHandlerCarrier';
-import { preventEvents } from '../../lib/utils';
 import Board from '../Board';
 import AnimatedIcon from '../AnimatedIcon';
 import Icon from '../Icon';

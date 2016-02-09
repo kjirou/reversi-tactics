@@ -1,7 +1,7 @@
+import { createClassBasedResourceList } from '@kjirou/utils';
 import dictify from 'dictify';
 import { classify } from 'underscore.string';
 
-import { createClassBasedResourceList } from '../../lib/utils';
 import UnitModel from './UnitModel';
 
 

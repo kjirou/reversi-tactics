@@ -1,7 +1,7 @@
+import { within } from '@kjirou/utils';
 import { aggregators } from 'rpgparameter';
 
 import { ARMY_COLORS, PARAMETERS } from '../../consts';
-import { within } from '../../lib/utils';
 import AutomaticNamingMixin from '../../mixins/AutomaticNamingMixin';
 import BattlerMixin, { isMixedBattler } from '../../mixins/BattlerMixin';
 import IconizedMixin from '../../mixins/IconizedMixin';
