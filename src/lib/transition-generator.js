@@ -1,43 +1,67 @@
 import { toSignedNumber } from '@kjirou/utils';
-import { generateTransition } from 'react-flip-book';
+import { last } from 'lodash';
+import { alterTransition, generateTransition, totalDurations } from 'react-flip-book';
 
 
-export const generateAnimatedIconTransition = (defaultProps, transitionType, options = {}) => {
+export const EFFECT_ANIMATIONS = {
+  crossed_slash: [
+    { duration: 50, flipIconId: 'red_slash_1' },
+    { duration: 100, flipIconId: 'red_slash_2' },
+    { duration: 50, flipIconId: 'red_slash_1' },
+    { duration: 50, flipIconId: null },
+    { duration: 50, flipIconId: 'reversed_red_slash_1' },
+    { duration: 100, flipIconId: 'reversed_red_slash_2' },
+    { duration: 50, flipIconId: 'reversed_red_slash_1' },
+  ],
+  slash: [
+    { duration: 50, flipIconId: 'red_slash_1' },
+    { duration: 100, flipIconId: 'red_slash_2' },
+    { duration: 50, flipIconId: 'red_slash_1' },
+  ],
+};
+
+const _getEffectAnimationOrError = (animationType) => {
+  const animation = EFFECT_ANIMATIONS[animationType];
+  if (!animation) {
+    throw new Error(`${animationType} is invalid animationType`);
+  }
+  return animation;
+};
+
+
+export const generateAnimatedIconTransition = (defaultProps, animationType, options = {}) => {
   options = Object.assign({
     delay: null,
     hpDelta: 0,
   }, options);
 
-  // TODO: define "slash" as constants
-  const transition = {
-    crossed_slash: [
-      { duration: 50, flipIconId: 'red_slash_1' },
-      { duration: 100, flipIconId: 'red_slash_2' },
-      { duration: 50, flipIconId: 'red_slash_1' },
-      { duration: 50, flipIconId: null },
-      { duration: 50, flipIconId: 'reversed_red_slash_1' },
-      { duration: 100, flipIconId: 'reversed_red_slash_2' },
-      { duration: 50, flipIconId: 'reversed_red_slash_1' },
-    ],
-    slash: [
-      { duration: 50, flipIconId: 'red_slash_1' },
-      { duration: 100, flipIconId: 'red_slash_2' },
-      { duration: 50, flipIconId: 'red_slash_1' },
-    ],
-  }[transitionType];
+  const transitionSource = [];
 
   if (options.delay !== null) {
-    transition.unshift({ duration: options.delay });
+    transitionSource.unshift({ duration: options.delay });
   }
 
+  const effectAnimation = _getEffectAnimationOrError(animationType);
+  transitionSource.push(...effectAnimation);
+
+  let transition = generateTransition(defaultProps, transitionSource);
+
+  // Display damaging/healing text over the tail of the effect animation
   if (options.hpDelta) {
-    transition.push({
-      duration: 500,
-      flipIconId: null,
+    const durationUntilNow = totalDurations(transition);
+    const overlappingDuration = Math.min(50, durationUntilNow);
+    const hpDeltaDuration = 500;
+    transition = alterTransition(transition, [{
+      keyframe: durationUntilNow - overlappingDuration,
       text: toSignedNumber(options.hpDelta),
       textClassNames: ['text-hp-delta'],
-    });
+    }]);
+    const lastTransition = generateTransition(last(transition), [{
+      duration: hpDeltaDuration - overlappingDuration,
+      flipIconId: null,
+    }]);
+    transition.push(...lastTransition);
   }
 
-  return generateTransition(defaultProps, transition);
+  return transition;
 };
