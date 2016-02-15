@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { uniq, values } from 'lodash';
 
-import { ARMY_COLORS } from '../consts';
+import { ARMY_COLORS, SCENE_IDS } from '../consts';
 import { getReversiPieceTypeFromArmyColor } from '../lib/utils';
 import GameModel from './GameModel';
 import Model from './Model';
@@ -22,6 +22,8 @@ export default class AppModel extends Model {
 
   constructor() {
     super();
+
+    this._sceneId = SCENE_IDS.WELCOME;
 
     this._lastProceedingResult = null;
     this._game = new GameModel();
@@ -76,28 +78,27 @@ export default class AppModel extends Model {
   }
 
   presentProps() {
-    // TODO: Re-compute & categorize props like reducers of Redux
-    const scenes = {
-      game: null,
-      welcome: null,
-    };
+    const scene = {};
 
-    if (this._game) {
-      const transitionMap = this._lastProceedingResult || {};
-      const squares = this.constructor._generateSquares(this._game, transitionMap);
+    if (this._sceneId === SCENE_IDS.GAME) {
+      if (this._game) {
+        const transitionMap = this._lastProceedingResult || {};
+        const squares = this.constructor._generateSquares(this._game, transitionMap);
 
-      scenes.game = {
-        squares,
-        armies: {
-          [ARMY_COLORS.BLACK]: this._game.armies[ARMY_COLORS.BLACK].presentProps(),
-          [ARMY_COLORS.WHITE]: this._game.armies[ARMY_COLORS.WHITE].presentProps(),
-        },
-        nextArmyColor: this._game.nextArmyColor,
-      };
+        scenes.game = {
+          squares,
+          armies: {
+            [ARMY_COLORS.BLACK]: this._game.armies[ARMY_COLORS.BLACK].presentProps(),
+            [ARMY_COLORS.WHITE]: this._game.armies[ARMY_COLORS.WHITE].presentProps(),
+          },
+          nextArmyColor: this._game.nextArmyColor,
+        };
+      }
     }
 
     return {
-      scenes,
+      sceneId: this._sceneId,
+      scene,
     };
   }
 }
