@@ -5,6 +5,7 @@ export const ARMY_COLORS = {
 
 export const EVENTS = {
   TOUCH_SQUARE: 'TOUCH_SQUARE',
+  TOUCH_START: 'TOUCH_START',
 };
 
 export const PARAMETERS = {
@@ -17,7 +18,13 @@ export const REVERSI_PIECE_TYPES = {
   BLACK: 'BLACK',
   EMPTY: 'EMPTY',
   WHITE: 'WHITE',
-}
+};
+
+export const SCENE_IDS = {
+  GAME: 'GAME',
+  HOME: 'HOME',
+  WELCOME: 'WELCOME',
+};
 
 // Should sync to stylesheets
 export const STYLES = {

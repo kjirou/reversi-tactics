@@ -1,0 +1,21 @@
+#js-app-container {
+
+  .welcome-scene {
+    font-family: 'Morris Roman';
+    cursor: pointer;
+
+    h1 {
+      font-size: 48px;
+      margin-top: 50%;
+      width: 100%;
+      text-align: center;
+    }
+
+    .touch-start {
+      font-size: 24px;
+      margin-top: 40%;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

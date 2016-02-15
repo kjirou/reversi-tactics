@@ -30,6 +30,15 @@ body.development {
 
 
 /*
+ * Fonts
+ */
+@font-face {
+  font-family: 'Morris Roman';
+  src: url('materials/fonts/morris-roman/MorrisRoman-Black.ttf') format('truetype');
+}
+
+
+/*
  * Reset
  */
 #js-app-container {
@@ -194,4 +203,5 @@ body.development {
 }
 
 
-@import './_scenes.scss';
+@import './_game-scene.scss';
+@import './_welcome-scene.scss';

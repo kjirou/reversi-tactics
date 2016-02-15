@@ -7,13 +7,11 @@ import scenes from './scenes';
 export default class Root extends Component {
 
   render() {
-    const sceneId = 'GameScene';
-    const sceneElement = React.createElement(scenes[sceneId], {
-      key: sceneId,
+    const SceneComponent = scenes[this.props.sceneId];
+    const sceneElement = React.createElement(SceneComponent, {
+      key: this.props.sceneId,
       root: this.props,
-      scene: {
-        GameScene: this.props.scenes.game,
-      }[sceneId] || null,
+      scene: this.props.scene,
     });
 
     return (
