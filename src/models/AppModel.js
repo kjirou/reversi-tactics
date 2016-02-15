@@ -78,21 +78,21 @@ export default class AppModel extends Model {
   }
 
   presentProps() {
-    const scene = {};
+    let scene = {};
 
     if (this._sceneId === SCENE_IDS.GAME) {
       if (this._game) {
         const transitionMap = this._lastProceedingResult || {};
         const squares = this.constructor._generateSquares(this._game, transitionMap);
 
-        scenes.game = {
+        scene = Object.assign(scene, {
           squares,
           armies: {
             [ARMY_COLORS.BLACK]: this._game.armies[ARMY_COLORS.BLACK].presentProps(),
             [ARMY_COLORS.WHITE]: this._game.armies[ARMY_COLORS.WHITE].presentProps(),
           },
           nextArmyColor: this._game.nextArmyColor,
-        };
+        });
       }
     }
 

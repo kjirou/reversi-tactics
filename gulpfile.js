@@ -31,8 +31,7 @@ const JS_SOURCE_INDEX_FILE_PATH = path.join(SOURCE_ROOT, 'index.js');
 const CSS_SOURCE_INDEX_FILE_PATH = path.join(SOURCE_ROOT, 'styles/index.scss');
 const CSS_SOURCE_PATTERN = path.join(SOURCE_ROOT, '**/*.scss');
 const STATIC_FILE_PATTERNS = [
-  //path.join(SOURCE_ROOT, '**/*.{gif,jpg,png}'),
-  //path.join(SOURCE_ROOT, '**/*.{json,txt}'),
+  path.join(SOURCE_ROOT, '**/*.ttf'),
 ];
 const DATA_URI_IMAGE_PATTERNS = [
   path.join(PUBLIC_DIST_ROOT, 'icons/**/*.png'),
