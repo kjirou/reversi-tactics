@@ -15,6 +15,10 @@ const actions = {
     }
     this._lastProceedingResult = this._game.proceed(position);
   },
+
+  touchStart() {
+    this._sceneId = SCENE_IDS.GAME;
+  },
 };
 
 

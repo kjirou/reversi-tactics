@@ -5,6 +5,7 @@ export const ARMY_COLORS = {
 
 export const EVENTS = {
   TOUCH_SQUARE: 'TOUCH_SQUARE',
+  TOUCH_START: 'TOUCH_START',
 };
 
 export const PARAMETERS = {

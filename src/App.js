@@ -57,6 +57,14 @@ export default class App extends Flux {
         .catch(this._onPromiseError)
       ;
     })
+
+    this._onDispatch(EVENTS.TOUCH_START, () => {
+      this._appModel
+        .touchStart()
+        .then(() => this.update(() => this._createState()))
+        .catch(this._onPromiseError)
+      ;
+    })
   }
 
   render(state) {
