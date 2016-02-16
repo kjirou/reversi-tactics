@@ -3,6 +3,7 @@ import React from 'react';
 
 import Root from './components/Root';
 import { EVENTS } from './consts';
+import { bindLogics, logics } from './logics';
 import AppModel from './models/AppModel';
 
 
@@ -23,6 +24,7 @@ export default class App extends Flux {
     });
 
     this._appModel = appModel;
+    this._logics = bindLogics(logics, appModel);
   }
 
   static _createState(appModel) {
@@ -51,7 +53,7 @@ export default class App extends Flux {
 
   subscribe() {
     this._onDispatch(EVENTS.TOUCH_SQUARE, ({ position }) => {
-      this._appModel
+      this._logics
         .touchSquare(position)
         .then(() => this.update(() => this._createState()))
         .catch(this._onPromiseError)
@@ -59,7 +61,7 @@ export default class App extends Flux {
     })
 
     this._onDispatch(EVENTS.TOUCH_START, () => {
-      this._appModel
+      this._logics
         .touchStart()
         .then(() => this.update(() => this._createState()))
         .catch(this._onPromiseError)
