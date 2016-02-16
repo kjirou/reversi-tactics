@@ -3,13 +3,14 @@ import React from 'react';
 
 import Root from './components/Root';
 import { EVENTS } from './consts';
+import { bindLogics, logics } from './logics';
 import AppModel from './models/AppModel';
 
 
 export default class App extends Flux {
 
   constructor({ renderer }) {
-    const appModel = new AppModel();
+    const appModel = new AppModel();  // Can not use "this" before super
 
     super({
       renderer,
@@ -23,11 +24,14 @@ export default class App extends Flux {
     });
 
     this._appModel = appModel;
+
+    // If use the original "subscribe" in called constructor,
+    //   it could not pass values via "this".
+    this._subscribe();
   }
 
   static _createState(appModel) {
-    const appProps = appModel.presentProps();
-    return appProps;
+    return appModel.presentProps();
   }
 
   _createState() {
@@ -35,7 +39,7 @@ export default class App extends Flux {
   }
 
   /*
-   * Attach logging to events triggered by "dispatch"
+   * Register event handler with some preprocessing
    */
   _onDispatch(eventName, handler) {
     const boundHandler = handler.bind(this);
@@ -45,26 +49,26 @@ export default class App extends Flux {
     });
   }
 
-  _onPromiseError(err) {
-    console.error(err.stack || err);
-  }
+  _subscribe() {
+    const {
+      touchSquare,
+      touchStart,
+    } = bindLogics(logics, this._appModel);
 
-  subscribe() {
-    this._onDispatch(EVENTS.TOUCH_SQUARE, ({ position }) => {
-      this._appModel
-        .touchSquare(position)
+    const queueUpdate = promise => {
+      promise
         .then(() => this.update(() => this._createState()))
-        .catch(this._onPromiseError)
+        .catch(err => console.error(err.stack || err))
       ;
-    })
+    };
+
+    this._onDispatch(EVENTS.TOUCH_SQUARE, ({ position }) => {
+      queueUpdate(touchSquare(position));
+    });
 
     this._onDispatch(EVENTS.TOUCH_START, () => {
-      this._appModel
-        .touchStart()
-        .then(() => this.update(() => this._createState()))
-        .catch(this._onPromiseError)
-      ;
-    })
+      queueUpdate(touchStart());
+    });
   }
 
   render(state) {

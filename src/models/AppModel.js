@@ -7,21 +7,6 @@ import GameModel from './GameModel';
 import Model from './Model';
 
 
-const actions = {
-
-  touchSquare(position) {
-    if (!this._game) {
-      return;
-    }
-    this._lastProceedingResult = this._game.proceed(position);
-  },
-
-  touchStart() {
-    this._sceneId = SCENE_IDS.GAME;
-  },
-};
-
-
 export default class AppModel extends Model {
 
   constructor() {
@@ -29,35 +14,11 @@ export default class AppModel extends Model {
 
     this._sceneId = SCENE_IDS.WELCOME;
 
-    this._lastProceedingResult = null;
     this._game = new GameModel();
-
-    this._includeActions(actions);
   }
 
-  /*
-   * Define actions to prototype from function map
-   *
-   * TODO: Organize dependencies
-   *
-   * @param {Object} actions - e.g. { [actionName]: action, .. }
-   */
-  _includeActions(actions) {
-    Object.keys(actions).forEach(actionName => {
-      const boundAction = actions[actionName].bind(this);
-      this[actionName] = (...args) => {
-        // Convert to Promise-based API forcibly
-        const result = boundAction(...args);
-        if (result instanceof Promise) {
-          return result;
-        } else if (result instanceof Error) {
-          return Promise.reject(result);
-        } else {
-          return Promise.resolve(result);
-        }
-      };
-    });
-  }
+  set sceneId(v) { this._sceneId = v; }
+  get game() { return this._game; }
 
   /*
    * @return {Array<object>} - A list of square props
@@ -86,7 +47,7 @@ export default class AppModel extends Model {
 
     if (this._sceneId === SCENE_IDS.GAME) {
       if (this._game) {
-        const transitionMap = this._lastProceedingResult || {};
+        const transitionMap = this._game.lastProceedingResult || {};
         const squares = this.constructor._generateSquares(this._game, transitionMap);
 
         scene = Object.assign(scene, {

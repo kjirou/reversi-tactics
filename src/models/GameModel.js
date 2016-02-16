@@ -50,11 +50,14 @@ export default class GameModel extends Model {
       [ARMY_COLORS.BLACK]: this._blackArmy,
       [ARMY_COLORS.WHITE]: this._whiteArmy,
     };
+
+    this._lastProceedingResult = null;
   }
 
   get board() { return this._board; }
   get armies() { return this._armies; }
   get nextArmyColor() { return this._nextArmyColor; }
+  get lastProceedingResult() { return this._lastProceedingResult; }
 
   getNextArmyPlaceableSquarePositions() {
     const reversiPieceType = getReversiPieceTypeFromArmyColor(this._nextArmyColor);
@@ -168,7 +171,7 @@ export default class GameModel extends Model {
   }
 
   /*
-   * @return {object}
+   * Let proceed one turn
    */
   proceed(position) {
     let transitionMap = {};
@@ -193,6 +196,6 @@ export default class GameModel extends Model {
       console.log('Can not place the piece in there');
     }
 
-    return transitionMap;
+    this._lastProceedingResult = transitionMap;
   }
 }
