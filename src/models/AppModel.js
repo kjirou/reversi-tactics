@@ -14,9 +14,11 @@ export default class AppModel extends Model {
 
     this._sceneId = SCENE_IDS.WELCOME;
 
-    this._lastProceedingResult = null;
     this._game = new GameModel();
   }
+
+  set sceneId(v) { this._sceneId = v; }
+  get game() { return this._game; }
 
   /*
    * @return {Array<object>} - A list of square props
@@ -45,7 +47,7 @@ export default class AppModel extends Model {
 
     if (this._sceneId === SCENE_IDS.GAME) {
       if (this._game) {
-        const transitionMap = this._lastProceedingResult || {};
+        const transitionMap = this._game.lastProceedingResult || {};
         const squares = this.constructor._generateSquares(this._game, transitionMap);
 
         scene = Object.assign(scene, {

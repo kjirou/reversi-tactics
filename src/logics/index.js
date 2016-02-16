@@ -52,15 +52,12 @@ export const bindLogics = (logics, appModel) => {
  */
 export const logics = {
 
-  // TODO: private properties are used
   touchSquare({ model }, position) {
-    if (!model._game) {
-      return;
-    }
-    model._lastProceedingResult = model._game.proceed(position);
+    if (!model.game) return;
+    model.game.proceed(position);
   },
 
   touchStart({ model }) {
-    model._sceneId = SCENE_IDS.GAME;
+    model.sceneId = SCENE_IDS.GAME;
   },
 };
