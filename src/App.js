@@ -2,7 +2,7 @@ import { Flux } from 'flumpt';
 import React from 'react';
 
 import Root from './components/Root';
-import { EVENTS } from './consts';
+import { EVENTS, SCENE_IDS } from './consts';
 import { bindLogics, logics } from './logics';
 import AppModel from './models/AppModel';
 
@@ -51,6 +51,7 @@ export default class App extends Flux {
 
   _subscribe() {
     const {
+      switchScene,
       touchSquare,
       touchStart,
     } = bindLogics(logics, this._appModel);
@@ -61,6 +62,16 @@ export default class App extends Flux {
         .catch(err => console.error(err.stack || err))
       ;
     };
+
+    this._onDispatch(EVENTS.TOUCH_NAVIGATION_BAR_ITEM, ({ index }) => {
+      const nextSceneId = [
+        SCENE_IDS.HOME,
+        SCENE_IDS.HOME,
+        SCENE_IDS.WELCOME,
+        SCENE_IDS.WELCOME,
+      ][index] || null;
+      queueUpdate(switchScene(nextSceneId));
+    });
 
     this._onDispatch(EVENTS.TOUCH_SQUARE, ({ position }) => {
       queueUpdate(touchSquare(position));
