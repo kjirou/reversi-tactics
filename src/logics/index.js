@@ -58,6 +58,6 @@ export const logics = {
   },
 
   touchStart({ model }) {
-    model.sceneId = SCENE_IDS.GAME;
+    model.sceneId = SCENE_IDS.HOME;
   },
 };
