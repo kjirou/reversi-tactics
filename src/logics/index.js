@@ -30,6 +30,9 @@ export const _resolveLogic = (logic, dependencies, logicArgs = []) => {
   return promisifiedResult;
 };
 
+/*
+ * Bind logics to dependencies
+ */
 export const bindLogics = (logics, appModel) => {
   const dependencies = {
     model: appModel,
@@ -44,13 +47,23 @@ export const bindLogics = (logics, appModel) => {
   return boundLogics;
 };
 
+
 /*
  * Business logics
  *
  * Generally each logic becomes one-to-one with the UI, but not necessarily.
  * For example, sometimes one of the logic is used for plural UIs.
+ *
+ * Therefore, as the business logic name, you can use both terms of the Model and terms of the UI.
+ * e.g.
+ *   Model terms = createFoo, updateFoo, obtainFoo, etc
+ *   UI terms    = touchFoo, scrollFoo, checkFoo, etc
  */
 export const logics = {
+
+  switchScene({ model }, sceneId) {
+    model.sceneId = sceneId;
+  },
 
   touchSquare({ model }, position) {
     if (!model.game) return;
@@ -58,6 +71,6 @@ export const logics = {
   },
 
   touchStart({ model }) {
-    model.sceneId = SCENE_IDS.GAME;
+    model.sceneId = SCENE_IDS.HOME;
   },
 };

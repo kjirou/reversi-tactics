@@ -1,0 +1,19 @@
+#js-app-container {
+
+  .home-scene {
+
+    .start-battle {
+      position: absolute;
+      margin: 0 10%;
+      bottom: 24px;
+      width: 80%;
+      height: 48px;
+      line-height: 48px;
+      font-size: 32px;
+      font-family: 'Morris Roman';
+      margin-top: 40%;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+}

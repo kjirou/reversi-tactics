@@ -2,7 +2,10 @@ import assert from 'assert';
 
 import {
   _resolveLogic,
+  bindLogics,
+  logics,
 } from 'src/logics';
+import AppModel from 'src/models/AppModel';
 
 
 describe('src/logics', () => {
@@ -66,6 +69,19 @@ describe('src/logics', () => {
           assert.strictEqual(err.message, 'Unexpected error');
         });
       ;
+    });
+  });
+
+
+  describe('bindLogics', () => {
+
+    it('should be', () => {
+      const appModel = new AppModel();
+      const boundLogics = bindLogics(logics, appModel);
+
+      assert.strictEqual(typeof boundLogics, 'object');
+      assert.strictEqual(Object.keys(boundLogics).length, Object.keys(logics).length);
+      assert(Object.keys(boundLogics).length > 0);
     });
   });
 });
