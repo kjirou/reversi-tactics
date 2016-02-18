@@ -30,6 +30,9 @@ export const _resolveLogic = (logic, dependencies, logicArgs = []) => {
   return promisifiedResult;
 };
 
+/*
+ * Bind logics to dependencies
+ */
 export const bindLogics = (logics, appModel) => {
   const dependencies = {
     model: appModel,
