@@ -6,12 +6,16 @@ import Scene from './Scene';
 
 
 export default class HomeScene extends Scene {
+  _onClickStartBattle() {
+    this.dispatch(EVENTS.TOUCH_START_BATTLE);
+  }
+
   render() {
     return (
       <div className="scene home-scene">
         <NavigationBar />
         <div className="scene-except-navigation-bar">
-          HomeScene
+          <div className="start-battle" onClick={ this._onClickStartBattle.bind(this) }>Start a Battle</div>
         </div>
       </div>
     );

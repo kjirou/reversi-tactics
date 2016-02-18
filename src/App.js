@@ -80,6 +80,10 @@ export default class App extends Flux {
     this._onDispatch(EVENTS.TOUCH_START, () => {
       queueUpdate(touchStart());
     });
+
+    this._onDispatch(EVENTS.TOUCH_START_BATTLE, () => {
+      queueUpdate(switchScene(SCENE_IDS.GAME));
+    });
   }
 
   render(state) {
