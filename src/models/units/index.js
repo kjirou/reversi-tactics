@@ -1,6 +1,5 @@
 import { createClassBasedResourceList } from '@kjirou/utils';
 import dictify from 'dictify';
-import { classify } from 'underscore.string';
 
 import UnitModel from './UnitModel';
 
