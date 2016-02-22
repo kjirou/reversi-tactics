@@ -109,6 +109,15 @@ body.development {
         top: var(--navigation-bar-height);
         width: 100%;
         height: calc(var(--app-height) - var(--navigation-bar-height));
+        h1 {
+          margin-top: 4px;
+          line-height: 48px;
+          font-size: 28px;
+          font-family: 'Morris Roman';
+          color: black;
+          background-color: white;
+          text-align: center;
+        }
       }
     }
   }
@@ -228,4 +237,5 @@ body.development {
 
 @import './_game-scene.scss';
 @import './_home-scene.scss';
+@import './_stage_selection-scene.scss';
 @import './_welcome-scene.scss';

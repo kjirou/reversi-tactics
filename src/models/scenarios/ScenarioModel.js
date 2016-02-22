@@ -18,9 +18,9 @@ export default class ScenarioModel extends PrototypeScenarioModel {
     super();
   }
 
-  //getTypeId() {
-  //  return this.constructor.getTypeId();
-  //}
+  getTypeId() {
+    return this.constructor.getTypeId();
+  }
 
   //getIconId() {
   //  if (this.isDead()) {

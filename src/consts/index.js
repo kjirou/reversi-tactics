@@ -25,6 +25,7 @@ export const REVERSI_PIECE_TYPES = {
 export const SCENE_IDS = {
   GAME: 'GAME',
   HOME: 'HOME',
+  STAGE_SELECTION: 'STAGE_SELECTION',
   WELCOME: 'WELCOME',
 };
 

@@ -68,7 +68,7 @@ export default class App extends Flux {
         SCENE_IDS.HOME,
         SCENE_IDS.HOME,
         SCENE_IDS.WELCOME,
-        SCENE_IDS.WELCOME,
+        SCENE_IDS.GAME,
       ][index] || null;
       queueUpdate(switchScene(nextSceneId));
     });
@@ -82,7 +82,7 @@ export default class App extends Flux {
     });
 
     this._onDispatch(EVENTS.TOUCH_START_BATTLE, () => {
-      queueUpdate(switchScene(SCENE_IDS.GAME));
+      queueUpdate(switchScene(SCENE_IDS.STAGE_SELECTION));
     });
   }
 

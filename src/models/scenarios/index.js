@@ -7,17 +7,11 @@ import ScenarioModel from './ScenarioModel';
 export const scenarioResourceList = createClassBasedResourceList(ScenarioModel, [
   {
     constants: {
-      _typeId: 'foo',
+      _typeId: 'goblin_cave',
+      _stages: [
+      ],
     },
   },
-//  {
-//    constants: {
-//      _typeId: 'goblin',
-//    },
-//    properties: {
-//      _maxHp: 3,
-//    },
-//  },
 ]);
 export const scenarioResourceDict = dictify(scenarioResourceList, obj => obj.getTypeId());
 export const scenarioTypeIds = Object.keys(scenarioResourceDict);
