@@ -3,6 +3,10 @@ export const ARMY_COLORS = {
   WHITE: 'WHITE',
 };
 
+export const DEFAULTS = {
+  UNIT_TYPE_ID: 'default',
+};
+
 export const EVENTS = {
   TOUCH_NAVIGATION_BAR_ITEM: 'TOUCH_NAVIGATION_BAR_ITEM',
   TOUCH_SQUARE: 'TOUCH_SQUARE',
@@ -11,6 +15,7 @@ export const EVENTS = {
 };
 
 export const PARAMETERS = {
+  MAX_BATTLER_COUNT: 32,
   MAX_MAX_HP: 99,
   MIN_MAX_HP: 1,
   MAX_VISIBLE_BATTLER_COUNT: 3,

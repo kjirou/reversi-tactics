@@ -7,6 +7,12 @@ import UnitModel from './UnitModel';
 export const unitResourceList = createClassBasedResourceList(UnitModel, [
   {
     constants: {
+      _typeId: 'default_unit',
+      _iconId: 'corpse',
+    },
+  },
+  {
+    constants: {
       _typeId: 'fighter',
     },
     properties: {
