@@ -7,6 +7,15 @@ import UnitModel from './UnitModel';
 export const unitResourceList = createClassBasedResourceList(UnitModel, [
   {
     constants: {
+      _typeId: 'bandit',
+    },
+    properties: {
+      _maxHp: 2,
+      _attackPower: 2,
+    },
+  },
+  {
+    constants: {
       _typeId: 'default_unit',
       _iconId: 'corpse',
     },
@@ -38,6 +47,20 @@ export const unitResourceList = createClassBasedResourceList(UnitModel, [
   },
   {
     constants: {
+      _typeId: 'militia',
+    },
+  },
+  {
+    constants: {
+      _typeId: 'minotaur',
+    },
+    properties: {
+      _maxHp: 5,
+      _attackPower: 3,
+    },
+  },
+  {
+    constants: {
       _typeId: 'orc',
     },
     properties: {
@@ -47,7 +70,10 @@ export const unitResourceList = createClassBasedResourceList(UnitModel, [
   },
   {
     constants: {
-      _typeId: 'vigilante',
+      _typeId: 'soldier',
+    },
+    properties: {
+      _maxHp: 3,
     },
   },
 ]);

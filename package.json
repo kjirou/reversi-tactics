@@ -71,6 +71,7 @@
   "scripts": {
     "b": "npm run build",
     "build": "gulp build",
+    "build-icons": "gulp build:divide-icons && gulp build:data-uri-images",
     "d": "npm run develop",
     "develop": "gulp develop",
     "s": "npm run serve",

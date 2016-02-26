@@ -30,8 +30,11 @@ export default class GameModel extends Model {
         return {
           0: 'goblin',
           1: 'goblin',
-          2: 'orc',
-        }[random(2)];
+          2: 'goblin',
+          3: 'orc',
+          4: 'orc',
+          5: 'minotaur',
+        }[random(5)];
       }),
     });
     this._whiteArmy = new ArmyModel({
@@ -39,8 +42,8 @@ export default class GameModel extends Model {
       color: ARMY_COLORS.WHITE,
       unitDeck: range(32).map(() => {
         return {
-          0: 'vigilante',
-          1: 'vigilante',
+          0: 'militia',
+          1: 'soldier',
           2: 'fighter',
           3: 'knight',
         }[random(3)];

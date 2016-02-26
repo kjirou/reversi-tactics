@@ -5,6 +5,7 @@ import AutomaticNamingMixin from '../../mixins/AutomaticNamingMixin';
 import IconizedMixin from '../../mixins/IconizedMixin';
 import TypeIdMixin from '../../mixins/TypeIdMixin';
 import Model from '../Model';
+import StageModel from './StageModel';
 
 
 class PrototypeScenarioModel extends Model {}
@@ -16,6 +17,19 @@ export default class ScenarioModel extends PrototypeScenarioModel {
 
   constructor() {
     super();
+
+    this._stagesSource = [];
+    this._stages = [];
+  }
+
+  initialize() {
+    this._stages = this._stagesSource.map(stageSource => {
+      return new StageModel({
+        armyName: stageSource.armyName,
+        unitTypeIds: stageSource.unitTypeIds,
+        defaultUnitTypeId: stageSource.defaultUnitTypeId,
+      });
+    });
   }
 
   getTypeId() {
@@ -28,4 +42,10 @@ export default class ScenarioModel extends PrototypeScenarioModel {
   //  }
   //  return this.constructor.getIconId();
   //}
+
+  static create(...args) {
+    const instance = new this(...args);
+    instance.initialize();
+    return instance;
+  }
 }
