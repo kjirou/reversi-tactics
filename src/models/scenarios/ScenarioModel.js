@@ -43,6 +43,9 @@ export default class ScenarioModel extends PrototypeScenarioModel {
   //  return this.constructor.getIconId();
   //}
 
+  presentProps() {
+  }
+
   static create(...args) {
     const instance = new this(...args);
     instance.initialize();

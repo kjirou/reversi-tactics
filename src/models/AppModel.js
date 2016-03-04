@@ -5,6 +5,7 @@ import { ARMY_COLORS, SCENE_IDS } from '../consts';
 import { getReversiPieceTypeFromArmyColor } from '../lib/utils';
 import GameModel from './GameModel';
 import Model from './Model';
+import { scenarioResourceList } from './scenarios';
 
 
 export default class AppModel extends Model {
@@ -13,6 +14,8 @@ export default class AppModel extends Model {
     super();
 
     this._sceneId = SCENE_IDS.WELCOME;
+
+    this._stages = scenarioResourceList.map(AnyScenarioModel => AnyScenarioModel.create());
 
     this._game = new GameModel();
   }
