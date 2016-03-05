@@ -6,11 +6,12 @@
     box-sizing: border-box;
 
     .partition {
-      padding-left: 4px;
-      height: 32px;
-      line-height: 32px;
-      font-size: 21px;
+      height: 48px;
+      line-height: 48px;
+      font-size: 24px;
       font-family: 'Morris Roman';
+      letter-spacing: 2px;
+      text-align: center;
     }
 
     .scenario-item {
@@ -36,6 +37,11 @@
           width: calc(var(--app-width) - 48px);
           padding-left: 8px;
 
+          .scenario-name {
+            height: 24px;
+            line-height: 24px;
+            font-size: 18px;
+          }
           ul {
             display: flex;
             justify-content: flex-start;
@@ -45,11 +51,6 @@
             li {
               margin-right: 10%;
             }
-          }
-          .scenario-name {
-            height: 24px;
-            line-height: 24px;
-            font-size: 18px;
           }
         }
       }

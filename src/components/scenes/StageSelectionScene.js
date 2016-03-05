@@ -8,21 +8,21 @@ import Scene from './Scene';
 
 export default class StageSelectionScene extends Scene {
 
-  _createRandomScenarioElements() {
+  _createMissionScenarioElements() {
     return [
-      <li key="random-scenario-1" className="scenario-item">
+      <li key="mission-scenario-1" className="scenario-item">
         <div className="left-side side">
           <div className="scenario-icon-container">
             <AnimatedIcon iconId="goblin" />
           </div>
         </div>
         <div className="right-side side">
+          <div className="scenario-name">Goblin Cave</div>
           <ul>
             <li className="lv">Lv: 99</li>
             <li className="mr">Mr: 3</li>
             <li className="progress">Stg: 2/5</li>
           </ul>
-          <div className="scenario-name">Goblin Cave</div>
         </div>
       </li>,
     ];
@@ -30,8 +30,8 @@ export default class StageSelectionScene extends Scene {
 
   _createPartitionedScenarioElements() {
     return [
-      <li key="random-partition" className="partition">Ramdom</li>,
-      ...this._createRandomScenarioElements(),
+      <li key="mission-partition" className="partition">Mission</li>,
+      ...this._createMissionScenarioElements(),
       <li key="campaign-partition" className="partition">Campaign</li>,
     ];
   }
