@@ -9,6 +9,7 @@ export const scenarioResourceList = createClassBasedResourceList(ScenarioModel, 
   {
     constants: {
       _typeId: 'training_range',
+      _iconId: 'militia',
     },
     properties: {
       _stagesSource: [
@@ -29,6 +30,7 @@ export const scenarioResourceList = createClassBasedResourceList(ScenarioModel, 
   {
     constants: {
       _typeId: 'goblin_cave',
+      _iconId: 'goblin',
     },
     properties: {
       _stagesSource: [
@@ -49,6 +51,7 @@ export const scenarioResourceList = createClassBasedResourceList(ScenarioModel, 
   {
     constants: {
       _typeId: 'orc_keep',
+      _iconId: 'orc',
     },
     properties: {
       _stagesSource: [

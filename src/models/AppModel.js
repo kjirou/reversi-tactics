@@ -15,7 +15,7 @@ export default class AppModel extends Model {
 
     this._sceneId = SCENE_IDS.WELCOME;
 
-    this._stages = scenarioResourceList.map(AnyScenarioModel => AnyScenarioModel.create());
+    this._scenarios = scenarioResourceList.map(AScenarioModel => AScenarioModel.create());
 
     this._game = new GameModel();
   }
@@ -62,6 +62,11 @@ export default class AppModel extends Model {
           nextArmyColor: this._game.nextArmyColor,
         });
       }
+    } else if (this._sceneId === SCENE_IDS.STAGE_SELECTION) {
+      scene = Object.assign(scene, {
+        missionScenarios: [],
+        campaignScenarios: this._scenarios.map(scenario => scenario.presentProps()),
+      });
     }
 
     return {

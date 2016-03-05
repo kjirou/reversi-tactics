@@ -32,18 +32,19 @@ export default class ScenarioModel extends PrototypeScenarioModel {
     });
   }
 
-  getTypeId() {
+  _getTypeId() {
     return this.constructor.getTypeId();
   }
 
-  //getIconId() {
-  //  if (this.isDead()) {
-  //    return 'bones';
-  //  }
-  //  return this.constructor.getIconId();
-  //}
+  _getIconId() {
+    return this.constructor.getIconId();
+  }
 
   presentProps() {
+    return {
+      iconId: this._getIconId(),
+      name: this.getName(),
+    };
   }
 
   static create(...args) {

@@ -25,4 +25,22 @@ describe('src/models/scenarios/ScenarioModel', () => {
       assert(model._stages[1] instanceof StageModel);
     });
   });
+
+
+  describe('presentProps', () => {
+
+    it('should be', () => {
+      class FooScenarioModel extends ScenarioModel {}
+      FooScenarioModel._typeId = 'foo_hoge';
+      FooScenarioModel._iconId = 'bar_fuga';
+
+      const model = FooScenarioModel.create();
+      const props = model.presentProps();
+
+      assert.deepEqual(props, {
+        name: 'Foo Hoge',
+        iconId: 'bar_fuga',
+      });
+    });
+  });
 });
