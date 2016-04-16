@@ -15,7 +15,7 @@ export default class AppModel extends Model {
 
     this._sceneId = SCENE_IDS.WELCOME;
 
-    this._scenarios = scenarioResourceList.map(AScenarioModel => AScenarioModel.create());
+    this._scenarios = scenarioResourceList.map(SomeScenarioModel => SomeScenarioModel.create());
 
     this._game = new GameModel();
   }
