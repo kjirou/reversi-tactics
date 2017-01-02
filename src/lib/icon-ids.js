@@ -6,16 +6,19 @@ var DENZI_ICON_POSITIONS = [
 
   // characters
   ['characters', [0, 3], 'alchemist'],
+  ['characters', [1, 4], 'bandit'],
   ['characters', [2, 2], 'bird_male'],
   ['characters', [2, 3], 'bird_female'],
   ['characters', [0, 4], 'cleric'],
   ['characters', [0, 0], 'fighter'],
   ['characters', [1, 1], 'healer'],
   ['characters', [1, 3], 'knight'],
+  ['characters', [1, 5], 'militia'],
   ['characters', [0, 1], 'mage'],
   ['characters', [0, 8], 'nerd'],
   ['characters', [0, 2], 'ranger'],
   ['characters', [0, 5], 'thief'],
+  ['characters', [1, 14], 'soldier'],
   ['characters', [1, 5], 'vigilante'],
 
   // enemies

@@ -17,7 +17,7 @@ export default class App extends Flux {
       initialState: App._createState(appModel),
       middlewares: [
         state => {
-          console.log('update:', state);
+          console.log('render:', state);
           return state;
         }
       ]
@@ -56,7 +56,7 @@ export default class App extends Flux {
       touchStart,
     } = bindLogics(logics, this._appModel);
 
-    const queueUpdate = promise => {
+    const enqueueUpdate = promise => {
       promise
         .then(() => this.update(() => this._createState()))
         .catch(err => console.error(err.stack || err))
@@ -68,21 +68,21 @@ export default class App extends Flux {
         SCENE_IDS.HOME,
         SCENE_IDS.HOME,
         SCENE_IDS.WELCOME,
-        SCENE_IDS.WELCOME,
+        SCENE_IDS.GAME,
       ][index] || null;
-      queueUpdate(switchScene(nextSceneId));
+      enqueueUpdate(switchScene(nextSceneId));
     });
 
     this._onDispatch(EVENTS.TOUCH_SQUARE, ({ position }) => {
-      queueUpdate(touchSquare(position));
+      enqueueUpdate(touchSquare(position));
     });
 
     this._onDispatch(EVENTS.TOUCH_START, () => {
-      queueUpdate(touchStart());
+      enqueueUpdate(touchStart());
     });
 
     this._onDispatch(EVENTS.TOUCH_START_BATTLE, () => {
-      queueUpdate(switchScene(SCENE_IDS.GAME));
+      enqueueUpdate(switchScene(SCENE_IDS.STAGE_SELECTION));
     });
   }
 
